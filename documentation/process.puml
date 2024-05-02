@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Demande Client;
+:Routage via Traefik;
+if (Route nécessite authentification) then (true)
+  repeat :Redirection vers page de login Keycloak;
+      if (Nouvel utilisateur ?) then (true)
+        :Création profil;
+      else (false)
+      endif
+  repeat while (Login correct ?) is (no) not (yes)
+else (false)
+endif
+
+:Accès Route;
+
+stop
+
+@enduml

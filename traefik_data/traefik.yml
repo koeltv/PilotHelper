@@ -1,0 +1,32 @@
+log:
+  level: DEBUG
+  filePath: /etc/traefik/traefik.log
+
+api:
+  insecure: true # Enable dashboard access from outside
+
+metrics:
+  prometheus:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+    entryPoint: metrics
+
+providers:
+  docker:
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+  file:
+    filename: /etc/traefik/dynamic.yml
+
+entryPoints:
+  http:
+    address: :80
+  metrics:
+    address: :8082
+
+experimental:
+  plugins:
+    keycloakopenid:
+      moduleName: github.com/Gwojda/keycloakopenid
+      version: v0.1.35

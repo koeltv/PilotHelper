@@ -1,0 +1,12 @@
+http:
+  middlewares:
+    keycloak-middleware-name:
+      plugin:
+        keycloakopenid:
+          KeycloakURLEnv: "KEYCLOAK_URL"
+          ClientIDEnv: "KEYCLOAK_CLIENT_ID"
+          ClientSecretEnv: "KEYCLOAK_CLIENT_SECRET"
+          KeycloakRealmEnv: "KEYCLOAK_REALM"
+          TokenCookieNameEnv: "TOKEN_COOKIE_NAME"
+          Scope: openid
+          UseAuthHeader: "false"

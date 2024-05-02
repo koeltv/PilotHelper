@@ -1,0 +1,88 @@
+services:
+  ############################
+  # Infrastructures services #
+  ############################
+
+  # Keycloak database
+  keycloak-database:
+    image: bitnami/postgresql:latest
+    volumes:
+      - keycloak_database:/bitnami/postgresql
+    env_file:
+      - keycloak-database.env
+
+  # Keycloak : Authentification & Authorization
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    command: start-dev --import-realm
+    env_file:
+      - keycloak-database.env
+      - keycloak.env
+    volumes:
+      - ./keycloak_data:/opt/keycloak/data/import:ro
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    depends_on:
+      - keycloak-database
+
+  # Traefik : Reverse proxy
+  traefik:
+    restart: on-failure
+    image: traefik:latest
+    ports:
+      - "${PROXY_PORT:-80}:80"
+      - 8081:8080 # For admin interface
+    env_file:
+      - keycloak-shared.env
+    volumes:
+      - ./traefik_data/:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  # Prometheus : Metrics collection
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    volumes:
+      - ./prometheus:/etc/prometheus
+
+  # Grafana : Dashboards for metrics
+  grafana:
+    build: grafana
+    depends_on:
+      - prometheus
+    env_file:
+      - grafana.env
+    labels:
+      traefik.enable: true
+      traefik.http.routers.grafana.rule: PathPrefix(`/grafana`)
+
+  ############################
+  # Internal services        #
+  ############################
+
+  # Business database
+  database:
+    image: bitnami/postgresql:latest
+    volumes:
+      - database:/bitnami/postgresql
+    env_file:
+      - database.env
+
+  # Simple service example
+  data:
+    build: data
+    image: pilot-helper/data
+    restart: on-failure
+    labels:
+      traefik.enable: true
+      traefik.http.routers.data.rule: PathPrefix(`/data`)
+      traefik.http.routers.data.middlewares: keycloak-middleware-name@file,data
+      traefik.http.middlewares.data.stripprefix.prefixes: /data
+    depends_on:
+      - database
+    env_file:
+      - keycloak-shared.env
+      - database.env
+
+volumes:
+  keycloak_database:
+  database:
