@@ -18,6 +18,18 @@ Voici un résumé de l'architecture du projet :
 - Ajouter dans le fichier `hosts` (`C:\Windows\System32\drivers\etc\hosts` sur Windows) la ligne ```127.0.0.1 keycloak```.
 - Dans ce répertoire lancer docker compose: `docker compose up -d`
 
+Les comptes par défaut sont :
+- Keycloak admin:
+  - username: `admin`
+  - password: `admin`
+- Grafana:
+  - username: `admin`
+  - password: `password`
+- Keycloak (page de login):
+  - pas de compte par défaut, il faut en créer un (register ou via interface admin)
+
+Toutes les valeurs par défaut sont visibles dans les fichiers `.env` après execution du script et `documentation/env/*.env.example` avant.
+
 ## Patrons de conceptions utilisés
  - Reverse Proxy : une adresse exposée, plusieurs services
  - Cache : style CouchDB
