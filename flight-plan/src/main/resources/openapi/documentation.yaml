@@ -1,0 +1,196 @@
+openapi: "3.1.0"
+info:
+  title: "PilotHelper Flight Plan API"
+  description: "PilotHelper API for managing Flight Plans"
+  version: "1.0.0"
+servers:
+- url: "http://localhost/flight-plan"
+paths:
+  /:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "This is the Flight Plan API"
+  /{id}:
+    delete:
+      description: "Delete flight-plan"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: "Read flight-plan"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/FlightPlan"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: "Update flight-plan"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlightPlan"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /metrics:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+components:
+  schemas:
+    Aircraft:
+      type: "object"
+      properties:
+        aircraftId:
+          type: "string"
+        aircraftType:
+          type: "string"
+        turbulenceType:
+          type: "string"
+        equipment:
+          type: "string"
+        transponder:
+          type: "string"
+        colorAndMarkings:
+          type: "string"
+      required:
+      - "aircraftId"
+      - "aircraftType"
+      - "equipment"
+      - "transponder"
+      - "colorAndMarkings"
+    Equipment:
+      type: "object"
+      properties:
+        uhfPost:
+          type: "boolean"
+        vhfPost:
+          type: "boolean"
+        rdbaBeacon:
+          type: "boolean"
+        safetyJacketWithLight:
+          type: "boolean"
+        safetyJacketWithFluorescein:
+          type: "boolean"
+        safetyJacketWithUHF:
+          type: "boolean"
+        safetyJacketWithVHF:
+          type: "boolean"
+        raftCount:
+          type: "integer"
+          format: "int32"
+        raftCapacity:
+          type: "integer"
+          format: "int32"
+        raftCoverageColor:
+          type: "string"
+      required:
+      - "raftCoverageColor"
+    FlightPlan:
+      type: "object"
+      properties:
+        flightRules:
+          type: "string"
+        flightType:
+          type: "string"
+        aircraftData:
+          $ref: "#/components/schemas/Aircraft"
+        aircraftCount:
+          type: "integer"
+          format: "int32"
+        startingAirport:
+          type: "string"
+        startingTime:
+          type: "string"
+        cruisingSpeed:
+          type: "string"
+        cruisingAltitude:
+          type: "string"
+        path:
+          type: "string"
+        destinationAirport:
+          type: "string"
+        estimatedTime:
+          type: "string"
+        alternativeAirport:
+          type: "array"
+          items:
+            type: "string"
+        otherInformations:
+          type: "array"
+          items:
+            type: "string"
+        autonomy:
+          type: "string"
+        occupantCount:
+          type: "integer"
+          format: "int32"
+        pilot:
+          type: "string"
+        equipment:
+          $ref: "#/components/schemas/Equipment"
+      required:
+      - "aircraftData"
+      - "startingAirport"
+      - "startingTime"
+      - "cruisingSpeed"
+      - "cruisingAltitude"
+      - "path"
+      - "destinationAirport"
+      - "estimatedTime"
+      - "alternativeAirport"
+      - "otherInformations"
+      - "autonomy"
+      - "pilot"
+      - "equipment"

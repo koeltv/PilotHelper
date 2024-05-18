@@ -64,6 +64,8 @@ services:
     image: bitnami/postgresql:latest
     volumes:
       - database:/bitnami/postgresql
+    ports:
+      - "5432:5432"
     env_file:
       - database.env
 
@@ -77,6 +79,21 @@ services:
       traefik.http.routers.data.rule: PathPrefix(`/data`)
       traefik.http.routers.data.middlewares: keycloak-middleware-name@file,data
       traefik.http.middlewares.data.stripprefix.prefixes: /data
+    depends_on:
+      - database
+    env_file:
+      - keycloak-shared.env
+      - database.env
+
+  flight-plan:
+    build: flight-plan
+    image: pilot-helper/flight-plan
+    restart: on-failure
+    labels:
+      traefik.enable: true
+      traefik.http.routers.flight-plan.rule: PathPrefix(`/flight-plan`)
+      traefik.http.routers.flight-plan.middlewares: keycloak-middleware-name@file,flight-plan
+      traefik.http.middlewares.flight-plan.stripprefix.prefixes: /flight-plan
     depends_on:
       - database
     env_file:
