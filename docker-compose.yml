@@ -66,6 +66,8 @@ services:
       - database:/bitnami/postgresql
     env_file:
       - database.env
+    ports:
+      - "5432:5432"
 
   # Simple service example
   data:
