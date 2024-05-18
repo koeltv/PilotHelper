@@ -3,7 +3,6 @@ package com.pilothelper.services
 import com.pilothelper.model.Aircraft
 import com.pilothelper.model.FlightPlan
 import kotlinx.coroutines.Dispatchers
-import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -11,7 +10,10 @@ import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class FlightPlanService(database: Database) {
+class FlightPlanService(
+    database: Database,
+    private val aircraftService: AircraftService
+) {
     internal object FlightPlans : IntIdTable() {
         // Case 8
         val flightRules = char("flight_rules", length = 1)
@@ -74,10 +76,12 @@ class FlightPlanService(database: Database) {
     suspend fun create(flightPlan: FlightPlan): Int = dbQuery {
         val equipmentId = FlightEquipments.insertAndGetId {
             it.prepareFrom(flightPlan.equipment)
-        }
+        }.value
+
+        val aircraftId = aircraftService.createOrUpdate(flightPlan.aircraftData)
 
         FlightPlans.insertAndGetId {
-            it.prepareFrom(flightPlan, equipmentId)
+            it.prepareFrom(flightPlan, aircraftId, equipmentId)
         }.value
     }
 
@@ -90,8 +94,10 @@ class FlightPlanService(database: Database) {
 
     suspend fun update(id: Int, flightPlan: FlightPlan) {
         dbQuery {
+            val aircraftId = aircraftService.createOrUpdate(flightPlan.aircraftData)
+
             FlightPlans.update({ FlightPlans.id eq id }) {
-                it.prepareFrom(flightPlan)
+                it.prepareFrom(flightPlan, aircraftId)
             }
 
             val equipmentId = FlightPlans
@@ -122,13 +128,14 @@ class FlightPlanService(database: Database) {
         this[FlightEquipments.raftCoverageColor] = equipment.raftCoverageColor
     }
 
-    private fun  UpdateBuilder<Int>.prepareFrom(
+    private fun UpdateBuilder<Int>.prepareFrom(
         flightPlan: FlightPlan,
-        equipmentId: EntityID<Int>? = null
+        aircraftId: Int,
+        equipmentId: Int? = null
     ) {
         this[FlightPlans.flightRules] = flightPlan.flightRules.toString()
         this[FlightPlans.flightType] = flightPlan.flightType.toString()
-        this[FlightPlans.aircraft] = flightPlan.aircraftData.aircraftId.toInt()
+        this[FlightPlans.aircraft] = aircraftId
         this[FlightPlans.aircraftCount] = flightPlan.aircraftCount
         this[FlightPlans.startingAirport] = flightPlan.startingAirport
         this[FlightPlans.startingTime] = flightPlan.startingTime

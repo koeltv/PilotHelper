@@ -47,8 +47,8 @@ class AircraftService(database: Database) {
         }
     }
 
-    suspend fun update(id: Int, aircraft: Aircraft) {
-        dbQuery {
+    suspend fun update(id: Int, aircraft: Aircraft): Int {
+        return dbQuery {
             Aircrafts.update({ Aircrafts.id eq id }) {
                 it[aircraftId] = aircraft.aircraftId
                 it[aircraftType] = aircraft.aircraftType
@@ -57,6 +57,16 @@ class AircraftService(database: Database) {
                 it[transponder] = aircraft.transponder
                 it[colorAndMarkings] = aircraft.colorAndMarkings
             }
+        }
+    }
+
+    suspend fun createOrUpdate(aircraft: Aircraft): Int {
+        return dbQuery {
+            Aircrafts.select { Aircrafts.aircraftId eq aircraft.aircraftId }
+                .map { it[Aircrafts.id].value }
+                .singleOrNull()
+                ?.let { update(it, aircraft) }
+                ?: create(aircraft)
         }
     }
 
