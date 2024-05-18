@@ -1,5 +1,6 @@
 package com.pilothelper.plugins
 
+import com.pilothelper.FlightPlanPdfConverter
 import com.pilothelper.model.FlightPlan
 import com.pilothelper.services.FlightPlanService
 import io.ktor.http.*
@@ -36,7 +37,13 @@ fun Application.configureDatabases() {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID_FEEDBACK)
             val flightPlan = flightPlanService.read(id)
             if (flightPlan != null) {
-                call.respond(HttpStatusCode.OK, flightPlan)
+                if (call.request.contentType() == ContentType.Application.Pdf) {
+                    FlightPlanPdfConverter.fillFrom(flightPlan)
+                        ?.let { call.respondFile(it) }
+                        ?: call.respond(HttpStatusCode.InternalServerError)
+                } else {
+                    call.respond(HttpStatusCode.OK, flightPlan)
+                }
             } else {
                 call.respond(HttpStatusCode.NotFound)
             }

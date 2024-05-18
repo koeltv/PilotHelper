@@ -36,6 +36,8 @@ data class FlightPlan(
         val vhfPost: Boolean,
         val rdbaBeacon: Boolean,
 
+        // TODO Add survival equipment
+
         val safetyJacketWithLight: Boolean,
         val safetyJacketWithFluorescein: Boolean,
         val safetyJacketWithUHF: Boolean,
