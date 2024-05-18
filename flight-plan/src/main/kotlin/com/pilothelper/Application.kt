@@ -8,9 +8,9 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    configureDP()
     configureHTTP()
     configureMonitoring()
     configureSerialization()
-    configureDatabases()
     configureRouting()
 }

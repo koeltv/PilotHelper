@@ -7,6 +7,7 @@ val h2Version: String by project
 val apacheClientVersion: String by project
 val prometheusVersion: String by project
 val openpdfVersion: String by project
+val koinVersion: String by project
 
 plugins {
     kotlin("jvm") version "1.9.24"
@@ -50,6 +51,9 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgresVersion")
 
     implementation("com.github.librepdf:openpdf:$openpdfVersion")
+
+    implementation("io.insert-koin:koin-ktor:$koinVersion")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
 
     implementation("com.h2database:h2:$h2Version")
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
