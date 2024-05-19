@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: "3.1.0"
 info:
   title: "PilotHelper API"
   description: "PilotHelper API"
@@ -6,6 +6,110 @@ info:
 servers:
 - url: "https://PilotHelper"
 paths:
+  /aircraft/user/{id}:
+    get:
+      description: "Get Aircraft from User"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Aircraft"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /aircrafts:
+    post:
+      description: "Create aircraft"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Aircraft"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Unit"
+  /aircrafts/{id}:
+    delete:
+      description: "Delete aircraft"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: "Read aircraft"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Aircraft"
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    put:
+      description: "Update aircraft"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "integer"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Aircraft"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /users:
     post:
       description: "Create user"
@@ -81,6 +185,16 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /metrics:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
   /:
     get:
       description: ""
@@ -93,7 +207,7 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: "Hello World!"
+                  value: ""
   /json/kotlinx-serialization:
     get:
       description: ""
@@ -106,16 +220,40 @@ paths:
                 $ref: "#/components/schemas/Map_String"
 components:
   schemas:
+    Aircraft:
+      type: "object"
+      properties:
+        aircraftId:
+          type: "string"
+        aircraftType:
+          type: "string"
+        turbulenceType:
+          type: "string"
+        equipment:
+          type: "string"
+        transponder:
+          type: "string"
+      required:
+      - "aircraftId"
+      - "aircraftType"
+      - "turbulenceType"
+      - "equipment"
+      - "transponder"
+    Unit:
+      type: "object"
+      properties: {}
     ExposedUser:
       type: "object"
       properties:
         name:
           type: "string"
-        age:
-          type: "integer"
-          format: "int32"
       required:
       - "name"
+    Function1:
+      type: "object"
+      properties: {}
+    Function1_? super HTML:
+      type: "object"
     Map:
       type: "object"
       properties: {}

@@ -85,7 +85,7 @@ private fun Route.swaggerUI(
                                     url: '$fullPath/$apiUrl',
                                     dom_id: '#swagger-ui',
                                     presets: [
-                                        SwaggerUIBundle.presets.apis,
+                          x              SwaggerUIBundle.presets.apis,
                                         SwaggerUIStandalonePreset
                                     ],
                                     layout: 'StandaloneLayout'
