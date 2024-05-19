@@ -58,7 +58,7 @@ fun Application.configureDatabases() {
         // Create aircraft
         post("/aircrafts") {
             val aircraft = call.receive<Aircraft>()
-            val token = call.getToken()
+            val token = call.getToken() ?: return@post call.respond(HttpStatusCode.Unauthorized)
             val response = requestUserInfo(token)
             val user = ExposedUser(response["name"].toString().removeSurrounding("\""))
             val id = aircraftService.create(aircraft, listOf(user))
