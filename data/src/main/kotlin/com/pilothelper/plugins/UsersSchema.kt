@@ -61,11 +61,14 @@ class UserService(database: Database) {
             Users.innerJoin(LinksUsersAircrafts).innerJoin(Aircrafts)
                 .select(Users.id eq id)
                 .map {
-                    Aircraft(it[Aircrafts.aircraftId],
+                    Aircraft(
+                        it[Aircrafts.aircraftId],
                         it[Aircrafts.aircraftType],
                         it[Aircrafts.turbulenceType],
                         it[Aircrafts.equipment],
-                        it[Aircrafts.transponder])
+                        it[Aircrafts.transponder],
+                        it[Aircrafts.colorAndMarkings],
+                    )
                 }
         }
     }

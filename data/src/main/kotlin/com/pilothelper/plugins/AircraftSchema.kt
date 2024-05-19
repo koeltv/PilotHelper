@@ -16,15 +16,17 @@ data class Aircraft(
     val turbulenceType: String,
     val equipment: String,
     val transponder: String,
+    val colorAndMarkings: String,
 )
 
 class AircraftService( database: Database) {
     object Aircrafts : IntIdTable() {
-        val aircraftId = varchar("aircraftId", 7)
-        val aircraftType = varchar("aircraftType", 4)
-        val turbulenceType = varchar("turbulenceType", 1)
+        val aircraftId = varchar("aircraft_id", 7)
+        val aircraftType = varchar("aircraft_type", 4)
+        val turbulenceType = char("turbulence_type", 1)
         val equipment = varchar("equipment", 30)
         val transponder = varchar("transponder", 30)
+        val colorAndMarkings = varchar("color_and_markings", 100)
     }
 
     init {
@@ -44,6 +46,7 @@ class AircraftService( database: Database) {
             it[turbulenceType] = aircraft.turbulenceType
             it[equipment] = aircraft.equipment
             it[transponder] = aircraft.transponder
+            it[colorAndMarkings] = aircraft.colorAndMarkings
         }[Aircrafts.id].value
         for(user in users) {
             val userIdforLink = Users.insertIgnore {
@@ -59,11 +62,14 @@ class AircraftService( database: Database) {
         return dbQuery {
             Aircrafts.select { Aircrafts.id eq id }
                 .map {
-                    Aircraft(it[Aircrafts.aircraftId],
-                    it[Aircrafts.aircraftType],
-                    it[Aircrafts.turbulenceType],
-                    it[Aircrafts.equipment],
-                    it[Aircrafts.transponder])
+                    Aircraft(
+                        it[Aircrafts.aircraftId],
+                        it[Aircrafts.aircraftType],
+                        it[Aircrafts.turbulenceType],
+                        it[Aircrafts.equipment],
+                        it[Aircrafts.transponder],
+                        it[Aircrafts.colorAndMarkings],
+                    )
                 }
                 .singleOrNull()
         }
@@ -76,6 +82,7 @@ class AircraftService( database: Database) {
                 it[turbulenceType] = aircraft.turbulenceType
                 it[equipment] = aircraft.equipment
                 it[transponder] = aircraft.transponder
+                it[colorAndMarkings] = colorAndMarkings
             }
         }
     }
