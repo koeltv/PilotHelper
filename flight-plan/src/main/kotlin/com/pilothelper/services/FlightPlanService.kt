@@ -46,6 +46,7 @@ class FlightPlanService(
         val autonomy = char("autonomy", length = 4)
         val occupantCount = integer("occupant_count")
         val pilot = varchar("pilot", length = 30)
+        val remarks = varchar("remarks", length = 200)
 
         val equipment = reference("equipment", FlightEquipments, onDelete = ReferenceOption.CASCADE)
     }
@@ -54,6 +55,10 @@ class FlightPlanService(
         val uhfPost = bool("uhf_post")
         val vhfPost = bool("vhf_post")
         val rdbaBeacon = bool("rdba_beacon")
+        val survivalEquipmentPolar = bool("survival_equipment_polar")
+        val survivalEquipmentDesert = bool("survival_equipment_desert")
+        val survivalEquipmentMaritime = bool("survival_equipment_maritime")
+        val survivalEquipmentJungle = bool("survival_equipment_jungle")
         val safetyJacketWithLight = bool("safety_jacket_with_light")
         val safetyJacketWithFluorescein = bool("safety_jacket_with_fluorescein")
         val safetyJacketWithUHF = bool("safety_jacket_with_uhf")
@@ -119,6 +124,10 @@ class FlightPlanService(
         this[FlightEquipments.uhfPost] = equipment.uhfPost
         this[FlightEquipments.vhfPost] = equipment.vhfPost
         this[FlightEquipments.rdbaBeacon] = equipment.rdbaBeacon
+        this[FlightEquipments.survivalEquipmentDesert] = equipment.survivalEquipmentDesert
+        this[FlightEquipments.survivalEquipmentJungle] = equipment.survivalEquipmentJungle
+        this[FlightEquipments.survivalEquipmentPolar] = equipment.survivalEquipmentPolar
+        this[FlightEquipments.survivalEquipmentMaritime] = equipment.survivalEquipmentMaritime
         this[FlightEquipments.safetyJacketWithLight] = equipment.safetyJacketWithLight
         this[FlightEquipments.safetyJacketWithFluorescein] = equipment.safetyJacketWithFluorescein
         this[FlightEquipments.safetyJacketWithUHF] = equipment.safetyJacketWithUHF
@@ -149,6 +158,7 @@ class FlightPlanService(
         this[FlightPlans.autonomy] = flightPlan.autonomy
         this[FlightPlans.occupantCount] = flightPlan.occupantCount
         this[FlightPlans.pilot] = flightPlan.pilot
+        this[FlightPlans.remarks] = flightPlan.remarks
 
         if (equipmentId != null) this[FlightPlans.equipment] = equipmentId
     }
@@ -177,10 +187,15 @@ class FlightPlanService(
         autonomy = this[FlightPlans.autonomy],
         occupantCount = this[FlightPlans.occupantCount],
         pilot = this[FlightPlans.pilot],
+        remarks = this[FlightPlans.remarks],
         equipment = FlightPlan.Equipment(
             uhfPost = this[FlightEquipments.uhfPost],
             vhfPost = this[FlightEquipments.vhfPost],
             rdbaBeacon = this[FlightEquipments.rdbaBeacon],
+            survivalEquipmentPolar = this[FlightEquipments.survivalEquipmentPolar],
+            survivalEquipmentDesert = this[FlightEquipments.survivalEquipmentDesert],
+            survivalEquipmentJungle = this[FlightEquipments.survivalEquipmentJungle],
+            survivalEquipmentMaritime = this[FlightEquipments.survivalEquipmentMaritime],
             safetyJacketWithLight = this[FlightEquipments.safetyJacketWithLight],
             safetyJacketWithFluorescein = this[FlightEquipments.safetyJacketWithFluorescein],
             safetyJacketWithUHF = this[FlightEquipments.safetyJacketWithUHF],

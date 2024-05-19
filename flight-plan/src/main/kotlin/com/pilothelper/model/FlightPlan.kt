@@ -27,8 +27,9 @@ data class FlightPlan(
     // Case 19
     val autonomy: String,
     val occupantCount: Int,
-    val pilot: String,
     val equipment: Equipment,
+    val remarks: String,
+    val pilot: String,
 ) {
     @Serializable
     data class Equipment(
@@ -36,7 +37,10 @@ data class FlightPlan(
         val vhfPost: Boolean,
         val rdbaBeacon: Boolean,
 
-        // TODO Add survival equipment
+        val survivalEquipmentPolar: Boolean,
+        val survivalEquipmentDesert: Boolean,
+        val survivalEquipmentMaritime: Boolean,
+        val survivalEquipmentJungle: Boolean,
 
         val safetyJacketWithLight: Boolean,
         val safetyJacketWithFluorescein: Boolean,
