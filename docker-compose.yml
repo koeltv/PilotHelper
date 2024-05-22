@@ -101,6 +101,21 @@ services:
       - keycloak-shared.env
       - database.env
 
+  planning-tools:
+    build: planning-tools
+    image: pilot-helper/planning-tools
+    restart: on-failure
+    labels:
+      traefik.enable: true
+      traefik.http.routers.planning-tools.rule: PathPrefix(`/planning-tools`)
+      traefik.http.routers.planning-tools.middlewares: keycloak-middleware-name@file,planning-tools
+      traefik.http.middlewares.planning-tools.stripprefix.prefixes: /planning-tools
+    depends_on:
+      - database
+    env_file:
+      - keycloak-shared.env
+      - database.env
+
 volumes:
   keycloak_database:
   database:
