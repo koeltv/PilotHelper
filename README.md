@@ -11,6 +11,12 @@ Voici un résumé de l'architecture du projet :
 
 ![](./documentation/system-overview.png)
 
+| Service                                      | Route via proxy | Fichier de spécification                                                       |
+|----------------------------------------------|-----------------|--------------------------------------------------------------------------------|
+| [Données avions, ...](./data)                | /data           | [OpenAPI spec](./data/src/main/resources/openapi/documentation.yaml)           |
+| [Plans de vol](./flight-plan)                | /flight-plan    | [OpenAPI spec](./flight-plan/src/main/resources/openapi/documentation.yaml)    |
+| [Outils de planifications](./planning-tools) | /planning-tools | [OpenAPI spec](./planning-tools/src/main/resources/openapi/documentation.yaml) |
+
 ## Setup
 
 - Lancer le script [env-setup.sh](./env-setup.sh) pour copier les fichiers env depuis [les exemples](./documentation/env) puis les paramétrer (les valeurs par défaut suffisent pour un essai).
@@ -38,5 +44,7 @@ Toutes les valeurs par défaut sont visibles dans les fichiers `.env` après exe
  - Service Interceptor : Intercepte requête pour traitement, ex: Authentification
  - Idempotent retry : retry côté client (PWA + client(s) REST)
  - Consumer-Driven Contract : Test d'intégration par contrat (via OpenAPI spec, par exemple)
+
+## Fonctionnement global du back
 
 [![](./documentation/process.svg)](./documentation/process.puml)
