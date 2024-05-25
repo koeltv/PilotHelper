@@ -36,15 +36,6 @@ Les comptes par défaut sont :
 
 Toutes les valeurs par défaut sont visibles dans les fichiers `.env` après execution du script et `documentation/env/*.env.example` avant.
 
-## Patrons de conceptions utilisés
- - Reverse Proxy : une adresse exposée, plusieurs services
- - Cache : style CouchDB
- - Media Type Negociation : json/xml/...
- - Service Descriptor : un fichier OpenAPI par service
- - Service Interceptor : Intercepte requête pour traitement, ex: Authentification
- - Idempotent retry : retry côté client (PWA + client(s) REST)
- - Consumer-Driven Contract : Test d'intégration par contrat (via OpenAPI spec, par exemple)
-
 ## Fonctionnement global du back
 
 [![](./documentation/process.svg)](./documentation/process.puml)
