@@ -50,6 +50,7 @@ dependencies {
 
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("org.postgresql:postgresql:$postgresVersion")
 
     implementation("io.insert-koin:koin-ktor:$koinVersion")

@@ -4,20 +4,22 @@ import com.pilothelper.fetcher.IPInfoFetcher
 import com.pilothelper.fetcher.RouteFetcher
 import com.pilothelper.fetcher.WeatherFetcher
 import com.pilothelper.model.Coordinates
+import com.pilothelper.service.AircraftTypeService
 import com.pilothelper.service.AirportService
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.forwardedheaders.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.get
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     // Handle IP address even through reverse proxy
     install(ForwardedHeaders)
 
-    val airportService by inject<AirportService>()
+    val aircraftTypeService = get<AircraftTypeService>()
+    val airportService = get<AirportService>()
     val ipInfoFetcher by inject<IPInfoFetcher>()
     val weatherFetcher by inject<WeatherFetcher>()
     val routeFetcher by inject<RouteFetcher>()
@@ -43,8 +45,8 @@ fun Application.configureRouting() {
             call.respond(routes)
         }
 
-        get("/aircraft-type") { // TODO
-            call.respondText("Not Yet Implemented", ContentType.Text.Plain, HttpStatusCode.NotImplemented)
+        get("/aircraft-type") { // TODO Expand for search
+            call.respond(aircraftTypeService.readAll())
         }
 
         get("/airport") { // TODO Expand for search

@@ -21,10 +21,9 @@ class AircraftTypeFetcherTest {
         val fetcher = AircraftTypeFetcher(testClient)
 
         val data = runBlocking {
-            fetcher.fetch()
+            fetcher.fetchAll()
         }
 
-        println(data.pagination)
-        println(data.data)
+        println(data.size)
     }
 }
