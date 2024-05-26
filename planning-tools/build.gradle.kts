@@ -7,6 +7,7 @@ val h2Version: String by project
 val apacheClientVersion: String by project
 val prometheusVersion: String by project
 val koinVersion: String by project
+val jsoupVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.0.0"
@@ -41,6 +42,7 @@ dependencies {
 
     implementation("io.ktor:ktor-client-apache:$apacheClientVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("org.jsoup:jsoup:$jsoupVersion")
 
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")

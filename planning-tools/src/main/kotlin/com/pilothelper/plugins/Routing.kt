@@ -45,8 +45,20 @@ fun Application.configureRouting() {
             call.respond(routes)
         }
 
-        get("/aircraft-type") { // TODO Expand for search
+        get("/aircraft-type") {
             call.respond(aircraftTypeService.readAll())
+        }
+
+        get("/aircraft-type/name/{name}") {
+            val partialAircraftName =
+                call.parameters["name"] ?: throw MissingRequestParameterException("Missing aircraft name")
+            call.respond(aircraftTypeService.readAllWithNameLike(partialAircraftName))
+        }
+
+        get("/aircraft-type/type/{type}") {
+            val partialAircraftType =
+                call.parameters["type"] ?: throw MissingRequestParameterException("Missing aircraft type")
+            call.respond(aircraftTypeService.readAllWithDesignatorLike(partialAircraftType))
         }
 
         get("/airport") { // TODO Expand for search
