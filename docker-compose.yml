@@ -115,6 +115,7 @@ services:
     env_file:
       - keycloak-shared.env
       - database.env
+      - api.env
 
 volumes:
   keycloak_database:

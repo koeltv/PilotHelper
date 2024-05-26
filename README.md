@@ -36,15 +36,16 @@ Les comptes par défaut sont :
 
 Toutes les valeurs par défaut sont visibles dans les fichiers `.env` après execution du script et `documentation/env/*.env.example` avant.
 
-## Patrons de conceptions utilisés
- - Reverse Proxy : une adresse exposée, plusieurs services
- - Cache : style CouchDB
- - Media Type Negociation : json/xml/...
- - Service Descriptor : un fichier OpenAPI par service
- - Service Interceptor : Intercepte requête pour traitement, ex: Authentification
- - Idempotent retry : retry côté client (PWA + client(s) REST)
- - Consumer-Driven Contract : Test d'intégration par contrat (via OpenAPI spec, par exemple)
-
 ## Fonctionnement global du back
 
 [![](./documentation/process.svg)](./documentation/process.puml)
+
+## APIs utilisées
+
+| API                                                   | route(s)                                                                                                                  |
+|-------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
+| [AviationStack](https://aviationstack.com/)           | [/aircraft_types](https://aviationstack.com/documentation)                                                                |
+| [OpenAIP](https://www.openaip.net/)                   | [/airports](https://docs.openaip.net/#/Airports/get_airports)                                                             |
+| [AviationAPI](https://www.aviationapi.com/)           | [/preferred-routes/search](https://docs.aviationapi.com/#tag/preferred-routes%2Fpaths%2F~1preferred-routes~1search%2Fget) |
+| [AviationWeather](https://aviationweather.gov/)       | [/api/data/metar](https://aviationweather.gov/data/api/#/Data/dataMetars)                                                 |
+| [TechnikNews IPGeo API](https://api.techniknews.net/) | [/](https://api.techniknews.net/ipgeo)                                                                                    |

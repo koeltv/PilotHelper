@@ -34,10 +34,13 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
+    implementation("io.ktor:ktor-server-forwarded-header:$ktorVersion")
+
     implementation("io.ktor:ktor-server-swagger:$ktorVersion")
     implementation("io.ktor:ktor-server-html-builder:$ktorVersion")
 
     implementation("io.ktor:ktor-client-apache:$apacheClientVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
 
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
@@ -54,5 +57,6 @@ dependencies {
 
     implementation("com.h2database:h2:$h2Version")
     testImplementation("io.ktor:ktor-server-tests:$ktorVersion")
+    testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }

@@ -14,7 +14,7 @@ RUN ["gradle", "shadowJar"]
 ## Stage 2: Create a Minimal Container
 FROM eclipse-temurin:17-jre-alpine
 LABEL authors="Valentin Koeltgen"
-EXPOSE 8000
+EXPOSE 8080
 # Copy the executable from the builder container
 COPY --from=builder /home/project/build/libs/*.jar /service.jar
 # Run the executable
