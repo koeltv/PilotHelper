@@ -19,34 +19,35 @@ data class Airport(
     val geometry: Geometry,
     val elevation: Elevation,
 //    val elevationGeoid: ElevationGeoid,
-    val trafficType: List<Int>,
-    val magneticDeclination: Float,
-    val ppr: Boolean,
+//    val trafficType: List<Int>,
+//    val magneticDeclination: Float,
+//    val ppr: Boolean,
     val private: Boolean,
-    val skydiveActivity: Boolean,
-    val winchOnly: Boolean,
+//    val skydiveActivity: Boolean,
+//    val winchOnly: Boolean,
 //    val services: Services,
 //    val frequencies: List<Frequency>,
 //    val runways: List<Runway>,
 //    val hoursOfOperation: HoursOfOperation,
-    val contact: String?,
-    val remarks: String?,
+//    val contact: String?,
+//    val remarks: String?,
 //    val images: List<Image>,
-    val createdBy: String,
-    val updatedBy: String,
-    val createdAt: String, // Datetime
-    val updatedAt: String, // Datetime
+//    val createdBy: String,
+//    val updatedBy: String,
+//    val createdAt: String, // Datetime
+//    val updatedAt: String, // Datetime
 ) {
     @Serializable
     data class Geometry(
         val type: String,
+        // For point geometry type, first is longitude, then latitude
         val coordinates: List<Float>
     )
 
     @Serializable
     data class Elevation(
         val value: Int,
-        val unit: Int,
-        val referenceDatum: Int,
+        val unit: Int, // Always meters
+        val referenceDatum: Int, // Always MSL
     )
 }
