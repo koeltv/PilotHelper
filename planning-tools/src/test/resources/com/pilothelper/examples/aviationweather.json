@@ -1,0 +1,52 @@
+[
+  {
+    "metar_id": 553199180,
+    "icaoId": "LFPG",
+    "receiptTime": "2024-05-26 12:41:08",
+    "obsTime": 1716726600,
+    "reportTime": "2024-05-26 12:30:00",
+    "temp": 22,
+    "dewp": 8,
+    "wdir": 250,
+    "wspd": 13,
+    "wgst": null,
+    "visib": "6+",
+    "altim": 1014,
+    "slp": null,
+    "qcField": 2,
+    "wxString": null,
+    "presTend": null,
+    "maxT": null,
+    "minT": null,
+    "maxT24": null,
+    "minT24": null,
+    "precip": null,
+    "pcp3hr": null,
+    "pcp6hr": null,
+    "pcp24hr": null,
+    "snow": null,
+    "vertVis": null,
+    "metarType": "METAR",
+    "rawOb": "LFPG 261230Z AUTO 25013KT 220V280 9999 FEW047/// BKN056/// BKN068/// //////CB 22/08 Q1014 TEMPO 25015G25KT 3000 SHRA",
+    "mostRecent": 1,
+    "lat": 49.015,
+    "lon": 2.534,
+    "elev": 107,
+    "prior": 5,
+    "name": "Paris/De Gaulle Arpt, ID, FR",
+    "clouds": [
+      {
+        "cover": "FEW",
+        "base": 4700
+      },
+      {
+        "cover": "BKN",
+        "base": 5600
+      },
+      {
+        "cover": "BKN",
+        "base": 6800
+      }
+    ]
+  }
+]
