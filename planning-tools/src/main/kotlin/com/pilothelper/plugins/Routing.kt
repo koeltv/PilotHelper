@@ -68,7 +68,7 @@ fun Application.configureRouting() {
         get("/airport/name/{name}") {
             val partialAirportName =
                 call.parameters["name"] ?: throw MissingRequestParameterException("Missing airport name")
-            call.respond(airportService.readAllWithNameLike(partialAirportName))
+            call.respond(airportService.readAllWithNameLike(partialAirportName.uppercase()))
         }
 
         get("/airport/icao/{icaoCode}") {

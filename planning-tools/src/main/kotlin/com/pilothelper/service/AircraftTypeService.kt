@@ -8,6 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.javatime.CurrentDate
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -25,7 +26,7 @@ class AircraftTypeService(
         val designator = varchar("designator", 4)
         val engineManufacturer = varchar("engine_manufacturer", 40)
 
-        val lastUpdated = date("last_updated")
+        val lastUpdated = date("last_updated").defaultExpression(CurrentDate)
     }
 
     init {

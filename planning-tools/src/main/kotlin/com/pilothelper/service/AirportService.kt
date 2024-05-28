@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.javatime.CurrentDate
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
@@ -33,7 +34,7 @@ class AirportService(
         val altitude = integer("altitude")
         val private = bool("private")
 
-        val lastUpdated = date("last_updated")
+        val lastUpdated = date("last_updated").defaultExpression(CurrentDate)
 
         override val primaryKey = PrimaryKey(id)
     }
