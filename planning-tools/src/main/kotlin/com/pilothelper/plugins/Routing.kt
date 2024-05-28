@@ -61,8 +61,26 @@ fun Application.configureRouting() {
             call.respond(aircraftTypeService.readAllWithDesignatorLike(partialAircraftType))
         }
 
-        get("/airport") { // TODO Expand for search
+        get("/airport") {
             call.respond(airportService.readAll())
+        }
+
+        get("/airport/name/{name}") {
+            val partialAirportName =
+                call.parameters["name"] ?: throw MissingRequestParameterException("Missing airport name")
+            call.respond(airportService.readAllWithNameLike(partialAirportName))
+        }
+
+        get("/airport/icao/{icaoCode}") {
+            val partialAirportName =
+                call.parameters["icaoCode"] ?: throw MissingRequestParameterException("Missing icao code")
+            call.respond(airportService.readAllWithICAOLike(partialAirportName))
+        }
+
+        get("/airport/iata/{iataCode}") {
+            val partialAirportName =
+                call.parameters["iataCode"] ?: throw MissingRequestParameterException("Missing iata code")
+            call.respond(airportService.readAllWithIATALike(partialAirportName))
         }
 
         // Read all airports close to a given point

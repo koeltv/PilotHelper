@@ -86,6 +86,24 @@ class AirportService(
         Airports.selectAll().map { it.toAirport() }
     }
 
+    suspend fun readAllWithNameLike(name: String): List<Airport> = dbQuery {
+        Airports.selectAll()
+            .where { Airports.name like "%$name%" }
+            .map { it.toAirport() }
+    }
+
+    suspend fun readAllWithICAOLike(icaoCode: String): List<Airport> = dbQuery {
+        Airports.selectAll()
+            .where { Airports.icaoCode like "%$icaoCode%" }
+            .map { it.toAirport() }
+    }
+
+    suspend fun readAllWithIATALike(iataCode: String): List<Airport> = dbQuery {
+        Airports.selectAll()
+            .where { Airports.iataCode like "%$iataCode%" }
+            .map { it.toAirport() }
+    }
+
     suspend fun findAllNearby(point: Coordinates, radius: Int): List<Airport> = dbQuery {
         Airports.selectAll().where {
             Airports.latitude.between(
