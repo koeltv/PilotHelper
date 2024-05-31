@@ -14,16 +14,20 @@ services:
   # Keycloak : Authentification & Authorization
   keycloak:
     image: quay.io/keycloak/keycloak:latest
-    command: start-dev --import-realm
+    command: start --import-realm
     env_file:
       - keycloak-database.env
+      - keycloak-url.env
       - keycloak.env
     volumes:
       - ./keycloak_data:/opt/keycloak/data/import:ro
-    ports:
-      - "${KEYCLOAK_PORT:-8080}:8080"
     depends_on:
       - keycloak-database
+    labels:
+      traefik.enable: true
+      traefik.http.routers.keycloak.rule: Host(`keycloak.pilothelper.com`)
+      traefik.http.routers.keycloak.entrypoints: https,http
+      traefik.http.routers.keycloak.tls: true
 
   # Traefik : Reverse proxy
   traefik:
@@ -31,11 +35,16 @@ services:
     image: traefik:latest
     ports:
       - "${PROXY_PORT:-80}:80"
+      - "${HTTPS_PROXY_PORT:-443}:443"
       - 8081:8080 # For admin interface
     env_file:
       - keycloak-shared.env
+      - keycloak-url.env
     volumes:
       - ./traefik_data/:/etc/traefik
+      - ./traefik_certs/_wildcard.pilothelper.com.pem:/etc/ssl/certs/_wildcard.pilothelper.com.pem:ro
+      - ./traefik_certs/_wildcard.pilothelper.com-key.pem:/etc/ssl/certs/_wildcard.pilothelper.com-key.pem:ro
+      - ./traefik_certs:/certs:ro
       - /var/run/docker.sock:/var/run/docker.sock
 
   # Prometheus : Metrics collection
@@ -55,6 +64,8 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.grafana.rule: PathPrefix(`/grafana`)
+      traefik.http.routers.grafana.entrypoints: https,http
+      traefik.http.routers.grafana.tls: true
 
   ############################
   # Internal services        #
@@ -77,6 +88,8 @@ services:
     restart: on-failure
     labels:
       traefik.enable: true
+      traefik.http.routers.data.entrypoints: https,http
+      traefik.http.routers.data.tls: true
       traefik.http.routers.data.rule: PathPrefix(`/data`)
       traefik.http.routers.data.middlewares: keycloak-middleware-name@file,data
       traefik.http.middlewares.data.stripprefix.prefixes: /data
@@ -92,6 +105,8 @@ services:
     restart: on-failure
     labels:
       traefik.enable: true
+      traefik.http.routers.flight-plan.entrypoints: https,http
+      traefik.http.routers.flight-plan.tls: true
       traefik.http.routers.flight-plan.rule: PathPrefix(`/flight-plan`)
       traefik.http.routers.flight-plan.middlewares: keycloak-middleware-name@file,flight-plan
       traefik.http.middlewares.flight-plan.stripprefix.prefixes: /flight-plan
@@ -107,6 +122,8 @@ services:
     restart: on-failure
     labels:
       traefik.enable: true
+      traefik.http.routers.planning-tools.entrypoints: https,http
+      traefik.http.routers.planning-tools.tls: true
       traefik.http.routers.planning-tools.rule: PathPrefix(`/planning-tools`)
       traefik.http.routers.planning-tools.middlewares: keycloak-middleware-name@file,planning-tools
       traefik.http.middlewares.planning-tools.stripprefix.prefixes: /planning-tools

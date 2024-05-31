@@ -1,3 +1,6 @@
+global:
+  sendAnonymousUsage: false
+
 log:
   level: DEBUG
   filePath: /etc/traefik/traefik.log
@@ -22,6 +25,12 @@ providers:
 entryPoints:
   http:
     address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: https
+  https:
+    address: :443
   metrics:
     address: :8082
 

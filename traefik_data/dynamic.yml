@@ -3,10 +3,17 @@ http:
     keycloak-middleware-name:
       plugin:
         keycloakopenid:
-          KeycloakURLEnv: "KEYCLOAK_URL"
+          KeycloakURLEnv: "KEYCLOAK_FRONT_URL"
           ClientIDEnv: "KEYCLOAK_CLIENT_ID"
           ClientSecretEnv: "KEYCLOAK_CLIENT_SECRET"
           KeycloakRealmEnv: "KEYCLOAK_REALM"
           TokenCookieNameEnv: "TOKEN_COOKIE_NAME"
           Scope: openid
           UseAuthHeader: "false"
+
+tls:
+  certificates:
+    - certFile: /certs/_wildcard.pilothelper.com.pem
+      keyFile: /certs/_wildcard.pilothelper.com-key.pem
+      stores:
+        - default
