@@ -1,35 +1,30 @@
-openapi: "3.0.0"
+openapi: "3.0.3"
 info:
-  title: "PilotHelper API"
-  description: "PilotHelper API"
+  title: "PilotHelper Data API"
+  description: "PilotHelper API for storing user-related data"
   version: "1.0.0"
 servers:
-- url: "https://PilotHelper"
+  - url: "https://pilothelper.com/data"
 paths:
-  /aircraft/user/{id}:
+  /:
     get:
-      description: "Get Aircraft from User"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "integer"
+      description: ""
       responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/Aircraft"
-        "404":
-          description: "Not Found"
+        "401":
+          description: "Unauthorized"
           content:
             '*/*':
               schema:
                 type: "object"
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
   /aircraft:
     post:
       description: "Create aircraft"
@@ -38,10 +33,23 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Aircraft"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Aircraft"
         required: true
       responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
         "201":
           description: "Created"
+          content:
+            '*/*':
+              schema:
+                type: object
   /aircraft/{id}:
     delete:
       description: "Delete aircraft"
@@ -76,7 +84,10 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Aircraft"
+            application/xml:
               schema:
                 $ref: "#/components/schemas/Aircraft"
         "404":
@@ -98,6 +109,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Aircraft"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/Aircraft"
         required: true
       responses:
         "200":
@@ -106,6 +120,29 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /aircraft/user/{id}:
+    get:
+      description: "Get Aircrafts from User"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Aircraft"
+            'application/xml':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Aircraft"
 components:
   schemas:
     Aircraft:
@@ -121,9 +158,12 @@ components:
           type: "string"
         transponder:
           type: "string"
+        colorAndMarkings:
+          type: "string"
       required:
       - "aircraftId"
       - "aircraftType"
       - "turbulenceType"
       - "equipment"
       - "transponder"
+      - "colorAndMarkings"

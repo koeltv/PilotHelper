@@ -1,10 +1,10 @@
 openapi: "3.0.3"
 info:
-  title: "PilotHelper planning-tools API"
-  description: "PilotHelper API with all kinds of tools to help prepare a flight-plan"
+  title: "PilotHelper Planning Tools API"
+  description: "PilotHelper API for tools that help to plan a flight"
   version: "1.0.0"
 servers:
-  - url: "http://localhost/planning-tools"
+  - url: "https://pilothelper.com/planning-tools"
 paths:
   /:
     get:
@@ -26,11 +26,17 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
               schema:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/AircraftType"
+            'application/xml':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AircraftType"
+
   /aircraft-type/name/{name}:
     get:
       description: ""
@@ -44,7 +50,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AircraftType"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -62,7 +73,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AircraftType"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -74,7 +90,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -92,7 +113,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -110,7 +136,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -128,7 +159,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -151,7 +187,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -174,7 +215,12 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Route"
+            'application/xml':
               schema:
                 type: "array"
                 items:
@@ -192,7 +238,10 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Weather"
+            'application/xml':
               schema:
                 $ref: "#/components/schemas/Weather"
 components:
