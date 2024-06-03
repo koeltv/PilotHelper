@@ -1,0 +1,31 @@
+<div style="text-align: center">
+  <h1>Ajouter un avion personnel</h1>
+  <form [formGroup]="aircraftForm" (ngSubmit)="onSubmit()">
+
+    <label for="airCraftId"></label>
+    <input type="text" id="airCraftId" formControlName="airCraftId" placeholder="N° d'avion"><br><br>
+
+    <label for="airCraftType"></label>
+    <select id="airCraftType" formControlName="airCraftType" required>
+      <option *ngFor="let item of typeList">{{item}}</option>
+    </select><br><br>
+
+    <label for="turbulenceType"></label>
+    <select id="turbulenceType" formControlName="turbulenceType" required>
+      <option *ngFor="let item of turbulenceType">{{item}}</option>
+    </select><br><br>
+
+    <label for="equipment"></label>
+    <input type="text" id="equipment" formControlName="equipment" placeholder="Equipement"><br><br>
+
+    <label for="transponder"></label>
+    <input type="text" id="transponder" formControlName="transponder" placeholder="Transponder"><br><br>
+
+    <label for="colorAndMarkings"></label>
+    <input type="text" id="colorAndMarkings" formControlName="colorAndMarkings" placeholder="Couleur et déco"><br><br>
+
+    <input type="submit" name="save" value="Enregistrer">
+    <input type="reset" name="reset" value="Effacer">
+
+  </form>
+</div>

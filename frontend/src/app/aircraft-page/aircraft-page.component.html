@@ -1,0 +1,17 @@
+
+<h1>Page Aicrafts</h1>
+
+<personal-aircraft-form (aircraftCreated)="addAircraft($event)"></personal-aircraft-form>
+
+<h2>Liste des avions</h2>
+
+
+<show-aircraft-form [airCraftList]="airCraftList" (visibleAirCraftList)="updateVisibleAircraft($event)" ></show-aircraft-form>
+
+<ul>
+  <li *ngFor="let aircraft of visibleAircraft">
+    ID: {{ aircraft.aircraftId }}, Type: {{ aircraft.airCraftType }}, Turbulence: {{ aircraft.turbulenceType }},
+    Équipement: {{ aircraft.equipment }}, Transpondeur: {{ aircraft.transponder }}, Couleur et Marquages: {{ aircraft.colorAndMarkings }}
+  </li>
+</ul>
+
