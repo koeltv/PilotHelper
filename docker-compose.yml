@@ -117,6 +117,14 @@ services:
       - database.env
       - api.env
 
+  frontend:
+    build: frontend
+    image: pilot-helper/frontend
+    restart: on-failure
+    labels:
+      traefik.enable: true
+      traefik.http.routers.frontend.rule: PathPrefix(`/`)
+
 volumes:
   keycloak_database:
   database:
