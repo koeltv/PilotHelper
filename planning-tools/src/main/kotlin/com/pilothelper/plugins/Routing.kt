@@ -4,20 +4,22 @@ import com.pilothelper.fetcher.IPInfoFetcher
 import com.pilothelper.fetcher.RouteFetcher
 import com.pilothelper.fetcher.WeatherFetcher
 import com.pilothelper.model.Coordinates
+import com.pilothelper.service.AircraftTypeService
 import com.pilothelper.service.AirportService
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.forwardedheaders.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.get
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     // Handle IP address even through reverse proxy
     install(ForwardedHeaders)
 
-    val airportService by inject<AirportService>()
+    val aircraftTypeService = get<AircraftTypeService>()
+    val airportService = get<AirportService>()
     val ipInfoFetcher by inject<IPInfoFetcher>()
     val weatherFetcher by inject<WeatherFetcher>()
     val routeFetcher by inject<RouteFetcher>()
@@ -43,12 +45,42 @@ fun Application.configureRouting() {
             call.respond(routes)
         }
 
-        get("/aircraft-type") { // TODO
-            call.respondText("Not Yet Implemented", ContentType.Text.Plain, HttpStatusCode.NotImplemented)
+        get("/aircraft-type") {
+            call.respond(aircraftTypeService.readAll())
         }
 
-        get("/airport") { // TODO Expand for search
+        get("/aircraft-type/name/{name}") {
+            val partialAircraftName =
+                call.parameters["name"] ?: throw MissingRequestParameterException("Missing aircraft name")
+            call.respond(aircraftTypeService.readAllWithNameLike(partialAircraftName))
+        }
+
+        get("/aircraft-type/type/{type}") {
+            val partialAircraftType =
+                call.parameters["type"] ?: throw MissingRequestParameterException("Missing aircraft type")
+            call.respond(aircraftTypeService.readAllWithDesignatorLike(partialAircraftType))
+        }
+
+        get("/airport") {
             call.respond(airportService.readAll())
+        }
+
+        get("/airport/name/{name}") {
+            val partialAirportName =
+                call.parameters["name"] ?: throw MissingRequestParameterException("Missing airport name")
+            call.respond(airportService.readAllWithNameLike(partialAirportName.uppercase()))
+        }
+
+        get("/airport/icao/{icaoCode}") {
+            val partialAirportName =
+                call.parameters["icaoCode"] ?: throw MissingRequestParameterException("Missing icao code")
+            call.respond(airportService.readAllWithICAOLike(partialAirportName))
+        }
+
+        get("/airport/iata/{iataCode}") {
+            val partialAirportName =
+                call.parameters["iataCode"] ?: throw MissingRequestParameterException("Missing iata code")
+            call.respond(airportService.readAllWithIATALike(partialAirportName))
         }
 
         // Read all airports close to a given point

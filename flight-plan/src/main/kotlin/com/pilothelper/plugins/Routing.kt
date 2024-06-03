@@ -26,17 +26,23 @@ fun Application.configureRouting() {
         // Read flight-plan
         get("{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID_FEEDBACK)
-            val formatAsPdf = call.request.queryParameters["pdf"] != null
-                    || call.request.contentType() == ContentType.Application.Pdf
             val flightPlan = flightPlanService.read(id)
             if (flightPlan != null) {
-                if (formatAsPdf) {
-                    FlightPlanPdfConverter.fillFrom(flightPlan)
-                        ?.let { call.respondFile(it) }
-                        ?: call.respond(HttpStatusCode.InternalServerError)
-                } else {
-                    call.respond(HttpStatusCode.OK, flightPlan)
-                }
+                call.respond(HttpStatusCode.OK, flightPlan)
+            } else {
+                call.respond(HttpStatusCode.NotFound)
+            }
+        }
+        get("{id}/pdf") {
+            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException(INVALID_ID_FEEDBACK)
+            val flightPlan = flightPlanService.read(id)
+            if (flightPlan != null) {
+                FlightPlanPdfConverter.fillFrom(flightPlan)
+                    ?.let {
+                        call.respondFile(it)
+                        it.delete()
+                    }
+                    ?: call.respond(HttpStatusCode.InternalServerError)
             } else {
                 call.respond(HttpStatusCode.NotFound)
             }

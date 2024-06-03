@@ -3,12 +3,11 @@ package com.pilothelper.model
 import kotlinx.serialization.Serializable
 
 /**
- * Data returned by AviationStack API: https://aviationstack.com/documentation
+ * Data returned by ICAODesignators website: https://www.icaodesignators.com/
  */
 @Serializable
 data class AircraftType(
-    val id: String,
-    val iata_code: String,
-    val aircraft_name: String,
-    val plane_type_id: String,
+    val name: String,
+    val designator: String,
+    val engineManufacturer: String,
 )

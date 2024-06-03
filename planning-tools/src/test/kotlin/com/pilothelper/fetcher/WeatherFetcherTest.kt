@@ -1,25 +1,29 @@
 package com.pilothelper.fetcher
 
-import io.ktor.client.*
-import io.ktor.client.engine.apache.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.serialization.kotlinx.json.*
+import com.pilothelper.ApplicationTest
+import com.pilothelper.setupClientWithResponse
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
-import kotlin.test.assertNotNull
+import kotlin.test.assertEquals
 
 class WeatherFetcherTest {
 
     @Test
     fun fetchInfo() {
-        val client = HttpClient(Apache) {
-            install(ContentNegotiation) { json() }
-        }
+        val responseContent = ApplicationTest::class.java.getResource("examples/aviationweather.json")!!.readText()
+
+        val client = setupClientWithResponse(
+            status = HttpStatusCode.OK,
+            headers = headersOf(HttpHeaders.ContentType, "application/json"),
+            content = responseContent
+        )
+
         val fetcher = WeatherFetcher(client)
         val weather = runBlocking {
             fetcher.fetchInfo("LFPG")
         }
-        println(weather)
-        assertNotNull(weather)
+
+        assertEquals("LFPG", weather.icaoId)
     }
 }

@@ -1,0 +1,34 @@
+[
+  {
+    "origin": "ABQ",
+    "route": "ABQ DIESL TTORO3 IAH",
+    "destination": "IAH",
+    "hours1": null,
+    "hours2": null,
+    "hours3": null,
+    "type": "H",
+    "area": null,
+    "altitude": null,
+    "aircraft": "TURBOJETS & TURBOPROPS - DME/DME/IRU OR GPS",
+    "flow": "IAH EAST FLOW",
+    "seq": 1,
+    "d_artcc": "ZAB",
+    "a_artcc": "ZHU"
+  },
+  {
+    "origin": "ABQ",
+    "route": "ABQ DIESL MSCOT4 IAH",
+    "destination": "IAH",
+    "hours1": null,
+    "hours2": null,
+    "hours3": null,
+    "type": "H",
+    "area": null,
+    "altitude": null,
+    "aircraft": "TURBOJETS & TURBOPROPS - DME/DME/IRU OR GPS",
+    "flow": "IAH WEST FLOW",
+    "seq": 2,
+    "d_artcc": "ZAB",
+    "a_artcc": "ZHU"
+  }
+]

@@ -11,10 +11,7 @@ fun Application.configureRouting() {
             val token = call.getToken() ?: return@get call.respond(HttpStatusCode.Unauthorized)
             val response = requestUserInfo(token)
 
-            call.respondText("Hey ${response["name"].toString().removeSurrounding("\"")}, get ready to rock and roll !")
+            call.respondText("Hey ${response.name}, get ready to rock and roll !")
         }
-
     }
-
-
 }

@@ -1,11 +1,14 @@
 package com.pilothelper.plugins
 
+import com.pilothelper.model.Aircraft
+import com.pilothelper.service.AircraftService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
+import java.util.*
 
 val dbUser = System.getenv("DB_USERNAME") ?: "root"
 val dbPassword = System.getenv("DB_PASSWORD") ?: ""
@@ -19,54 +22,21 @@ fun Application.configureDatabases() {
         driver = dbDriver,
         password = dbPassword
     )
-    val userService = UserService(database)
     val aircraftService = AircraftService(database)
     routing {
-        // Create user
-        post("/users") {
-            val user = call.receive<ExposedUser>()
-            val id = userService.create(user)
-            call.respond(HttpStatusCode.Created, id)
-        }
-
-        // Read user
-        get("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = userService.read(id)
-            if (user != null) {
-                call.respond(HttpStatusCode.OK, user)
-            } else {
-                call.respond(HttpStatusCode.NotFound)
-            }
-        }
-
-        // Update user
-        put("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val user = call.receive<ExposedUser>()
-            userService.update(id, user)
-            call.respond(HttpStatusCode.OK)
-        }
-
-        // Delete user
-        delete("/users/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            userService.delete(id)
-            call.respond(HttpStatusCode.OK)
-        }
-
         // Create aircraft
-        post("/aircrafts") {
+        post("/aircraft") {
             val aircraft = call.receive<Aircraft>()
             val token = call.getToken() ?: return@post call.respond(HttpStatusCode.Unauthorized)
             val response = requestUserInfo(token)
-            val user = ExposedUser(response["name"].toString().removeSurrounding("\""))
-            val id = aircraftService.create(aircraft, listOf(user))
+
+            val userId = UUID.fromString(response.sub)
+            val id = aircraftService.create(aircraft, listOf(userId))
             call.respond(HttpStatusCode.Created, id)
         }
 
         // Read aircraft
-        get("/aircrafts/{id}") {
+        get("/aircraft/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             val aircraft = aircraftService.read(id)
             if (aircraft != null) {
@@ -77,7 +47,7 @@ fun Application.configureDatabases() {
         }
 
         // Update aircraft
-        put("/aircrafts/{id}") {
+        put("/aircraft/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             val aircraft = call.receive<Aircraft>()
             aircraftService.update(id, aircraft)
@@ -85,21 +55,21 @@ fun Application.configureDatabases() {
         }
 
         // Delete aircraft
-        delete("/aircrafts/{id}") {
+        delete("/aircraft/{id}") {
             val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
             val resultDelete = aircraftService.delete(id)
-            if(resultDelete) {
+            if (resultDelete) {
                 call.respond(HttpStatusCode.OK)
-            }else{
+            } else {
                 call.respond(HttpStatusCode.NotFound)
             }
         }
 
         //Get Aircraft from User
         get("/aircraft/user/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalArgumentException("Invalid ID")
-            val allAicraftFromUser = userService.getAllAircrafts(id)
-            call.respond(HttpStatusCode.OK, allAicraftFromUser)
+            val id = call.parameters["id"]?.let { UUID.fromString(it) } ?: throw IllegalArgumentException("Invalid ID")
+            val userAircrafts = aircraftService.readUserAircrafts(id)
+            call.respond(HttpStatusCode.OK, userAircrafts)
         }
     }
 }

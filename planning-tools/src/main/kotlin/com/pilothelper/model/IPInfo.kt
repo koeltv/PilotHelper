@@ -24,5 +24,5 @@ data class IPInfo(
     val hosting: Boolean,
     val ip: String,
     val cached: Boolean,
-    val cacheTimestamp: Int,
+    val cacheTimestamp: Int?,
 )

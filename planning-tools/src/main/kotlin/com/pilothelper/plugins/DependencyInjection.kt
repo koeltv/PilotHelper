@@ -1,9 +1,7 @@
 package com.pilothelper.plugins
 
-import com.pilothelper.fetcher.AirportFetcher
-import com.pilothelper.fetcher.IPInfoFetcher
-import com.pilothelper.fetcher.RouteFetcher
-import com.pilothelper.fetcher.WeatherFetcher
+import com.pilothelper.fetcher.*
+import com.pilothelper.service.AircraftTypeService
 import com.pilothelper.service.AirportService
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -22,7 +20,7 @@ import org.koin.logger.slf4jLogger
 val appModule = module {
     single<Database> { database }
     singleOf(::AirportService)
-    single<HttpClient> {
+    factory<HttpClient> {
         HttpClient(Apache) {
             install(ContentNegotiation) {
                 json(Json {
@@ -36,6 +34,8 @@ val appModule = module {
     singleOf(::IPInfoFetcher)
     singleOf(::WeatherFetcher)
     singleOf(::RouteFetcher)
+    singleOf(::AircraftTypeFetcher)
+    singleOf(::AircraftTypeService)
 }
 
 fun Application.configureDP() {

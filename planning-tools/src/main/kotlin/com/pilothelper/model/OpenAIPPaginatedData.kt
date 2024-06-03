@@ -10,7 +10,6 @@ data class OpenAIPPaginatedData<T>(
     val limit: Int,
     val totalCount: Int,
     val totalPages: Int,
-    val nextPage: Int,
     val page: Int,
     val items: List<T>,
 )

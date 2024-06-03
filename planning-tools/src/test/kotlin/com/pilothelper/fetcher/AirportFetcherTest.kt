@@ -7,8 +7,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 class AirportFetcherTest {
 
@@ -30,8 +30,8 @@ class AirportFetcherTest {
         val airports = runBlocking {
             fetcher.fetch()
         }
-        println(airports)
+
         assertNotNull(airports)
-        assertTrue(airports.items.isNotEmpty())
+        assertEquals(1000, airports.items.size)
     }
 }
