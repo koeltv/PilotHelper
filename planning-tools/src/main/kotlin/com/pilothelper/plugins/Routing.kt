@@ -91,9 +91,9 @@ fun Application.configureRouting() {
             val coordinates = if (latitude != null && longitude != null) {
                 Coordinates(latitude, longitude)
             } else {
-                val clientAddress = call.request.origin.remoteHost
+                val clientAddress = call.request.origin.remoteAddress
                 val ipInfo = ipInfoFetcher.fetchInfo(clientAddress)
-                    ?: throw BadRequestException("Address $clientAddress is in a reserved range")
+                    ?: throw BadRequestException("Address $clientAddress is in a reserved range, client: ${call.request.origin}")
                 Coordinates(ipInfo.lat, ipInfo.lon)
             }
 
