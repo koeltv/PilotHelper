@@ -25,5 +25,16 @@
         ]
       }
     }
+  ],
+  "navigationUrls": [
+    "!/grafana",
+    "!/grafana/**",
+    "!/data",
+    "!/data/**",
+    "!/flight-plan",
+    "!/flight-plan/**",
+    "!/planning-tools",
+    "!/planning-tools/**",
+    "/**"
   ]
 }
