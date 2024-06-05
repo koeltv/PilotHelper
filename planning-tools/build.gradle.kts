@@ -42,6 +42,7 @@ dependencies {
 
     implementation("io.ktor:ktor-client-apache:$apacheClientVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-xml:$ktorVersion")
     implementation("org.jsoup:jsoup:$jsoupVersion")
 
     implementation("io.ktor:ktor-server-content-negotiation:$ktorVersion")

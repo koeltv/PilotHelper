@@ -1,0 +1,10 @@
+<form>
+  <div>
+    <select name="filter"
+          [(ngModel)]="listFilter"
+          (ngModelChange)="filterChange($event)">
+      <option value="0">All</option>
+      <option *ngFor="let airCraft of airCraftList, let i = index" [value]="i+1">{{airCraft.aircraftId}}</option>
+    </select>
+  </div>
+</form>

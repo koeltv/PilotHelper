@@ -12,7 +12,7 @@ COPY src ./src
 RUN ["gradle", "shadowJar"]
 
 ## Stage 2: Create a Minimal Container
-FROM eclipse-temurin:17-jre
+FROM bellsoft/liberica-openjre-alpine-musl:17
 LABEL authors="Valentin Koeltgen"
 EXPOSE 8000
 # Copy the executable from the builder container
