@@ -18,6 +18,7 @@ jobs:
           - image: data
           - image: flight-plan
           - image: planning-tools
+          - image: frontend
     permissions:
       contents: read
       packages: write
