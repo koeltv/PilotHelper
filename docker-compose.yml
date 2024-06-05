@@ -51,9 +51,9 @@ services:
     volumes:
       - ./reverse-proxy/traefik.yml/:/etc/traefik/traefik.yml:ro
       - ./reverse-proxy/dynamic.yml/:/etc/traefik/dynamic.yml:ro
-      - ./traefik_certs/_wildcard.pilothelper.com.pem:/etc/ssl/certs/_wildcard.pilothelper.com.pem:ro
-      - ./traefik_certs/_wildcard.pilothelper.com-key.pem:/etc/ssl/certs/_wildcard.pilothelper.com-key.pem:ro
-      - ./traefik_certs:/certs:ro
+      - ./reverse-proxy/certs/_wildcard.pilothelper.com.pem:/etc/ssl/certs/_wildcard.pilothelper.com.pem:ro
+      - ./reverse-proxy/certs/_wildcard.pilothelper.com-key.pem:/etc/ssl/certs/_wildcard.pilothelper.com-key.pem:ro
+      - ./reverse-proxy/certs:/certs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   # Prometheus : Metrics collection
@@ -167,6 +167,8 @@ services:
     restart: on-failure
     labels:
       traefik.enable: true
+      traefik.http.routers.frontend.entrypoints: https,http
+      traefik.http.routers.frontend.tls: true
       traefik.http.routers.frontend.rule: PathPrefix(`/`)
 
 volumes:
