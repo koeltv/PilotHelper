@@ -8,3 +8,11 @@ datasources:
     isDefault: true
     uid: e0618230-b9a4-471f-8633-d053edfb8c38
     editable: false
+
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    isDefault: false
+    uid: 7e729405-4d00-48ee-85d7-0d788518530d
+    editable: false

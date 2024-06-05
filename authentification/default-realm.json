@@ -1,7 +1,7 @@
 {
   "id": "6ba4c8b5-556f-48cc-a03f-b1d2b49d8632",
   "realm": "realm-name",
-  "displayName": "",
+  "displayName": "PilotHelper",
   "displayNameHtml": "",
   "notBefore": 1713906732,
   "defaultSignatureAlgorithm": "RS256",

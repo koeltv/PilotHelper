@@ -15,7 +15,7 @@ COPY src src
 RUN ["npm", "run", "build"]
 
 ## Stage 2: Create a Minimal NGINX Container
-FROM nginx:alpine3.19
+FROM nginx:alpine3.19-slim
 EXPOSE 80
 # Copy the configuration file inside the container
 COPY nginx.conf /etc/nginx/nginx.conf

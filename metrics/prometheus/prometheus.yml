@@ -1,0 +1,28 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'traefik'
+    static_configs:
+      - targets:
+          - 'traefik:8082'
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: [ 'node-exporter:9100' ]
+
+  - job_name: 'data'
+    static_configs:
+      - targets:
+          - 'data:8000'
+
+  - job_name: 'flight-plan'
+    static_configs:
+      - targets:
+          - 'flight-plan:8000'
+
+  - job_name: 'planning-tools'
+    static_configs:
+      - targets:
+          - 'planning-tools:8080'
