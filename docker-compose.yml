@@ -169,7 +169,8 @@ services:
       traefik.enable: true
       traefik.http.routers.frontend.entrypoints: https,http
       traefik.http.routers.frontend.tls: true
-      traefik.http.routers.frontend.rule: PathPrefix(`/`)
+      traefik.http.routers.frontend.rule: Host(`pilothelper.com`) && PathPrefix(`/`)
+      traefik.http.routers.frontend.priority: 1 # Lower priority to avoid conflicts
 
 volumes:
   keycloak_database:
