@@ -1,3 +1,3 @@
 export const environment = {
-  backendUrl: "http://pilothelper.com/"
+  backendUrl: "http://pilothelper.com"
 };
