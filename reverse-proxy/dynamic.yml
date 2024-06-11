@@ -10,3 +10,9 @@ http:
           TokenCookieNameEnv: "TOKEN_COOKIE_NAME"
           Scope: openid
           UseAuthHeader: "false"
+
+    cors: # Needed to allow access through a browser
+      headers:
+        accessControlAllowOriginList:
+          - "http://localhost:4200"
+        accessControlAllowCredentials: true

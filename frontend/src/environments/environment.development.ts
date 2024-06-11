@@ -1,3 +1,4 @@
 export const environment = {
-  backendUrl: "http://pilothelper.com"
+  backendUrl: "http://localhost",
+  frontendUrl: "http://localhost:4200"
 };
