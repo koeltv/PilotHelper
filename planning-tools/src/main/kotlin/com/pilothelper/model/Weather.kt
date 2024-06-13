@@ -47,6 +47,6 @@ data class Weather(
     @Serializable
     data class Cloud(
         val cover: String,
-        val base: Int
+        val base: Int?
     )
 }
