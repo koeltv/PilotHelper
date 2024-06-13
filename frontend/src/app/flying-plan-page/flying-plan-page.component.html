@@ -3,3 +3,10 @@
 </p>
 
 <p>{{ JSON.stringify(flightPlan) }}</p>
+
+<show-aircraft-form [airCraftList]="myAirCraft" (visibleAirCraftList)="onAircraftSelected($event)"></show-aircraft-form>
+
+<app-flying-plan-form
+  [selectedAircraft]="selectedAircraft"
+  (formSubmit)="onFormSubmit($event)">
+</app-flying-plan-form>

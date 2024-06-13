@@ -1,0 +1,135 @@
+
+
+<form [formGroup]="flyingPlanForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="flightRules">Flight Rules:</label>
+    <input id="flightRules" formControlName="flightRules" />
+  </div>
+  <div>
+    <label for="flightType">Flight Type:</label>
+    <input id="flightType" formControlName="flightType" />
+  </div>
+  <div formGroupName="aircraftData">
+    <label for="aircraftId">Aircraft ID:</label>
+    <input id="aircraftId" formControlName="aircraftId" />
+
+    <label for="airCraftType">Aircraft Type:</label>
+    <input id="airCraftType" formControlName="airCraftType" />
+
+    <label for="turbulenceType">Turbulence Type:</label>
+    <input id="turbulenceType" formControlName="turbulenceType" />
+
+    <label for="equipment">Equipment:</label>
+    <input id="equipment" formControlName="equipment" />
+
+    <label for="transponder">Transponder:</label>
+    <input id="transponder" formControlName="transponder" />
+
+    <label for="colorAndMarkings">Color and Markings:</label>
+    <input id="colorAndMarkings" formControlName="colorAndMarkings" />
+  </div>
+  <div>
+    <label for="aircraftCount">Aircraft Count:</label>
+    <input id="aircraftCount" formControlName="aircraftCount" type="number" />
+  </div>
+  <div>
+    <label for="startingAirport">Starting Airport:</label>
+    <input id="startingAirport" formControlName="startingAirport" />
+  </div>
+  <div>
+    <label for="startingTime">Starting Time:</label>
+    <input id="startingTime" formControlName="startingTime" type="time" />
+  </div>
+  <div>
+    <label for="cruisingSpeed">Cruising Speed:</label>
+    <input id="cruisingSpeed" formControlName="cruisingSpeed" />
+  </div>
+  <div>
+    <label for="cruisingAltitude">Cruising Altitude:</label>
+    <input id="cruisingAltitude" formControlName="cruisingAltitude" />
+  </div>
+  <div>
+    <label for="path">Path:</label>
+    <input id="path" formControlName="path" />
+  </div>
+  <div>
+    <label for="destinationAirport">Destination Airport:</label>
+    <input id="destinationAirport" formControlName="destinationAirport" />
+  </div>
+  <div>
+    <label for="estimatedTime">Estimated Time:</label>
+    <input id="estimatedTime" formControlName="estimatedTime" type="time" />
+  </div>
+  <div formArrayName="alternativeAirport">
+    <label>Alternative Airport:</label>
+    <div *ngFor="let altAirport of alternativeAirports.controls; let i=index">
+      <input [formControlName]="i" [id]="'alternativeAirports' + i"/>
+    </div>
+  </div>
+  <div formArrayName="otherInformations">
+    <label>Other Informations:</label>
+    <div *ngFor="let info of otherInformations.controls; let i=index">
+      <input [formControlName]="i" [id]="'otherInformations' + i"/>
+    </div>
+  </div>
+  <div>
+    <label for="autonomy">Autonomy:</label>
+    <input id="autonomy" formControlName="autonomy" />
+  </div>
+  <div>
+    <label for="occupantCount">Occupant Count:</label>
+    <input id="occupantCount" formControlName="occupantCount" type="number" />
+  </div>
+  <div formGroupName="equipement">
+    <label for="uhfPost">UHF Post:</label>
+    <input id="uhfPost" formControlName="uhfPost" type="checkbox" />
+
+    <label for="vhfPost">VHF Post:</label>
+    <input id="vhfPost" formControlName="vhfPost" type="checkbox" />
+
+    <label for="rdbaBeacon">RDBA Beacon:</label>
+    <input id="rdbaBeacon" formControlName="rdbaBeacon" type="checkbox" />
+
+    <label for="survivalEquipmentPolar">Survival Equipment Polar:</label>
+    <input id="survivalEquipmentPolar" formControlName="survivalEquipmentPolar" type="checkbox" />
+
+    <label for="survivalEquipmentDesert">Survival Equipment Desert:</label>
+    <input id="survivalEquipmentDesert" formControlName="survivalEquipmentDesert" type="checkbox" />
+
+    <label for="survivalEquipmentMaritime">Survival Equipment Maritime:</label>
+    <input id="survivalEquipmentMaritime" formControlName="survivalEquipmentMaritime" type="checkbox" />
+
+    <label for="survivalEquipmentJungle">Survival Equipment Jungle:</label>
+    <input id="survivalEquipmentJungle" formControlName="survivalEquipmentJungle" type="checkbox" />
+
+    <label for="safetyJacketWithLight">Safety Jacket With Light:</label>
+    <input id="safetyJacketWithLight" formControlName="safetyJacketWithLight" type="checkbox" />
+
+    <label for="safetyJacketWithFluorescein">Safety Jacket With Fluorescein:</label>
+    <input id="safetyJacketWithFluorescein" formControlName="safetyJacketWithFluorescein" type="checkbox" />
+
+    <label for="safetyJacketWithUHF">Safety Jacket With UHF:</label>
+    <input id="safetyJacketWithUHF" formControlName="safetyJacketWithUHF" type="checkbox" />
+
+    <label for="safetyJacketWithVHF">Safety Jacket With VHF:</label>
+    <input id="safetyJacketWithVHF" formControlName="safetyJacketWithVHF" type="checkbox" />
+
+    <label for="raftCount">Raft Count:</label>
+    <input id="raftCount" formControlName="raftCount" type="number" />
+
+    <label for="raftCapacity">Raft Capacity:</label>
+    <input id="raftCapacity" formControlName="raftCapacity" type="number" />
+
+    <label for="raftCoverageColor">Raft Coverage Color:</label>
+    <input id="raftCoverageColor" formControlName="raftCoverageColor" />
+  </div>
+  <div>
+    <label for="remarks">Remarks:</label>
+    <input id="remarks" formControlName="remarks" />
+  </div>
+  <div>
+    <label for="pilot">Pilot:</label>
+    <input id="pilot" formControlName="pilot" />
+  </div>
+  <button type="submit" [disabled]="flyingPlanForm.invalid">Submit</button>
+</form>
