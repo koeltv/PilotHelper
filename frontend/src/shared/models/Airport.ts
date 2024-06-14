@@ -26,7 +26,7 @@ export class Airport {
     public country: string,
     public geometry: Geometry,
     public elevation: Elevation,
-    public private: boolean
+    public isPrivate: boolean
   ) {
   }
 }

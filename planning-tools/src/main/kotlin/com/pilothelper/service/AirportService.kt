@@ -128,7 +128,7 @@ class AirportService(
         this[Airports.latitude] = airport.geometry.coordinates[1]
         this[Airports.longitude] = airport.geometry.coordinates[0]
         this[Airports.altitude] = airport.elevation.value
-        this[Airports.private] = airport.private
+        this[Airports.private] = airport.isPrivate
         this[Airports.lastUpdated] = LocalDate.now()
     }
 
@@ -149,6 +149,6 @@ class AirportService(
             unit = 0,
             referenceDatum = 1,
         ),
-        private = this[Airports.private],
+        isPrivate = this[Airports.private],
     )
 }
