@@ -1,6 +1,6 @@
 http:
   middlewares:
-    keycloak-middleware-name:
+    authentification:
       plugin:
         keycloakopenid:
           KeycloakURLEnv: "KEYCLOAK_URL"
