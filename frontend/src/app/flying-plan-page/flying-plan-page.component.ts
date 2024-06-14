@@ -21,11 +21,32 @@ export class FlyingPlanPageComponent {
   public flightPlan: FlightPlan | undefined
 
   myAirCraft: AirCraft[] = [
-    { aircraftId: "avion1", airCraftType: "A", turbulenceType: "1", equipment: "tout", transponder: "jsp", colorAndMarkings: "rouge" },
-    { aircraftId: "avion2", airCraftType: "D", turbulenceType: "3", equipment: "tout", transponder: "jsp encore", colorAndMarkings: "bleu" }
+    {
+      aircraftId: "avion1",
+      aircraftType: "A",
+      turbulenceType: "1",
+      equipment: "tout",
+      transponder: "jsp",
+      colorAndMarkings: "rouge"
+    },
+    {
+      aircraftId: "avion2",
+      aircraftType: "D",
+      turbulenceType: "3",
+      equipment: "tout",
+      transponder: "jsp encore",
+      colorAndMarkings: "bleu"
+    }
   ];
 
-  selectedAircraft: AirCraft = {aircraftId:'', airCraftType:'', turbulenceType:'', equipment:'', transponder:'', colorAndMarkings:''};
+  selectedAircraft: AirCraft = {
+    aircraftId: '',
+    aircraftType: '',
+    turbulenceType: '',
+    equipment: '',
+    transponder: '',
+    colorAndMarkings: ''
+  };
 
   onAircraftSelected(selectedAircraft: AirCraft[]) {
     this.selectedAircraft = selectedAircraft[0];
@@ -36,7 +57,7 @@ export class FlyingPlanPageComponent {
     // Envoie vers le backend
   }
 
-  constructor(flightPlanService: FlightPlanService) {
+  constructor(private flightPlanService: FlightPlanService) {
     flightPlanService.readFlightPlan(2)
       .subscribe(flightPlan => {
         console.log(flightPlan);

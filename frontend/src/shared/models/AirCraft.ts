@@ -1,6 +1,6 @@
 export class AirCraft {
   constructor(public aircraftId : string,
-              public airCraftType : string,
+              public aircraftType: string,
               public turbulenceType : string,
               public equipment : string,
               public transponder : string,

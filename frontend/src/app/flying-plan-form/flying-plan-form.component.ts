@@ -83,7 +83,7 @@ export class FlyingPlanFormComponent implements OnChanges{
     this.flyingPlanForm.patchValue({
       aircraftData: {
         aircraftId: selectedAircraft.aircraftId,
-        airCraftType: selectedAircraft.airCraftType,
+        airCraftType: selectedAircraft.aircraftType,
         turbulenceType: selectedAircraft.turbulenceType,
         equipment: selectedAircraft.equipment,
         transponder: selectedAircraft.transponder,
