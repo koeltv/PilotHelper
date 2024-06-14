@@ -8,7 +8,7 @@ import {FlightPlan} from "../../shared/models/FlightPlan";
   providedIn: 'root'
 })
 export class FlightPlanService {
-  private baseUrl = `${environment.backendUrl}/flight-plan`
+  private baseUrl = `${environment.backendUrl}/flight-plan/`
   private options = {withCredentials: true};
 
   constructor(private client: HttpClient) {

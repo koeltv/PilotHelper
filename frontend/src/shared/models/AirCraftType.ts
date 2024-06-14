@@ -1,4 +1,4 @@
-export class airCraftType {
+export class AirCraftType {
   constructor(public type : string[]) {
   }
 }

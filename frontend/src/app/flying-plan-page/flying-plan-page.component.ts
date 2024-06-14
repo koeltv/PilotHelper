@@ -4,7 +4,7 @@ import {FlightPlan} from "../../shared/models/FlightPlan";
 import {environment} from "../../environments/environment";
 import {showAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.component";
-import {airCraft} from "../../shared/models/airCraft";
+import {AirCraft} from "../../shared/models/AirCraft";
 
 @Component({
   selector: 'app-flying-plan-page',
@@ -20,14 +20,14 @@ export class FlyingPlanPageComponent {
   protected pageUrl = `${environment.frontendUrl}/flyingplan`;
   public flightPlan: FlightPlan | undefined
 
-  myAirCraft: airCraft[] = [
+  myAirCraft: AirCraft[] = [
     { aircraftId: "avion1", airCraftType: "A", turbulenceType: "1", equipment: "tout", transponder: "jsp", colorAndMarkings: "rouge" },
     { aircraftId: "avion2", airCraftType: "D", turbulenceType: "3", equipment: "tout", transponder: "jsp encore", colorAndMarkings: "bleu" }
   ];
 
-  selectedAircraft: airCraft = {aircraftId:'', airCraftType:'', turbulenceType:'', equipment:'', transponder:'', colorAndMarkings:''};
+  selectedAircraft: AirCraft = {aircraftId:'', airCraftType:'', turbulenceType:'', equipment:'', transponder:'', colorAndMarkings:''};
 
-  onAircraftSelected(selectedAircraft: airCraft[]) {
+  onAircraftSelected(selectedAircraft: AirCraft[]) {
     this.selectedAircraft = selectedAircraft[0];
   }
 

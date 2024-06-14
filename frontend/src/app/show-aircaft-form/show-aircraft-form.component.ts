@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
-import { airCraft } from "../../shared/models/airCraft";
+import {AirCraft} from "../../shared/models/AirCraft";
 import {PersonalAircraftFormComponent} from "../create-aircraft-form/create-aicraft-form.component";
-import { NgForOf, CommonModule } from "@angular/common";
+import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
@@ -14,10 +14,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 export class showAircraftForm{
 
-  @Input()airCraftList: airCraft[] = [];
-  @Output()visibleAirCraftList = new EventEmitter<airCraft[]>();
+  @Input()airCraftList: AirCraft[] = [];
+  @Output()visibleAirCraftList = new EventEmitter<AirCraft[]>();
   listFilter : string = '0';
-  visibleAircraft : airCraft[] = this.airCraftList;
+  visibleAircraft : AirCraft[] = this.airCraftList;
 
   filterChange (value : any){
     if (value === '0'){

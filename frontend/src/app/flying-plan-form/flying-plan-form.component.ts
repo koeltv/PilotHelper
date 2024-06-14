@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { airCraft} from "../../shared/models/airCraft";
-import { FlightPlan} from "../../shared/models/FlightPlan";
+import {AirCraft} from "../../shared/models/AirCraft";
+import {FlightPlan} from "../../shared/models/FlightPlan";
 
 
 @Component({
@@ -15,7 +15,7 @@ import { FlightPlan} from "../../shared/models/FlightPlan";
 })
 export class FlyingPlanFormComponent implements OnChanges{
 
-  @Input() selectedAircraft: airCraft | null = null;
+  @Input() selectedAircraft: AirCraft | null = null;
   @Output() formSubmit = new EventEmitter<FlightPlan>();
 
   flyingPlanForm: FormGroup;
@@ -79,7 +79,7 @@ export class FlyingPlanFormComponent implements OnChanges{
     }
   }
 
-  updateAircraftData(selectedAircraft: airCraft) {
+  updateAircraftData(selectedAircraft: AirCraft) {
     this.flyingPlanForm.patchValue({
       aircraftData: {
         aircraftId: selectedAircraft.aircraftId,
