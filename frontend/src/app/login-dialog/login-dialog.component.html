@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Authentification</h1>
+<div mat-dialog-content>
+  <p>Veuillez vous identifier</p>
+  <p>
+    <mat-form-field>
+      <mat-label>Identifiant</mat-label>
+      <input matInput [(ngModel)]="data.login">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field>
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput [(ngModel)]="data.password">
+    </mat-form-field>
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>OK</button>
+</div>

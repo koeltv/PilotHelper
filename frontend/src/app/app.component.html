@@ -7,9 +7,10 @@
     <a mat-button (click)="navigate('/aircraft')">Mes aéronefs</a>
     <a mat-button (click)="navigate('/flyingplan')">Planifier un vol</a>
     <span class="spacer"></span>
-    <a mat-icon-button href="http://keycloak:8080" aria-label="Login icon">
-      <mat-icon>login</mat-icon>
-    </a>
+    <span>{{ username ? 'Bonjour ' + username : '' }}</span>
+    <button mat-icon-button (click)="username ? logout() : openLoginDialog()" aria-label="Login icon">
+      <mat-icon>{{ username ? 'logout' : 'login' }}</mat-icon>
+    </button>
   </mat-toolbar>
 
   <router-outlet></router-outlet>

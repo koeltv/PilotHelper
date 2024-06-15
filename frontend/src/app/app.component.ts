@@ -4,6 +4,9 @@ import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button";
 import {MatSidenavContainer} from "@angular/material/sidenav";
+import {AuthentificationService} from "./api/authentification.service";
+import {MatDialog} from "@angular/material/dialog";
+import {LoginData, LoginDialogComponent} from "./login-dialog/login-dialog.component";
 
 
 @Component({
@@ -16,10 +19,44 @@ import {MatSidenavContainer} from "@angular/material/sidenav";
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private router: Router) {
+  username: string | undefined;
+
+  constructor(
+    private router: Router,
+    private authentificationService: AuthentificationService,
+    public dialog: MatDialog
+  ) {
+    if (this.authentificationService.checkForLogin()) {
+      this.updateLoginState();
+    }
   }
 
   navigate(path: string) {
     this.router.navigate([path]);
+  }
+
+  updateLoginState() {
+    this.authentificationService.getUserInfo()?.subscribe(data => {
+      this.username = data.name;
+    });
+  }
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      data: new LoginData(),
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (data != undefined) {
+        this.authentificationService.login(data).subscribe(_ => {
+          this.updateLoginState();
+        });
+      }
+    });
+  }
+
+  logout() {
+    this.authentificationService.logout();
+    this.username = undefined;
   }
 }
