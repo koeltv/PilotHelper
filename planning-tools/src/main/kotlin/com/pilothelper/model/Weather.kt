@@ -16,7 +16,7 @@ data class Weather(
     val dewp: Int,
     val wdir: Int,
     val wspd: Int,
-    val wgst: String?,
+    val wgst: Int?,
     val visib: String,
     val altim: Int,
     val slp: String?,

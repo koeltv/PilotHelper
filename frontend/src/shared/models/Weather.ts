@@ -17,7 +17,7 @@ export class Weather {
     public dewp: number,
     public wdir: number,
     public wspd: number,
-    public wgst: string | null,
+    public wgst: number | null,
     public visib: string,
     public altim: number,
     public slp: string | null,
