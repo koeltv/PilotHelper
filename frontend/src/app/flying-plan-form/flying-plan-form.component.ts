@@ -2,13 +2,16 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AirCraft} from "../../shared/models/AirCraft";
 import {FlightPlan} from "../../shared/models/FlightPlan";
-
+import {NgForOf} from "@angular/common";
+import {AirportInputComponent} from "./airport-input/airport-input.component";
 
 @Component({
   selector: 'app-flying-plan-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgForOf,
+    AirportInputComponent,
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
@@ -33,12 +36,12 @@ export class FlyingPlanFormComponent implements OnChanges{
         colorAndMarkings: ['']
       }),
       aircraftCount: [1, Validators.required],
-      startingAirport: ['', Validators.required],
+      startingAirport: [undefined, Validators.required],
       startingTime: ['', Validators.required],
       cruisingSpeed: ['', Validators.required],
       cruisingAltitude: ['', Validators.required],
       path: ['', Validators.required],
-      destinationAirport: ['', Validators.required],
+      destinationAirport: [undefined, Validators.required],
       estimatedTime: ['', Validators.required],
       alternativeAirport: this.fb.array(['']),
       otherInformations: this.fb.array(['']),
