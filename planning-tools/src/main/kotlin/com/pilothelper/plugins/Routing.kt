@@ -84,20 +84,31 @@ fun Application.configureRouting() {
         }
 
         // Read all airports close to a given point
-        get("/airport/nearby") {
+        get("/airport/nearby/location") {
             val latitude = call.request.queryParameters["latitude"]?.toFloatOrNull()
+                ?: throw BadRequestException("Missing latitude")
             val longitude = call.request.queryParameters["longitude"]?.toFloatOrNull()
+                ?: throw BadRequestException("Missing longitude")
+            val radius = call.request.queryParameters["radius"]?.toFloatOrNull() ?: 2f
+            val coordinates = Coordinates(latitude, longitude)
 
-            val coordinates = if (latitude != null && longitude != null) {
-                Coordinates(latitude, longitude)
-            } else {
-                val clientAddress = call.request.origin.remoteAddress
-                val ipInfo = ipInfoFetcher.fetchInfo(clientAddress)
-                    ?: throw BadRequestException("Address $clientAddress is in a reserved range, client: ${call.request.origin}")
-                Coordinates(ipInfo.lat, ipInfo.lon)
-            }
+            val nearbyAirports = airportService.findAllNearby(coordinates, radius)
+            call.respond(nearbyAirports)
+        }
 
-            val nearbyAirports = airportService.findAllNearby(coordinates, 5)
+        // Read all airports close to a given point
+        get("/airport/nearby/ip/{ip?}") {
+            val radius = call.request.queryParameters["radius"]?.toFloatOrNull() ?: 2f
+
+            val ip = call.parameters["ip"]
+                ?.let { if (it.matches(Regex("\\d{1,3}(\\.\\d{1,3}){3}"))) it else null }
+                ?: call.request.origin.remoteAddress
+
+            val ipInfo = ipInfoFetcher.fetchInfo(ip)
+                ?: throw BadRequestException("Address $ip is in a reserved range, client: ${call.request.origin}")
+            val coordinates = Coordinates(ipInfo.lat, ipInfo.lon)
+
+            val nearbyAirports = airportService.findAllNearby(coordinates, radius)
             call.respond(nearbyAirports)
         }
     }

@@ -105,7 +105,7 @@ class AirportService(
             .map { it.toAirport() }
     }
 
-    suspend fun findAllNearby(point: Coordinates, radius: Int): List<Airport> = dbQuery {
+    suspend fun findAllNearby(point: Coordinates, radius: Float): List<Airport> = dbQuery {
         Airports.selectAll().where {
             Airports.latitude.between(
                 point.latitude - radius,
