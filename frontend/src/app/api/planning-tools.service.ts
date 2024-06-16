@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
+import {from, Observable, switchMap} from "rxjs";
 import {Weather} from "../../shared/models/Weather";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
@@ -11,8 +11,9 @@ import {Airport} from "../../shared/models/Airport";
   providedIn: 'root'
 })
 export class PlanningToolsService {
-  private baseUrl = `${environment.backendUrl}/planning-tools`
-  private options = {withCredentials: true};
+  private readonly baseUrl = `${environment.backendUrl}/planning-tools`
+  private readonly publicIpProvider = "https://icanhazip.com/";
+  private readonly options = {withCredentials: true};
 
   constructor(private client: HttpClient) {
   }
@@ -53,7 +54,11 @@ export class PlanningToolsService {
     return this.client.get<Airport[]>(`${this.baseUrl}/airport/iata/${iata}`, this.options);
   }
 
-  getNearbyAirports(): Observable<Airport[]> {
-    return this.client.get<Airport[]>(`${this.baseUrl}/airport/nearby`, this.options);
+  getNearbyAirports(radius: number = 2): Observable<Airport[]> {
+    return from(fetch(this.publicIpProvider).then(response => response.text())).pipe(
+      switchMap(publicIp => {
+        return this.client.get<Airport[]>(`${this.baseUrl}/airport/nearby/ip/${publicIp.trim()}?radius=${radius}`, this.options);
+      })
+    )
   }
 }

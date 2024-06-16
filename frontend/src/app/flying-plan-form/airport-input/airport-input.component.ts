@@ -9,6 +9,8 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {Airport} from "../../../shared/models/Airport";
 import {Observable} from "rxjs";
 import {PlanningToolsService} from "../../api/planning-tools.service";
+import {MatDialog} from "@angular/material/dialog";
+import {NearbyAirportDialogComponent} from "./nearby-airport-dialog/nearby-airport-dialog.component";
 
 @Component({
   selector: 'app-airport-input',
@@ -34,7 +36,8 @@ import {PlanningToolsService} from "../../api/planning-tools.service";
 })
 export class AirportInputComponent {
   constructor(
-    public planningToolsService: PlanningToolsService,
+    private dialog: MatDialog,
+    private planningToolsService: PlanningToolsService,
   ) {
   }
 
@@ -94,5 +97,16 @@ export class AirportInputComponent {
     if (airport == undefined) return '';
     if (typeof airport == 'string') return 'ZZZZ';
     return airport.icaoCode ? airport.icaoCode : 'ZZZZ';
+  }
+
+  suggestNearbyAirports() {
+    this.dialog
+      .open(NearbyAirportDialogComponent)
+      .afterClosed()
+      .subscribe(airport => {
+        if (airport) {
+          this.control.patchValue(airport);
+        }
+      });
   }
 }
