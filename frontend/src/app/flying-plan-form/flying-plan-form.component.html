@@ -49,8 +49,13 @@
     <input id="cruisingAltitude" formControlName="cruisingAltitude" />
   </div>
   <div>
-    <label for="path">Path:</label>
-    <input id="path" formControlName="path" />
+    <mat-form-field>
+      <mat-label>Route</mat-label>
+      <textarea matInput formControlName="path" placeholder="ABQ DIESL TTORO3 IAH"></textarea>
+    </mat-form-field>
+    <button mat-icon-button aria-label="Get routes" (click)="suggestRoutes()">
+      <mat-icon>help</mat-icon>
+    </button>
   </div>
   <div>
     <app-airport-input [name]="'Destination Airport'"

@@ -4,6 +4,15 @@ import {AirCraft} from "../../shared/models/AirCraft";
 import {FlightPlan} from "../../shared/models/FlightPlan";
 import {NgForOf} from "@angular/common";
 import {AirportInputComponent} from "./airport-input/airport-input.component";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatIconButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
+import {PlanningToolsService} from "../api/planning-tools.service";
+import {Airport} from "../../shared/models/Airport";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {SelectRouteDialogComponent} from "../dialog/select-route-dialog/select-route-dialog.component";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -12,18 +21,28 @@ import {AirportInputComponent} from "./airport-input/airport-input.component";
     ReactiveFormsModule,
     NgForOf,
     AirportInputComponent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatIconButton,
+    MatIcon,
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
 })
-export class FlyingPlanFormComponent implements OnChanges{
+export class FlyingPlanFormComponent implements OnChanges {
 
   @Input() selectedAircraft: AirCraft | null = null;
   @Output() formSubmit = new EventEmitter<FlightPlan>();
 
   flyingPlanForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog,
+    private planningToolsService: PlanningToolsService,
+  ) {
     this.flyingPlanForm = this.fb.group({
       flightRules: ['', Validators.required],
       flightType: ['', Validators.required],
@@ -98,6 +117,32 @@ export class FlyingPlanFormComponent implements OnChanges{
   onSubmit() {
     if (this.flyingPlanForm.valid) {
       this.formSubmit.emit(this.flyingPlanForm.value);
+    }
+  }
+
+  suggestRoutes() {
+    let startingAirport: string | Airport | undefined = this.flyingPlanForm.get('startingAirport')?.value;
+    let destinationAirport: string | Airport | undefined = this.flyingPlanForm.get('destinationAirport')?.value;
+
+    if (startingAirport != null && destinationAirport != null) {
+      if (startingAirport instanceof Airport) {
+        startingAirport = startingAirport.iataCode ? startingAirport.iataCode : '';
+      }
+      if (destinationAirport instanceof Airport) {
+        destinationAirport = destinationAirport.iataCode ? destinationAirport.iataCode : '';
+      }
+      this.planningToolsService.getRoutesBetween(startingAirport, destinationAirport).subscribe(routes => {
+        this.dialog
+          .open(SelectRouteDialogComponent, {data: routes,})
+          .afterClosed()
+          .subscribe(route => {
+            if (route) {
+              this.flyingPlanForm.patchValue({path: route.route});
+            }
+          });
+      });
+    } else {
+      this.snackbar.open('Merci de renseigner l\'aéroport de départ et d\'arrivée', 'OK');
     }
   }
 }
