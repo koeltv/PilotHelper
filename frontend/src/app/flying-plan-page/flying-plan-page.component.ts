@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
-import {FlightPlanService} from "../api/flight-plan.service";
 import {FlightPlan} from "../../shared/models/FlightPlan";
-import {environment} from "../../environments/environment";
 import {showAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.component";
 import {AirCraft} from "../../shared/models/AirCraft";
@@ -17,9 +15,6 @@ import {AirCraft} from "../../shared/models/AirCraft";
   styleUrl: './flying-plan-page.component.css'
 })
 export class FlyingPlanPageComponent {
-  protected pageUrl = `${environment.frontendUrl}/flyingplan`;
-  public flightPlan: FlightPlan | undefined
-
   myAirCraft: AirCraft[] = [
     {
       aircraftId: "avion1",
@@ -56,15 +51,4 @@ export class FlyingPlanPageComponent {
     console.log('Flying Plan:', newFlyingPlan);
     // Envoie vers le backend
   }
-
-  constructor(private flightPlanService: FlightPlanService) {
-    flightPlanService.readFlightPlan(2)
-      .subscribe(flightPlan => {
-        console.log(flightPlan);
-        this.flightPlan = flightPlan;
-      });
-  }
-
-  protected readonly JSON = JSON;
-  protected readonly encodeURI = encodeURI;
 }

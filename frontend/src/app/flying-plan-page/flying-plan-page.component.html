@@ -1,8 +1,4 @@
-<p>flying-plan-page works! Login <a
-  href="http://keycloak:8080/realms/realm-name/protocol/openid-connect/auth?client_id=client-id&redirect_uri={{encodeURI(pageUrl)}}&response_type=code&scope=openid">here</a>
-</p>
-
-<p>{{ JSON.stringify(flightPlan) }}</p>
+<p>flying-plan-page works!</p>
 
 <show-aircraft-form [airCraftList]="myAirCraft" (visibleAirCraftList)="onAircraftSelected($event)"></show-aircraft-form>
 
