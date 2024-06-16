@@ -4,7 +4,6 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
-  MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
 import {MatFormField} from "@angular/material/form-field";
@@ -39,12 +38,7 @@ export class LoginData {
 })
 export class LoginDialogComponent {
   constructor(
-    public dialogRef: MatDialogRef<LoginDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LoginData,
   ) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

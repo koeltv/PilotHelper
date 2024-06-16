@@ -6,7 +6,7 @@ import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button"
 import {MatSidenavContainer} from "@angular/material/sidenav";
 import {AuthentificationService} from "./api/authentification.service";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginData, LoginDialogComponent} from "./login-dialog/login-dialog.component";
+import {LoginData, LoginDialogComponent} from "./dialog/login-dialog/login-dialog.component";
 
 
 @Component({
@@ -42,17 +42,16 @@ export class AppComponent {
   }
 
   openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      data: new LoginData(),
-    });
-
-    dialogRef.afterClosed().subscribe(data => {
-      if (data != undefined) {
-        this.authentificationService.login(data).subscribe(_ => {
-          this.updateLoginState();
-        });
-      }
-    });
+    this.dialog
+      .open(LoginDialogComponent, {data: new LoginData()})
+      .afterClosed()
+      .subscribe(data => {
+        if (data != undefined) {
+          this.authentificationService.login(data).subscribe(_ => {
+            this.updateLoginState();
+          });
+        }
+      });
   }
 
   logout() {

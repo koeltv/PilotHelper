@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
-import {LoginData} from "../login-dialog/login-dialog.component";
+import {LoginData} from "../dialog/login-dialog/login-dialog.component";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -19,11 +19,12 @@ export class AuthentificationService {
     const decodedCookies = decodeURIComponent(document.cookie);
     const cookieList = decodedCookies.split(';');
     for (let cookie of cookieList) {
-      while (cookie.charAt(0) == ' ') {
-        cookie = cookie.substring(1);
+      let trimmedCookie = cookie;
+      while (trimmedCookie.startsWith(' ')) {
+        trimmedCookie = trimmedCookie.substring(1);
       }
-      if (cookie.indexOf(name) == 0) {
-        return cookie.substring(name.length, cookie.length);
+      if (trimmedCookie.startsWith(name)) {
+        return trimmedCookie.substring(name.length, trimmedCookie.length);
       }
     }
     return null;
