@@ -7,25 +7,19 @@ servers:
   - url: "http://pilothelper.com/flight-plan"
 paths:
   /:
-    post:
-      description: "Create flight-plan"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FlightPlan"
-          'application/xml':
-            schema:
-              $ref: "#/components/schemas/FlightPlan"
-        required: true
+    get:
+      description: ""
       responses:
-        "201":
-          description: "Created"
+        "200":
+          description: "OK"
           content:
-            '*/*':
+            text/plain:
               schema:
-                type: "integer"
-                format: "int32"
+                $ref: "#/components/schemas/Function1_? super HTML"
+              examples:
+                text/html:
+                  description: "HTML document"
+                  value: ""
   /{id}:
     delete:
       description: "Delete flight-plan"
@@ -119,6 +113,24 @@ paths:
             '*/*':
               schema:
                 type: "object"
+  /user:
+    get:
+      description: "Read all flight-plans from user"
+      responses:
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/FlightPlansWithId"
 components:
   schemas:
     Aircraft:
@@ -237,3 +249,10 @@ components:
       - "equipment"
       - "remarks"
       - "pilot"
+    FlightPlansWithId:
+      type: object
+      properties:
+        id:
+          type: "number"
+        flightPlan:
+          $ref: "#/components/schemas/FlightPlan"

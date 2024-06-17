@@ -2,6 +2,7 @@ package com.pilothelper.services
 
 import com.pilothelper.model.Aircraft
 import com.pilothelper.model.FlightPlan
+import com.pilothelper.model.FlightPlanWithId
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
@@ -9,6 +10,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.statements.UpdateBuilder
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
 
 class FlightPlanService(
     database: Database,
@@ -68,9 +70,16 @@ class FlightPlanService(
         val raftCoverageColor = varchar("raft_coverage_color", 255)
     }
 
+    internal object FlightPlansUsers : Table() {
+        val userId = uuid("user_id")
+        val flightPlanId = reference("flight_plan_id", FlightPlans.id)
+
+        override val primaryKey = PrimaryKey(userId, flightPlanId)
+    }
+
     init {
         transaction(database) {
-            SchemaUtils.create(FlightEquipments, FlightPlans)
+            SchemaUtils.create(FlightEquipments, FlightPlans, FlightPlansUsers)
         }
     }
 
@@ -78,16 +87,23 @@ class FlightPlanService(
         return newSuspendedTransaction(Dispatchers.IO) { block() }
     }
 
-    suspend fun create(flightPlan: FlightPlan): Int = dbQuery {
+    suspend fun create(flightPlan: FlightPlan, userId: UUID): Int = dbQuery {
         val equipmentId = FlightEquipments.insertAndGetId {
             it.prepareFrom(flightPlan.equipment)
         }.value
 
         val aircraftId = aircraftService.createOrUpdate(flightPlan.aircraftData)
 
-        FlightPlans.insertAndGetId {
+        val flightPlanId = FlightPlans.insertAndGetId {
             it.prepareFrom(flightPlan, aircraftId, equipmentId)
         }.value
+
+        FlightPlansUsers.insert {
+            it[this.userId] = userId
+            it[this.flightPlanId] = flightPlanId
+        }
+
+        flightPlanId
     }
 
     suspend fun read(id: Int): FlightPlan? = dbQuery {
@@ -95,6 +111,12 @@ class FlightPlanService(
             .select { FlightPlans.id eq id }
             .map { it.toFlightPlan() }
             .singleOrNull()
+    }
+
+    suspend fun readAllFromUser(id: UUID): List<FlightPlanWithId> = dbQuery {
+        FlightPlans.innerJoin(FlightEquipments).innerJoin(AircraftService.Aircrafts).innerJoin(FlightPlansUsers)
+            .select { FlightPlansUsers.userId eq id }
+            .map { FlightPlanWithId(it[FlightPlans.id].value, it.toFlightPlan()) }
     }
 
     suspend fun update(id: Int, flightPlan: FlightPlan) {
