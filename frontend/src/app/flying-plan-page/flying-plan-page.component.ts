@@ -3,18 +3,26 @@ import {FlightPlan} from "../../shared/models/FlightPlan";
 import {showAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.component";
 import {AirCraft} from "../../shared/models/AirCraft";
+import {MatGridListModule} from '@angular/material/grid-list';
+import {DisplayMeteoComponent} from "./display-meteo/display-meteo.component";
+import {MatListModule} from '@angular/material/list';
+
 
 @Component({
   selector: 'app-flying-plan-page',
   standalone: true,
   imports: [
     showAircraftForm,
-    FlyingPlanFormComponent
+    FlyingPlanFormComponent,
+    DisplayMeteoComponent,
+    MatGridListModule,
+    MatListModule
   ],
   templateUrl: './flying-plan-page.component.html',
   styleUrl: './flying-plan-page.component.css'
 })
 export class FlyingPlanPageComponent {
+
   myAirCraft: AirCraft[] = [
     {
       aircraftId: "avion1",
@@ -43,6 +51,9 @@ export class FlyingPlanPageComponent {
     colorAndMarkings: ''
   };
 
+  airportCodeStart:string = "";
+  airportCodeEnd:string = "";
+
   onAircraftSelected(selectedAircraft: AirCraft[]) {
     this.selectedAircraft = selectedAircraft[0];
   }
@@ -50,5 +61,15 @@ export class FlyingPlanPageComponent {
   onFormSubmit(newFlyingPlan: FlightPlan) {
     console.log('Flying Plan:', newFlyingPlan);
     // Envoie vers le backend
+  }
+
+  updateMeteo(change: { [key: string]: any }){
+    console.log("updateMeteo",change);
+    if (change['startingAirport']) {
+      console.log("updateMeteo",change);
+      this.airportCodeStart = change['startingAirport'];
+    } else if (change['destinationAirport']) {
+      this.airportCodeEnd = change['destinationAirport'];
+    }
   }
 }

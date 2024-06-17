@@ -35,6 +35,7 @@ import {NearbyAirportDialogComponent} from "./nearby-airport-dialog/nearby-airpo
   styleUrl: './airport-input.component.css'
 })
 export class AirportInputComponent {
+
   constructor(
     private dialog: MatDialog,
     private planningToolsService: PlanningToolsService,

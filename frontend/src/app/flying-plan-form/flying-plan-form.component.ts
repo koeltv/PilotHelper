@@ -3,7 +3,6 @@ import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from
 import {AirCraft} from "../../shared/models/AirCraft";
 import {FlightPlan} from "../../shared/models/FlightPlan";
 import {NgForOf} from "@angular/common";
-import {AirportInputComponent} from "./airport-input/airport-input.component";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatIconButton} from "@angular/material/button";
@@ -13,6 +12,7 @@ import {Airport} from "../../shared/models/Airport";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {SelectRouteDialogComponent} from "../dialog/select-route-dialog/select-route-dialog.component";
+import {AirportInputComponent} from "./airport-input/airport-input.component";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -34,7 +34,7 @@ export class FlyingPlanFormComponent implements OnChanges {
 
   @Input() selectedAircraft: AirCraft | null = null;
   @Output() formSubmit = new EventEmitter<FlightPlan>();
-
+  @Output() formChange = new EventEmitter<{ [key: string]: any }>();
   flyingPlanForm: FormGroup;
 
   constructor(
@@ -85,7 +85,15 @@ export class FlyingPlanFormComponent implements OnChanges {
       remarks: [''],
       pilot: ['', Validators.required]
     });
+
+    Object.keys(this.flyingPlanForm.controls).forEach(fieldName => {
+      this.flyingPlanForm.get(fieldName)?.valueChanges.subscribe(newValue => {
+        this.formChange.emit({[fieldName]: newValue});
+      });
+    });
+
   }
+
 
   get alternativeAirports(): FormArray {
     return this.flyingPlanForm.get('alternativeAirport') as FormArray;
@@ -144,5 +152,10 @@ export class FlyingPlanFormComponent implements OnChanges {
     } else {
       this.snackbar.open('Merci de renseigner l\'aéroport de départ et d\'arrivée', 'OK');
     }
+  }
+
+  controlLenght(){
+
+    console.log("there were a change");
   }
 }

@@ -1,8 +1,29 @@
 <p>flying-plan-page works!</p>
+<mat-grid-list cols="4" rowHeight="1:2.5">
+  <mat-grid-tile
+    [colspan]="1">
+    <div>
+      <display-meteo [airportCode]="airportCodeStart"></display-meteo>
+      <br><br>
+      <display-meteo [airportCode]="airportCodeEnd"></display-meteo>
+    </div>
+  </mat-grid-tile>
 
-<show-aircraft-form [airCraftList]="myAirCraft" (visibleAirCraftList)="onAircraftSelected($event)"></show-aircraft-form>
 
-<app-flying-plan-form
-  [selectedAircraft]="selectedAircraft"
-  (formSubmit)="onFormSubmit($event)">
-</app-flying-plan-form>
+  <mat-grid-tile
+    [colspan]="2">
+    <div>
+      <show-aircraft-form [airCraftList]="myAirCraft"
+                          (visibleAirCraftList)="onAircraftSelected($event)"></show-aircraft-form>
+
+      <app-flying-plan-form
+        (formChange)="updateMeteo($event)"
+        [selectedAircraft]="selectedAircraft"
+        (formSubmit)="onFormSubmit($event)">
+      </app-flying-plan-form>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
