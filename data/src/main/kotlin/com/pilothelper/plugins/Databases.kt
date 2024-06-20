@@ -67,7 +67,7 @@ fun Application.configureDatabases() {
         }
 
         //Read all Aircraft from connected User
-        get("/aircraft/user/") {
+        get("/aircraft/user") {
             val token = call.getToken() ?: throw BadRequestException("Please login first")
             val id = UUID.fromString(requestUserInfo(token).sub)
             val userAircrafts = aircraftService.readUserAircrafts(id)
