@@ -1,12 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button";
 import {MatSidenavContainer} from "@angular/material/sidenav";
-import {AuthentificationService} from "./api/authentification.service";
 import {MatDialog} from "@angular/material/dialog";
-import {LoginData, LoginDialogComponent} from "./dialog/login-dialog/login-dialog.component";
+import {KeycloakEventType, KeycloakService} from "keycloak-angular";
 
 
 @Component({
@@ -16,18 +15,46 @@ import {LoginData, LoginDialogComponent} from "./dialog/login-dialog/login-dialo
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'frontend';
 
   username: string | undefined;
 
   constructor(
     private router: Router,
-    private authentificationService: AuthentificationService,
+    private authService: KeycloakService,
     public dialog: MatDialog
   ) {
-    if (this.authentificationService.checkForLogin()) {
-      this.updateLoginState();
+  }
+
+  public addAuthCookie(authService: KeycloakService) {
+    authService.getToken().then(token => {
+      console.log(`token`, token);
+      document.cookie = `Authorization=Bearer ${token}`;
+    });
+  }
+
+  public async ngOnInit() {
+    await this.setupAuthentification();
+  }
+
+  private async setupAuthentification() {
+    const service = this.authService;
+    const addAuthCookie = this.addAuthCookie;
+
+    service.keycloakEvents$.subscribe({
+      next(event) {
+        if (
+          event.type == KeycloakEventType.OnAuthSuccess ||
+          event.type == KeycloakEventType.OnAuthRefreshSuccess
+        ) addAuthCookie(service);
+      }
+    });
+
+    if (this.authService.isLoggedIn()) {
+      addAuthCookie(this.authService);
+      const profile = await this.authService.loadUserProfile();
+      this.username = profile.username;
     }
   }
 
@@ -35,27 +62,12 @@ export class AppComponent {
     this.router.navigate([path]);
   }
 
-  updateLoginState() {
-    this.authentificationService.getUserInfo()?.subscribe(data => {
-      this.username = data.name;
-    });
-  }
-
   openLoginDialog(): void {
-    this.dialog
-      .open(LoginDialogComponent, {data: new LoginData()})
-      .afterClosed()
-      .subscribe(data => {
-        if (data != undefined) {
-          this.authentificationService.login(data).subscribe(_ => {
-            this.updateLoginState();
-          });
-        }
-      });
+    this.authService.login();
   }
 
   logout() {
-    this.authentificationService.logout();
+    this.authService.logout();
     this.username = undefined;
   }
 }

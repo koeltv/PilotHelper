@@ -24,7 +24,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/assets"
             ],
             "styles": [
               "src/custom-theme.scss",
@@ -72,6 +73,9 @@
             "development": {
               "buildTarget": "frontend:build:development"
             }
+          },
+          "options": {
+            "proxyConfig": "proxy.conf.dev.json"
           },
           "defaultConfiguration": "development"
         },

@@ -1,9 +1,28 @@
-import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular/core';
+import {APP_INITIALIZER, ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import routeConfig from "./app.routes";
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideHttpClient, withFetch} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
+import {KeycloakBearerInterceptor, KeycloakService} from "keycloak-angular";
+import {environment} from "../environments/environment";
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () => {
+    return keycloak.init({
+      config: {
+        realm: `${environment.auth.realm}`,
+        url: `${environment.auth.url}`,
+        clientId: `${environment.auth.clientId}`
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri:
+          window.location.origin + '/assets/silent-check-sso.html'
+      },
+    });
+  }
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +33,18 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
+      multi: true
+    },
+    KeycloakService,
+    provideHttpClient(withFetch(), withInterceptorsFromDi()),
   ]
 };

@@ -13,7 +13,7 @@ services:
 
   # Keycloak : Authentification & Authorization
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:25.0.0
     command: start-dev --import-realm
     env_file:
       - keycloak-database.env

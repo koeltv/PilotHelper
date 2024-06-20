@@ -1,0 +1,20 @@
+{
+  "/planning-tools": {
+    "target": "http://localhost/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/flight-plan": {
+    "target": "http://localhost/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/data": {
+    "target": "http://localhost/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

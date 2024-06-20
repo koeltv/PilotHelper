@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {environment} from "../../environments/environment";
 import {FlightPlan} from "../../shared/models/FlightPlan";
 
 export class FlightPlanWithId {
@@ -16,8 +15,7 @@ export class FlightPlanWithId {
   providedIn: 'root'
 })
 export class FlightPlanService {
-  private baseUrl = `${environment.backendUrl}/flight-plan`;
-  private options = {withCredentials: true};
+  private baseUrl = `/flight-plan`;
 
   constructor(private client: HttpClient) {
   }
@@ -27,18 +25,18 @@ export class FlightPlanService {
   }
 
   readAllFlightPlans(): Observable<FlightPlanWithId[]> {
-    return this.client.get<FlightPlanWithId[]>(`${this.baseUrl}/user`, this.options);
+    return this.client.get<FlightPlanWithId[]>(`${this.baseUrl}/user`);
   }
 
   readFlightPlan(id: number): Observable<FlightPlan | undefined> {
-    return this.client.get<FlightPlan | undefined>(`${this.baseUrl}/${id}`, this.options);
+    return this.client.get<FlightPlan | undefined>(`${this.baseUrl}/${id}`);
   }
 
   updateFlightPlan(id: number, flightPlan: FlightPlan): Observable<any> {
-    return this.client.put(`${this.baseUrl}/${id}`, flightPlan, this.options);
+    return this.client.put(`${this.baseUrl}/${id}`, flightPlan);
   }
 
   deleteFlightPlan(id: number): Observable<any> {
-    return this.client.delete(`${this.baseUrl}/${id}`, this.options);
+    return this.client.delete(`${this.baseUrl}/${id}`);
   }
 }
