@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FlightPlan} from "../../shared/models/FlightPlan";
-import {showAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
+import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.component";
 import {AirCraft} from "../../shared/models/AirCraft";
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -12,7 +12,7 @@ import {MatListModule} from '@angular/material/list';
   selector: 'app-flying-plan-page',
   standalone: true,
   imports: [
-    showAircraftForm,
+    ShowAircraftForm,
     FlyingPlanFormComponent,
     DisplayMeteoComponent,
     MatGridListModule,

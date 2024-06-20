@@ -14,7 +14,7 @@
     [colspan]="2">
     <div>
       <show-aircraft-form [airCraftList]="myAirCraft"
-                          (visibleAirCraftList)="onAircraftSelected($event)"></show-aircraft-form>
+                          (updatedAircraftList)="onAircraftSelected($event)"></show-aircraft-form>
 
       <app-flying-plan-form
         (formChange)="updateMeteo($event)"
