@@ -14,7 +14,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 export class showAircraftForm{
 
-  @Input()airCraftList: AirCraft[] = [];
+  @Input()airCraftList!: AirCraft[];
   @Output()visibleAirCraftList = new EventEmitter<AirCraft[]>();
   listFilter : string = '0';
   visibleAircraft : AirCraft[] = this.airCraftList;

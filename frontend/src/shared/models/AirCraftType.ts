@@ -1,4 +1,8 @@
 export class AirCraftType {
-  constructor(public type : string[]) {
+  constructor(
+    public name: string,
+    public designator: string,
+    public engineManufacturer: string,
+  ) {
   }
 }

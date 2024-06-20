@@ -31,7 +31,7 @@ export class AircraftPageComponent {
   addAircraft(aircraft: AirCraft) {
     console.log('test', aircraft);
     this.dataService.createAircraft(aircraft).subscribe(result=> console.log(result));
-    //this.airCraftList.push(aircraft);
+
   }
 
   updateVisibleAircraft(updatedList: AirCraft[]) {
