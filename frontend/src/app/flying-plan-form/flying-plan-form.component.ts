@@ -13,6 +13,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
 import {SelectRouteDialogComponent} from "../dialog/select-route-dialog/select-route-dialog.component";
 import {AirportInputComponent} from "./airport-input/airport-input.component";
+import {AircraftTypeInputComponent} from "./aircraft-type-input/aircraft-type-input.component";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -26,6 +27,7 @@ import {AirportInputComponent} from "./airport-input/airport-input.component";
     MatInput,
     MatIconButton,
     MatIcon,
+    AircraftTypeInputComponent,
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
@@ -48,7 +50,7 @@ export class FlyingPlanFormComponent implements OnChanges {
       flightType: ['', Validators.required],
       aircraftData: this.fb.group({
         aircraftId: [''],
-        airCraftType: [''],
+        airCraftType: [undefined],
         turbulenceType: [''],
         equipment: [''],
         transponder: [''],
@@ -152,10 +154,5 @@ export class FlyingPlanFormComponent implements OnChanges {
     } else {
       this.snackbar.open('Merci de renseigner l\'aéroport de départ et d\'arrivée', 'OK');
     }
-  }
-
-  controlLenght(){
-
-    console.log("there were a change");
   }
 }
