@@ -3,13 +3,15 @@ import {PlanningToolsService} from "../../api/planning-tools.service";
 import {Cloud} from "../../../shared/models/Weather";
 import {NgIf} from "@angular/common";
 import {MatListModule} from '@angular/material/list';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'display-meteo',
   standalone: true,
   imports: [
     NgIf,
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
   templateUrl: './display-meteo.component.html',
   styleUrl: './display-meteo.component.css'
@@ -33,24 +35,23 @@ export class DisplayMeteoComponent implements OnChanges {
    }
 
   ngOnChanges(changes: SimpleChanges) {
-     console.log("testtest",this.airportCode);
      if(this.airportCode.length==4){
        this.displayWeatherFunction(this.airportCode);
+     }else{
+       this.nameDisplay = "Entrez un aéroport pour y voir la météo !";
      }
   }
 
    displayWeatherFunction(airportCode:string){
       this.planningToolService.getWeatherInfoFor(airportCode).subscribe(info =>{
-        this.nameDisplay = `METAR for: ${info.name} `;
-        this.conditionDisplay = `Conditions at: ${info.obsTime} `;
-        this.temperatureDisplay = `Temperature:	${info.temp}°C ( ${celsiusToFahrenheit(info.temp)}°F) `;
-        this.dewpointDisplay = `Dewpoint:	${info.dewp}°C ( ${celsiusToFahrenheit(info.dewp)} °F) `;
-        this.pressureDisplay = `Pressure (altimeter):	${mbToInchHg(info.altim)}} inches Hg (${info.altim} mb)`;
-        this.windsDisplay = `Winds:	from the ${degToCompass(info.wdir)} (${info.wdir} degrees) at ${ktToMph(info.wspd)} MPH (${info.wspd} knots; ${ktToMs(info?.wspd)} m/s)`;
-        this.visibilityDisplay = `Visibility:	${visibilityDecode(info.visib)}`;
-        this.cloudsDisplay = `Clouds: ${this.cloudInfoDisplay(info.clouds)}`;
-
-        console.log(info);
+        this.nameDisplay = `<b>METAR pour :</b> ${info.name} `;
+        this.conditionDisplay = `<b>Conditions à:</b> ${UnixToTimespan(info.obsTime)} `;
+        this.temperatureDisplay = `<b>Temperature:</b>	${info.temp}°C (${celsiusToFahrenheit(info.temp)}°F) `;
+        this.dewpointDisplay = `<b>Dewpoint:</b>	${info.dewp}°C (${celsiusToFahrenheit(info.dewp)} °F) `;
+        this.pressureDisplay = `<b>Pressure (altimeter):</b>	${mbToInchHg(info.altim)}  inches Hg (${info.altim} mb)`;
+        this.windsDisplay = `<b>Vents:</b> ${degToCompass(info.wdir)} (${info.wdir} degrés) à ${ktToMph(info.wspd)} MPH (${info.wspd} knots; ${ktToMs(info?.wspd)} m/s)`;
+        this.visibilityDisplay = `<b>Visibilité:</b>	${visibilityDecode(info.visib)}`;
+        this.cloudsDisplay = `<b>Nuages:</b> ${this.cloudInfoDisplay(info.clouds)}`;
       })
    }
 
@@ -75,20 +76,20 @@ export class DisplayMeteoComponent implements OnChanges {
   protected readonly mbToInchHg = mbToInchHg;
 }
 
-//TODO: find more case to complete this fucntion
-function visibilityDecode(visibility:string){
-  switch (visibility){
-    case"6+":{
-      return "6 or more sm (10+ km)"
-    }
+
+function visibilityDecode(visibility:any):string{
+  if (visibility== "6+" ) {
+    return "6+ sm (10+ km)"
+  } else {
+    let visbilityInKm = (Number(visibility) * 1.60934).toFixed(2);
+    return `${visibility} sm ( ${visbilityInKm} km)`;
   }
-  return "This condition was not handel";
 }
 
 function degToCompass(num: number) {
 
     var val = Math.floor((num / 22.5) + 0.5);
-    var arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    var arr = ["Nord", "Nord-Nord-Est ", "Nord-Est ", "Est-Nord-Est ", "Est", "Est-Sud-Est ", "Sud-Est", "Sud-Sud-Est ", "Sud", "Susuroît", "Suroît", "Ouest-Suroît ", "Ouest", "Ouest-Noroît ", "Noroît", "Nord-Noroît "];
     return arr[(val % 16)];
 
 }
@@ -137,4 +138,8 @@ function mbToInchHg (mb:number){
 
     return (mb/33.8639).toFixed(2);
 
+}
+
+function UnixToTimespan(unix:number){
+  return new Date(unix);
 }
