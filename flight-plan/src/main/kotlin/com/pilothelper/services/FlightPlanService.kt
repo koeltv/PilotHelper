@@ -50,7 +50,7 @@ class FlightPlanService(
         val pilot = varchar("pilot", length = 30)
         val remarks = varchar("remarks", length = 200)
 
-        val equipment = reference("equipment", FlightEquipments, onDelete = ReferenceOption.CASCADE)
+        val equipment = reference("equipment", FlightEquipments)
     }
 
     object FlightEquipments : IntIdTable() {
@@ -139,7 +139,15 @@ class FlightPlanService(
     }
 
     suspend fun delete(id: Int): Unit = dbQuery {
+        val equipmentId = FlightPlans
+            .slice(FlightPlans.equipment)
+            .select { FlightPlans.id eq id }
+            .map { it[FlightPlans.equipment] }
+            .single()
+
+        FlightPlansUsers.deleteWhere { flightPlanId eq id }
         FlightPlans.deleteWhere { FlightPlans.id eq id }
+        FlightEquipments.deleteWhere { FlightEquipments.id eq equipmentId }
     }
 
     private fun UpdateBuilder<Int>.prepareFrom(equipment: FlightPlan.Equipment) {
