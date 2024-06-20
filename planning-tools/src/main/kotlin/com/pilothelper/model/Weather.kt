@@ -1,6 +1,12 @@
 package com.pilothelper.model
 
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Data received from AviationWeatherGov API: https://aviationweather.gov/data/api/#/Data/dataMetars
@@ -17,6 +23,7 @@ data class Weather(
     val wdir: Int,
     val wspd: Int,
     val wgst: Int?,
+    @Serializable(with = FloatOrStringAsStringSerializer::class)
     val visib: String,
     val altim: Int,
     val slp: String?,
@@ -49,4 +56,21 @@ data class Weather(
         val cover: String,
         val base: Int?
     )
+}
+
+
+object FloatOrStringAsStringSerializer : KSerializer<String> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("FloatOrString", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: String) {
+        encoder.encodeString(value)
+    }
+
+    override fun deserialize(decoder: Decoder): String {
+        return try{
+            decoder.decodeFloat().toString()
+        } catch (e: Exception) {
+            decoder.decodeString()
+        }
+    }
 }
