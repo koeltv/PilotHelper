@@ -38,6 +38,7 @@ export class FlyingPlanFormComponent implements OnChanges {
   @Output() formSubmit = new EventEmitter<FlightPlan>();
   @Output() formChange = new EventEmitter<{ [key: string]: any }>();
   flyingPlanForm: FormGroup;
+  aircraftData: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -45,17 +46,19 @@ export class FlyingPlanFormComponent implements OnChanges {
     private dialog: MatDialog,
     private planningToolsService: PlanningToolsService,
   ) {
+    this.aircraftData = this.fb.group({
+      aircraftId: [''],
+      airCraftType: [undefined],
+      turbulenceType: [''],
+      equipment: [''],
+      transponder: [''],
+      colorAndMarkings: ['']
+    });
+
     this.flyingPlanForm = this.fb.group({
       flightRules: ['', Validators.required],
       flightType: ['', Validators.required],
-      aircraftData: this.fb.group({
-        aircraftId: [''],
-        airCraftType: [undefined],
-        turbulenceType: [''],
-        equipment: [''],
-        transponder: [''],
-        colorAndMarkings: ['']
-      }),
+      aircraftData: this.aircraftData,
       aircraftCount: [1, Validators.required],
       startingAirport: [undefined, Validators.required],
       startingTime: ['', Validators.required],

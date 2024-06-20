@@ -11,12 +11,10 @@
     <label for="aircraftId">Aircraft ID:</label>
     <input id="aircraftId" formControlName="aircraftId"/>
 
-    <!--    <label for="airCraftType">Aircraft Type:</label>-->
-    <!--    <input id="airCraftType" formControlName="airCraftType" />-->
     <div>
       <aircraft-type-input
                         [name]="'Aircraft Type'"
-                         [control]="flyingPlanForm.controls['airCraftType']"
+                        [control]="aircraftData.controls['airCraftType']"
       ></aircraft-type-input>
     </div>
 

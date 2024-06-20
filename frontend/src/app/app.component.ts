@@ -28,10 +28,7 @@ export class AppComponent implements OnInit {
   }
 
   public addAuthCookie(authService: KeycloakService) {
-    authService.getToken().then(token => {
-      console.log(`token`, token);
-      document.cookie = `Authorization=Bearer ${token}`;
-    });
+    authService.getToken().then(token => document.cookie = `Authorization=Bearer ${token}`);
   }
 
   public async ngOnInit() {

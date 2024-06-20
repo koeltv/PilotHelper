@@ -64,9 +64,7 @@ export class FlyingPlanPageComponent {
   }
 
   updateMeteo(change: { [key: string]: any }){
-    console.log("updateMeteo",change);
     if (change['startingAirport']) {
-      console.log("updateMeteo",change);
       this.airportCodeStart = change['startingAirport'];
     } else if (change['destinationAirport']) {
       this.airportCodeEnd = change['destinationAirport'];
