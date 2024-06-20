@@ -1,4 +1,5 @@
 export const environment = {
+  enableKeycloak: true,
   backendUrl: "http://pilothelper.com",
   auth: {
     url: 'http://keycloak.pilothelper.com',

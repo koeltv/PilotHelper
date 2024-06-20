@@ -9,6 +9,8 @@ import {environment} from "../environments/environment";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => {
+    if (!environment.enableKeycloak) return false;
+
     return keycloak.init({
       config: {
         realm: `${environment.auth.realm}`,
