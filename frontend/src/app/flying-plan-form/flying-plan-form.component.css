@@ -5,3 +5,7 @@ form{
 igx-time-picker{
   background-color: #8a90a5;
 }
+
+.space-margin {
+  margin: 0 20px;
+}

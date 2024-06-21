@@ -15,13 +15,8 @@ import {SelectRouteDialogComponent} from "../dialog/select-route-dialog/select-r
 import {AirportInputComponent} from "./airport-input/airport-input.component";
 import {AircraftTypeInputComponent} from "./aircraft-type-input/aircraft-type-input.component";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {
-  IGX_TIME_PICKER_DIRECTIVES,
-  IgxLabelDirective,
-  IgxTimePickerComponent,
-  PickerInteractionMode
-} from "igniteui-angular";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -37,10 +32,9 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     MatIcon,
     AircraftTypeInputComponent,
     MatCheckbox,
-    IgxTimePickerComponent,
-    IgxLabelDirective,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    MatDivider
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
@@ -52,9 +46,6 @@ export class FlyingPlanFormComponent implements OnChanges {
   @Output() formChange = new EventEmitter<{ [key: string]: any }>();
   flyingPlanForm: FormGroup;
   aircraftData: FormGroup;
-  public mode: PickerInteractionMode = PickerInteractionMode.DropDown;
-  public format = 'hh:mm tt';
-  public date: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
