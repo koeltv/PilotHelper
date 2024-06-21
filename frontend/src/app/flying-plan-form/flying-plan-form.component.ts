@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AirCraft} from "../../shared/models/AirCraft";
 import {FlightPlan} from "../../shared/models/FlightPlan";
@@ -15,8 +15,9 @@ import {SelectRouteDialogComponent} from "../dialog/select-route-dialog/select-r
 import {AirportInputComponent} from "./airport-input/airport-input.component";
 import {AircraftTypeInputComponent} from "./aircraft-type-input/aircraft-type-input.component";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {IgxLabelDirective, IgxTimePickerComponent, PickerInteractionMode} from "igniteui-angular";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
+import {MatDivider} from "@angular/material/divider";
+import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -32,24 +33,48 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
     MatIcon,
     AircraftTypeInputComponent,
     MatCheckbox,
-    IgxTimePickerComponent,
-    IgxLabelDirective,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    MatDivider,
+    ShowAircraftForm
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
 })
-export class FlyingPlanFormComponent implements OnChanges {
+export class FlyingPlanFormComponent {
 
-  @Input() selectedAircraft: AirCraft | null = null;
   @Output() formSubmit = new EventEmitter<FlightPlan>();
   @Output() formChange = new EventEmitter<{ [key: string]: any }>();
   flyingPlanForm: FormGroup;
   aircraftData: FormGroup;
-  public mode: PickerInteractionMode = PickerInteractionMode.DropDown;
-  public format = 'hh:mm tt';
-  public date: Date = new Date();
+
+  myAirCraft: AirCraft[] = [
+    {
+      aircraftId: "avion1",
+      aircraftType: "A",
+      turbulenceType: "1",
+      equipment: "tout",
+      transponder: "jsp",
+      colorAndMarkings: "rouge"
+    },
+    {
+      aircraftId: "avion2",
+      aircraftType: "D",
+      turbulenceType: "3",
+      equipment: "tout",
+      transponder: "jsp encore",
+      colorAndMarkings: "bleu"
+    }
+  ];
+
+  selectedAircraft: AirCraft = {
+    aircraftId: '',
+    aircraftType: '',
+    turbulenceType: '',
+    equipment: '',
+    transponder: '',
+    colorAndMarkings: ''
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -110,6 +135,10 @@ export class FlyingPlanFormComponent implements OnChanges {
 
   }
 
+  onAircraftSelected(selectedAircraft: AirCraft[]) {
+    this.selectedAircraft = selectedAircraft[0];
+    this.updateAircraftData(this.selectedAircraft);
+  }
 
   get alternativeAirports(): FormArray {
     return this.flyingPlanForm.get('alternativeAirport') as FormArray;
@@ -117,12 +146,6 @@ export class FlyingPlanFormComponent implements OnChanges {
 
   get otherInformations(): FormArray {
     return this.flyingPlanForm.get('otherInformations') as FormArray;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedAircraft'] && this.selectedAircraft) {
-      this.updateAircraftData(this.selectedAircraft);
-    }
   }
 
   updateAircraftData(selectedAircraft: AirCraft) {
@@ -149,6 +172,7 @@ export class FlyingPlanFormComponent implements OnChanges {
 
       this.flyingPlanForm.value.startingTime = this.flyingPlanForm.value.startingTime.replace(/:/, '');
       this.flyingPlanForm.value.estimatedTime = this.flyingPlanForm.value.estimatedTime.replace(/:/, '');
+      this.flyingPlanForm.value.autonomy = this.flyingPlanForm.value.autonomy.replace(/:/, '');
 
       this.formSubmit.emit(this.flyingPlanForm.value);
     }

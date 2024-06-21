@@ -1,5 +1,5 @@
 export const environment = {
-  enableKeycloak: true,
+  enableKeycloak: false,
   backendUrl: "http://localhost",
   auth: {
     url: 'http://keycloak:8080',
