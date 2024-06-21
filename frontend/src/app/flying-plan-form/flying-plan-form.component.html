@@ -92,6 +92,8 @@
 
       <mat-grid-tile colspan="2" rowspan="3">
         <div formGroupName="aircraftData">
+          <show-aircraft-form [airCraftList]="myAirCraft"
+                              (updatedAircraftList)="onAircraftSelected($event)"></show-aircraft-form>
           <mat-form-field class="space-margin">
             <mat-label>Aircraft ID:</mat-label>
             <input matInput id="aircraftId" formControlName="aircraftId"/>
