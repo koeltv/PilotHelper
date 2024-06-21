@@ -1,36 +1,13 @@
 <form [formGroup]="flyingPlanForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="flightRules">Flight Rules:</label>
-    <input id="flightRules" formControlName="flightRules"/>
-  </div>
+  <mat-form-field>
+    <mat-label>Flight Rules:</mat-label>
+    <input matInput id="flightRules" formControlName="flightRules"/>
+  </mat-form-field>
   <div>
     <label for="flightType">Flight Type:</label>
     <input id="flightType" formControlName="flightType"/>
   </div>
-  <div formGroupName="aircraftData">
-    <label for="aircraftId">Aircraft ID:</label>
-    <input id="aircraftId" formControlName="aircraftId"/>
 
-    <div>
-      <aircraft-type-input
-                        [name]="'Aircraft Type'"
-                        [control]="aircraftData.controls['aircraftType']"
-      ></aircraft-type-input>
-    </div>
-
-
-    <label for="turbulenceType">Turbulence Type:</label>
-    <input id="turbulenceType" formControlName="turbulenceType"/>
-
-    <label for="equipment">Equipment:</label>
-    <input id="equipment" formControlName="equipment"/>
-
-    <label for="transponder">Transponder:</label>
-    <input id="transponder" formControlName="transponder"/>
-
-    <label for="colorAndMarkings">Color and Markings:</label>
-    <input id="colorAndMarkings" formControlName="colorAndMarkings"/>
-  </div>
   <div>
     <label for="aircraftCount">Aircraft Count:</label>
     <input id="aircraftCount" formControlName="aircraftCount" type="number"/>
@@ -41,8 +18,12 @@
     ></app-airport-input>
   </div>
   <div>
-    <label for="startingTime">Starting Time:</label>
-    <input id="startingTime" formControlName="startingTime" type="time"/>
+    <igx-time-picker id="startingTime" formControlName="startingTime"
+                     [mode]="mode"
+                     [inputFormat]="format"
+                     [spinLoop]="false">
+      <label igxLabel>Starting Time:</label>
+    </igx-time-picker>
   </div>
   <div>
     <label for="cruisingSpeed">Cruising Speed:</label>
@@ -66,8 +47,12 @@
                        [control]="flyingPlanForm.controls['destinationAirport']"></app-airport-input>
   </div>
   <div>
-    <label for="estimatedTime">Estimated Time:</label>
-    <input id="estimatedTime" formControlName="estimatedTime" type="time"/>
+    <igx-time-picker id="estimatedTime" formControlName="estimatedTime"
+                     [mode]="mode"
+                     [inputFormat]="format"
+                     [spinLoop]="false">
+      <label igxLabel>Estimated Time :</label>
+    </igx-time-picker>
   </div>
   <div formArrayName="alternativeAirport">
     <label>Alternative Airport:</label>
@@ -89,49 +74,105 @@
     <label for="occupantCount">Occupant Count:</label>
     <input id="occupantCount" formControlName="occupantCount" type="number"/>
   </div>
-  <div formGroupName="equipment">
-    <label for="uhfPost">UHF Post:</label>
-    <input id="uhfPost" formControlName="uhfPost" type="checkbox"/>
 
-    <label for="vhfPost">VHF Post:</label>
-    <input id="vhfPost" formControlName="vhfPost" type="checkbox"/>
+  <mat-grid-list cols="2" rowHeight="200px">
+    <mat-grid-tile colspan="2" rowspan="2">
+      <h2>Aircraft Data</h2>
+      <div formGroupName="aircraftData">
+        <mat-label>Aircraft ID:</mat-label>
+        <input matInput id="aircraftId" formControlName="aircraftId"/>
 
-    <label for="rdbaBeacon">RDBA Beacon:</label>
-    <input id="rdbaBeacon" formControlName="rdbaBeacon" type="checkbox"/>
+        <div>
+          <aircraft-type-input
+            [name]="'Aircraft Type'"
+            [control]="aircraftData.controls['aircraftType']"
+          ></aircraft-type-input>
+        </div>
 
-    <label for="survivalEquipmentPolar">Survival Equipment Polar:</label>
-    <input id="survivalEquipmentPolar" formControlName="survivalEquipmentPolar" type="checkbox"/>
 
-    <label for="survivalEquipmentDesert">Survival Equipment Desert:</label>
-    <input id="survivalEquipmentDesert" formControlName="survivalEquipmentDesert" type="checkbox"/>
+        <label for="turbulenceType">Turbulence Type:</label>
+        <input id="turbulenceType" formControlName="turbulenceType"/>
 
-    <label for="survivalEquipmentMaritime">Survival Equipment Maritime:</label>
-    <input id="survivalEquipmentMaritime" formControlName="survivalEquipmentMaritime" type="checkbox"/>
+        <label for="equipment">Equipment:</label>
+        <input id="equipment" formControlName="equipment"/>
 
-    <label for="survivalEquipmentJungle">Survival Equipment Jungle:</label>
-    <input id="survivalEquipmentJungle" formControlName="survivalEquipmentJungle" type="checkbox"/>
+        <label for="transponder">Transponder:</label>
+        <input id="transponder" formControlName="transponder"/>
 
-    <label for="safetyJacketWithLight">Safety Jacket With Light:</label>
-    <input id="safetyJacketWithLight" formControlName="safetyJacketWithLight" type="checkbox"/>
+        <label for="colorAndMarkings">Color and Markings:</label>
+        <input id="colorAndMarkings" formControlName="colorAndMarkings"/>
+      </div>
+    </mat-grid-tile>
+    <div formGroupName="equipment">
+      <h2>Equipment Section</h2>
+      <mat-grid-tile colspan="1" rowspan="3">
+        <table>
+          <tr>
+            <mat-checkbox id="uhfPost" formControlName="uhfPost">UHF Post</mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="vhfPost" formControlName="vhfPost">VHF Post</mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="rdbaBeacon" formControlName="rdbaBeacon">RDBA Beacon</mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="survivalEquipmentPolar" formControlName="survivalEquipmentPolar">Survival Equipment
+              Polar
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="survivalEquipmentDesert" formControlName="survivalEquipmentDesert">Survival Equipment
+              Desert
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="survivalEquipmentMaritime" formControlName="survivalEquipmentMaritime">Survival Equipment
+              Maritime
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="survivalEquipmentJungle" formControlName="survivalEquipmentJungle">Survival Equipment
+              Jungle
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="safetyJacketWithLight" formControlName="safetyJacketWithLight">Safety Jacket With Light
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="safetyJacketWithFluorescein" formControlName="safetyJacketWithFluorescein">Safety Jacket
+              With Fluorescein
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="safetyJacketWithUHF" formControlName="safetyJacketWithUHF">Safety Jacket With UHF
+            </mat-checkbox>
+          </tr>
+          <tr>
+            <mat-checkbox id="safetyJacketWithVHF" formControlName="safetyJacketWithVHF">Safety Jacket With VHF
+            </mat-checkbox>
+          </tr>
+        </table>
+      </mat-grid-tile>
 
-    <label for="safetyJacketWithFluorescein">Safety Jacket With Fluorescein:</label>
-    <input id="safetyJacketWithFluorescein" formControlName="safetyJacketWithFluorescein" type="checkbox"/>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <label for="raftCount">Raft Count:</label>
+        <input id="raftCount" formControlName="raftCount" type="number"/>
+      </mat-grid-tile>
 
-    <label for="safetyJacketWithUHF">Safety Jacket With UHF:</label>
-    <input id="safetyJacketWithUHF" formControlName="safetyJacketWithUHF" type="checkbox"/>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <label for="raftCapacity">Raft Capacity:</label>
+        <input id="raftCapacity" formControlName="raftCapacity" type="number"/>
+      </mat-grid-tile>
 
-    <label for="safetyJacketWithVHF">Safety Jacket With VHF:</label>
-    <input id="safetyJacketWithVHF" formControlName="safetyJacketWithVHF" type="checkbox"/>
+      <mat-grid-tile colspan="1" rowspan="1">
+        <label for="raftCoverageColor">Raft Coverage Color:</label>
+        <input id="raftCoverageColor" formControlName="raftCoverageColor"/>
+      </mat-grid-tile>
 
-    <label for="raftCount">Raft Count:</label>
-    <input id="raftCount" formControlName="raftCount" type="number"/>
-
-    <label for="raftCapacity">Raft Capacity:</label>
-    <input id="raftCapacity" formControlName="raftCapacity" type="number"/>
-
-    <label for="raftCoverageColor">Raft Coverage Color:</label>
-    <input id="raftCoverageColor" formControlName="raftCoverageColor"/>
-  </div>
+    </div>
+  </mat-grid-list>
   <div>
     <label for="remarks">Remarks:</label>
     <input id="remarks" formControlName="remarks"/>
