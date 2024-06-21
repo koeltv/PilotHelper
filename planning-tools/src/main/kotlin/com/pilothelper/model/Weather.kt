@@ -67,10 +67,10 @@ object FloatOrStringAsStringSerializer : KSerializer<String> {
     }
 
     override fun deserialize(decoder: Decoder): String {
-        return try{
-            decoder.decodeFloat().toString()
-        } catch (e: Exception) {
+        return try {
             decoder.decodeString()
+        } catch (e: Exception) {
+            decoder.decodeFloat().toString()
         }
     }
 }
