@@ -44,7 +44,7 @@
       Effacer
     </button>
 
-    <button mat-fab extended type="submit" class="form-button">
+    <button mat-fab extended type="submit" class="form-button" [disabled]="!aircraftForm.valid">
       <mat-icon>send</mat-icon>
       Enregister
     </button>
