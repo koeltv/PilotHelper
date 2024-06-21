@@ -3,17 +3,17 @@
     <div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Flight Rules:</mat-label>
+            <mat-label>Règles de vol:</mat-label>
           <input matInput id="flightRules" formControlName="flightRules"/>
         </mat-form-field>
         <mat-form-field class="space-margin">
-          <mat-label>Flight Type:</mat-label>
+            <mat-label>Type de vol:</mat-label>
           <input matInput id="flightType" formControlName="flightType"/>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Aircraft Count:</mat-label>
+            <mat-label>Nombre d'aéronefs:</mat-label>
           <input matInput id="aircraftCount" formControlName="aircraftCount" type="number"/>
         </mat-form-field>
       </div>
@@ -27,21 +27,21 @@
       </div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Starting Time:</mat-label>
+            <mat-label>Temps de départ:</mat-label>
           <input matInput id="startingTime" formControlName="startingTime" type="time">
         </mat-form-field>
         <mat-form-field class="space-margin">
-          <mat-label>Estimated Time:</mat-label>
+            <mat-label>Durée prévue:</mat-label>
           <input matInput id="estimatedTime" formControlName="estimatedTime" type="time">
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Cruising Speed:</mat-label>
+            <mat-label>Vitesse de croisière:</mat-label>
           <input matInput id="cruisingSpeed" formControlName="cruisingSpeed"/>
         </mat-form-field>
         <mat-form-field class="space-margin">
-          <mat-label>Cruising Altitude:</mat-label>
+            <mat-label>Altitude de croisière:</mat-label>
           <input matInput id="cruisingAltitude" formControlName="cruisingAltitude"/>
         </mat-form-field>
       </div>
@@ -56,7 +56,7 @@
       </div>
       <div>
         <mat-form-field class="space-margin" formArrayName="alternativeAirport">
-          <mat-label>Alternative Airport:</mat-label>
+            <mat-label>Aéroports alternatifs:</mat-label>
           <div *ngFor="let altAirport of alternativeAirports.controls; let i=index">
             <input matInput [formControlName]="i" [id]="'alternativeAirports' + i"/>
           </div>
@@ -64,7 +64,7 @@
       </div>
       <div>
         <mat-form-field class="space-margin" formArrayName="otherInformations">
-          <mat-label>Other Informations:</mat-label>
+            <mat-label>Autres informations:</mat-label>
           <div *ngFor="let info of otherInformations.controls; let i=index">
             <input matInput [formControlName]="i" [id]="'otherInformations' + i"/>
           </div>
@@ -72,13 +72,13 @@
       </div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Autonomy:</mat-label>
+            <mat-label>Autonomie:</mat-label>
           <input matInput id="autonomy" formControlName="autonomy" type="time"/>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="space-margin">
-          <mat-label>Occupant Count:</mat-label>
+            <mat-label>Nombre d'occupants:</mat-label>
           <input matInput id="occupantCount" formControlName="occupantCount" type="number"/>
         </mat-form-field>
       </div>
@@ -87,30 +87,32 @@
     <mat-divider></mat-divider>
 
     <mat-grid-list cols="2" rowHeight="100px">
-
-      <mat-grid-tile colspan="2" rowspan="1"><h4>Aircraft Data</h4></mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1">
+            <h4>Données de l'aéronef</h4>
+        </mat-grid-tile>
 
       <mat-grid-tile colspan="2" rowspan="3">
         <div formGroupName="aircraftData">
           <show-aircraft-form [airCraftList]="aircrafts"
                               (updatedAircraftList)="onAircraftSelected($event)"></show-aircraft-form>
+
           <mat-form-field class="space-margin">
             <mat-label>Aircraft ID:</mat-label>
             <input matInput id="aircraftId" formControlName="aircraftId"/>
           </mat-form-field>
 
           <aircraft-type-input
-            [name]="'Aircraft Type'"
+                  name="Type d'aéronef"
             [control]="aircraftData.controls['aircraftType']"
           ></aircraft-type-input>
 
           <mat-form-field class="space-margin">
-            <mat-label>Turbulence Type:</mat-label>
+              <mat-label>Type de turbulence:</mat-label>
             <input matInput id="turbulenceType" formControlName="turbulenceType"/>
           </mat-form-field>
 
           <mat-form-field class="space-margin">
-            <mat-label>Equipment:</mat-label>
+              <mat-label>Équipement:</mat-label>
             <input matInput id="equipment" formControlName="equipment"/>
           </mat-form-field>
 
@@ -120,13 +122,13 @@
           </mat-form-field>
 
           <mat-form-field class="space-margin">
-            <mat-label>Color and Markings:</mat-label>
+              <mat-label>Marques et couleur:</mat-label>
             <input matInput id="colorAndMarkings" formControlName="colorAndMarkings"/>
           </mat-form-field>
         </div>
       </mat-grid-tile>
 
-      <mat-grid-tile colspan="2" rowspan="1"><h4>Equipment Section</h4></mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="1"><h4>Section équipement</h4></mat-grid-tile>
 
       <div formGroupName="equipment" style="text-align: left">
         <mat-grid-tile colspan="1" rowspan="5">
@@ -171,19 +173,19 @@
           <div>
             <div>
               <mat-form-field class="space-margin">
-                <mat-label>Raft Count:</mat-label>
+                  <mat-label>Nombre de canots:</mat-label>
                 <input matInput id="raftCount" formControlName="raftCount" type="number"/>
               </mat-form-field>
             </div>
             <div>
               <mat-form-field class="space-margin">
-                <mat-label>Raft Capacity:</mat-label>
+                  <mat-label>Capacité de canots:</mat-label>
                 <input matInput id="raftCapacity" formControlName="raftCapacity" type="number"/>
               </mat-form-field>
             </div>
             <div>
               <mat-form-field class="space-margin">
-                <mat-label>Raft Coverage Color:</mat-label>
+                  <mat-label>Couleur des canots:</mat-label>
                 <input matInput id="raftCoverageColor" formControlName="raftCoverageColor"/>
               </mat-form-field>
             </div>
@@ -194,16 +196,23 @@
     </mat-grid-list>
 
     <mat-divider></mat-divider>
+      <br>
 
     <mat-form-field class="space-margin">
-      <mat-label>Remarks:</mat-label>
+        <mat-label>Remarques:</mat-label>
       <input matInput id="remarks" formControlName="remarks"/>
     </mat-form-field>
     <mat-form-field class="space-margin">
-      <mat-label>Pilot:</mat-label>
+        <mat-label>Pilote:</mat-label>
       <input matInput id="pilot" formControlName="pilot"/>
     </mat-form-field>
-    <button type="submit" [disabled]="flyingPlanForm.invalid">Submit</button>
+
+      <div>
+          <button mat-fab extended type="submit" [disabled]="flyingPlanForm.invalid">
+              <mat-icon>send</mat-icon>
+              Enregister
+          </button>
+      </div>
   </form>
 </div>
 

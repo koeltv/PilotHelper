@@ -5,7 +5,7 @@ import {FlightPlan} from "../../shared/models/FlightPlan";
 import {NgForOf} from "@angular/common";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {MatIconButton} from "@angular/material/button";
+import {MatFabButton, MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {PlanningToolsService} from "../api/planning-tools.service";
 import {Airport} from "../../shared/models/Airport";
@@ -37,7 +37,8 @@ import {DataService} from "../api/data.service";
     MatGridList,
     MatGridTile,
     MatDivider,
-    ShowAircraftForm
+    ShowAircraftForm,
+    MatFabButton
   ],
   templateUrl: './flying-plan-form.component.html',
   styleUrl: './flying-plan-form.component.css'
