@@ -47,7 +47,7 @@ export class DisplayMeteoComponent implements OnChanges {
       this.nameDisplay = `<b>METAR pour :</b> ${info.name} `;
       this.conditionDisplay = `<b>Conditions à:</b> ${this.unixToTimespan(info.obsTime)} `;
       this.temperatureDisplay = `<b>Temperature:</b>	${info.temp}°C (${this.celsiusToFahrenheit(info.temp)}°F) `;
-      this.dewpointDisplay = `<b>Dewpoint:</b>	${info.dewp}°C (${this.celsiusToFahrenheit(info.dewp)} °F) `;
+      this.dewpointDisplay = `<b>Point de rosée:</b>	${info.dewp}°C (${this.celsiusToFahrenheit(info.dewp)} °F) `;
       this.pressureDisplay = `<b>Pressure (altimeter):</b>	${this.mbToInchHg(info.altim)}  inches Hg (${info.altim} mb)`;
       this.windsDisplay = `<b>Vents:</b> ${this.degToCompass(info.wdir)} (${info.wdir} degrés) à ${this.ktToMph(info.wspd)} MPH (${info.wspd} knots; ${this.ktToMs(info.wspd)} m/s)`;
       this.visibilityDisplay = `<b>Visibilité:</b>	${this.visibilityDecode(info.visib)}`;
@@ -60,8 +60,8 @@ export class DisplayMeteoComponent implements OnChanges {
     if (clouds) {
       clouds.forEach(cloud => {
         if (cloud.base != null) {
-          cloudsSentence += `${this.coverAbbreviationToCover(cloud.cover)} à ${cloud.base} pieds,`
-        }else{
+          cloudsSentence += `${this.coverAbbreviationToCover(cloud.cover)} à ${cloud.base} pieds, `
+        } else {
           cloudsSentence += `${this.coverAbbreviationToCover(cloud.cover)}`
         }
       })
@@ -125,6 +125,6 @@ export class DisplayMeteoComponent implements OnChanges {
   }
 
   unixToTimespan(unix: number) {
-    return new Date(unix);
+    return new Date(unix * 1000);
   }
 }
