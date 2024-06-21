@@ -1,11 +1,12 @@
 import {APP_INITIALIZER, ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
-import routeConfig from "./app.routes";
+import routeConfig from './app.routes';
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from "@angular/common/http";
-import {KeycloakBearerInterceptor, KeycloakService} from "keycloak-angular";
-import {environment} from "../environments/environment";
+import {HTTP_INTERCEPTORS, provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
+import {KeycloakBearerInterceptor, KeycloakService} from 'keycloak-angular';
+import {environment} from '../environments/environment';
+import {provideAnimations} from '@angular/platform-browser/animations';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () => {
@@ -19,11 +20,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
       },
       initOptions: {
         onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html'
+        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html'
       },
     });
-  }
+  };
 }
 
 export const appConfig: ApplicationConfig = {
@@ -48,5 +48,6 @@ export const appConfig: ApplicationConfig = {
     },
     KeycloakService,
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    provideAnimations()
   ]
 };
