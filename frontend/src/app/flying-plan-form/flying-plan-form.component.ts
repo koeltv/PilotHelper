@@ -48,7 +48,7 @@ export class FlyingPlanFormComponent implements OnChanges {
   ) {
     this.aircraftData = this.fb.group({
       aircraftId: [''],
-      airCraftType: [undefined],
+      aircraftType: [undefined],
       turbulenceType: [''],
       equipment: [''],
       transponder: [''],
@@ -71,7 +71,7 @@ export class FlyingPlanFormComponent implements OnChanges {
       otherInformations: this.fb.array(['']),
       autonomy: ['', Validators.required],
       occupantCount: [1, Validators.required],
-      equipement: this.fb.group({
+      equipment: this.fb.group({
         uhfPost: [false],
         vhfPost: [false],
         rdbaBeacon: [false],
@@ -118,7 +118,7 @@ export class FlyingPlanFormComponent implements OnChanges {
     this.flyingPlanForm.patchValue({
       aircraftData: {
         aircraftId: selectedAircraft.aircraftId,
-        airCraftType: selectedAircraft.aircraftType,
+        aircraftType: selectedAircraft.aircraftType,
         turbulenceType: selectedAircraft.turbulenceType,
         equipment: selectedAircraft.equipment,
         transponder: selectedAircraft.transponder,
@@ -129,6 +129,16 @@ export class FlyingPlanFormComponent implements OnChanges {
 
   onSubmit() {
     if (this.flyingPlanForm.valid) {
+      if (typeof this.flyingPlanForm.value.startingAirport == 'object')
+        this.flyingPlanForm.value.startingAirport = this.flyingPlanForm.value.startingAirport.icaoCode ?
+          this.flyingPlanForm.value.startingAirport.icaoCode : 'ZZZZ';
+      if (typeof this.flyingPlanForm.value.destinationAirport == 'object') this.flyingPlanForm.value.destinationAirport =
+        this.flyingPlanForm.value.destinationAirport.icaoCode ?
+          this.flyingPlanForm.value.destinationAirport.icaoCode : 'ZZZZ';
+
+      this.flyingPlanForm.value.startingTime = this.flyingPlanForm.value.startingTime.replace(/:/, '');
+      this.flyingPlanForm.value.estimatedTime = this.flyingPlanForm.value.estimatedTime.replace(/:/, '');
+
       this.formSubmit.emit(this.flyingPlanForm.value);
     }
   }
