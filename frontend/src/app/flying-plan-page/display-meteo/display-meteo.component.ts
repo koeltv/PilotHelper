@@ -18,7 +18,6 @@ import {MatCardModule} from '@angular/material/card';
 })
 
 export class DisplayMeteoComponent implements OnChanges {
-
   @Input() airportCode!: string;
 
   nameDisplay: string = "";
@@ -30,11 +29,10 @@ export class DisplayMeteoComponent implements OnChanges {
   visibilityDisplay: string = "";
   cloudsDisplay: string = "";
 
-
   constructor(private planningToolService: PlanningToolsService) {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(_changes: SimpleChanges) {
     if (this.airportCode.length == 4) {
       this.displayWeatherFunction(this.airportCode);
     } else {
@@ -45,14 +43,14 @@ export class DisplayMeteoComponent implements OnChanges {
   displayWeatherFunction(airportCode: string) {
     this.planningToolService.getWeatherInfoFor(airportCode).subscribe(info => {
       this.nameDisplay = `<b>METAR pour :</b> ${info.name} `;
-      this.conditionDisplay = `<b>Conditions à:</b> ${this.unixToTimespan(info.obsTime)} `;
+      this.conditionDisplay = `<b>Conditions &agrave;:</b> ${this.unixToTimespan(info.obsTime)} `;
       this.temperatureDisplay = `<b>Temperature:</b>	${info.temp}°C (${this.celsiusToFahrenheit(info.temp)}°F) `;
-      this.dewpointDisplay = `<b>Point de rosée:</b>	${info.dewp}°C (${this.celsiusToFahrenheit(info.dewp)} °F) `;
+      this.dewpointDisplay = `<b>Point de ros&eacute;e:</b>	${info.dewp}°C (${this.celsiusToFahrenheit(info.dewp)} °F) `;
       this.pressureDisplay = `<b>Pressure (altimeter):</b>	${this.mbToInchHg(info.altim)}  inches Hg (${info.altim} mb)`;
       this.windsDisplay = `<b>Vents:</b> ${this.degToCompass(info.wdir)} (${info.wdir} degrés) à ${this.ktToMph(info.wspd)} MPH (${info.wspd} knots; ${this.ktToMs(info.wspd)} m/s)`;
-      this.visibilityDisplay = `<b>Visibilité:</b>	${this.visibilityDecode(info.visib)}`;
+      this.visibilityDisplay = `<b>Visibilit&eacute;:</b>	${this.visibilityDecode(info.visib)}`;
       this.cloudsDisplay = `<b>Nuages:</b> ${this.cloudInfoDisplay(info.clouds)}`;
-    })
+    });
   }
 
   cloudInfoDisplay(clouds: Cloud[] | undefined) {
@@ -79,9 +77,8 @@ export class DisplayMeteoComponent implements OnChanges {
   }
 
   degToCompass(num: number) {
-
-    var val = Math.floor((num / 22.5) + 0.5);
-    var arr = ["Nord", "Nord-Nord-Est ", "Nord-Est ", "Est-Nord-Est ", "Est", "Est-Sud-Est ", "Sud-Est", "Sud-Sud-Est ", "Sud", "Susuroît", "Suroît", "Ouest-Suroît ", "Ouest", "Ouest-Noroît ", "Noroît", "Nord-Noroît "];
+    const val = Math.floor((num / 22.5) + 0.5);
+    const arr = ["Nord", "Nord-Nord-Est ", "Nord-Est ", "Est-Nord-Est ", "Est", "Est-Sud-Est ", "Sud-Est", "Sud-Sud-Est ", "Sud", "Susuroît", "Suroît", "Ouest-Suroît ", "Ouest", "Ouest-Noroît ", "Noroît", "Nord-Noroît "];
     return arr[(val % 16)];
   }
 

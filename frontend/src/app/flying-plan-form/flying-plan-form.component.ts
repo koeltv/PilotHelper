@@ -18,6 +18,7 @@ import {MatCheckbox} from "@angular/material/checkbox";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatDivider} from "@angular/material/divider";
 import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
+import {DataService} from "../api/data.service";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -48,24 +49,7 @@ export class FlyingPlanFormComponent {
   flyingPlanForm: FormGroup;
   aircraftData: FormGroup;
 
-  myAirCraft: AirCraft[] = [
-    {
-      aircraftId: "avion1",
-      aircraftType: "A",
-      turbulenceType: "1",
-      equipment: "tout",
-      transponder: "jsp",
-      colorAndMarkings: "rouge"
-    },
-    {
-      aircraftId: "avion2",
-      aircraftType: "D",
-      turbulenceType: "3",
-      equipment: "tout",
-      transponder: "jsp encore",
-      colorAndMarkings: "bleu"
-    }
-  ];
+  aircrafts: AirCraft[] = [];
 
   selectedAircraft: AirCraft = {
     aircraftId: '',
@@ -77,10 +61,11 @@ export class FlyingPlanFormComponent {
   };
 
   constructor(
-    private fb: FormBuilder,
-    private snackbar: MatSnackBar,
-    private dialog: MatDialog,
-    private planningToolsService: PlanningToolsService,
+    private readonly fb: FormBuilder,
+    private readonly snackbar: MatSnackBar,
+    private readonly dialog: MatDialog,
+    private readonly planningToolsService: PlanningToolsService,
+    private readonly dataService: DataService,
   ) {
     this.aircraftData = this.fb.group({
       aircraftId: [''],
@@ -127,17 +112,20 @@ export class FlyingPlanFormComponent {
       pilot: ['', Validators.required]
     });
 
+    this.dataService.readAllAircraft().subscribe(aircrafts => {
+      this.aircrafts = aircrafts;
+    })
+
     Object.keys(this.flyingPlanForm.controls).forEach(fieldName => {
       this.flyingPlanForm.get(fieldName)?.valueChanges.subscribe(newValue => {
         this.formChange.emit({[fieldName]: newValue});
       });
     });
-
   }
 
   onAircraftSelected(selectedAircraft: AirCraft[]) {
-    this.selectedAircraft = selectedAircraft[0];
-    this.updateAircraftData(this.selectedAircraft);
+    if (selectedAircraft.length == 0) return;
+    this.updateAircraftData(selectedAircraft[0]);
   }
 
   get alternativeAirports(): FormArray {
@@ -149,15 +137,13 @@ export class FlyingPlanFormComponent {
   }
 
   updateAircraftData(selectedAircraft: AirCraft) {
-    this.flyingPlanForm.patchValue({
-      aircraftData: {
-        aircraftId: selectedAircraft.aircraftId,
-        aircraftType: selectedAircraft.aircraftType,
-        turbulenceType: selectedAircraft.turbulenceType,
-        equipment: selectedAircraft.equipment,
-        transponder: selectedAircraft.transponder,
-        colorAndMarkings: selectedAircraft.colorAndMarkings
-      }
+    this.aircraftData.patchValue({
+      aircraftId: selectedAircraft.aircraftId,
+      aircraftType: selectedAircraft.aircraftType,
+      turbulenceType: selectedAircraft.turbulenceType,
+      equipment: selectedAircraft.equipment,
+      transponder: selectedAircraft.transponder,
+      colorAndMarkings: selectedAircraft.colorAndMarkings
     });
   }
 

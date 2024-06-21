@@ -5,7 +5,6 @@ import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.comp
 import {MatGridListModule} from '@angular/material/grid-list';
 import {DisplayMeteoComponent} from "./display-meteo/display-meteo.component";
 import {MatListModule} from '@angular/material/list';
-import {DataService} from "../api/data.service";
 import {FlightPlanService} from "../api/flight-plan.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -28,9 +27,20 @@ export class FlyingPlanPageComponent {
   airportCodeStart:string = "";
   airportCodeEnd:string = "";
 
+  constructor(
+    private readonly flightPlanService: FlightPlanService,
+    private readonly snackBar: MatSnackBar,
+  ) {
+  }
+
   onFormSubmit(newFlyingPlan: FlightPlan) {
-    console.log('Flying Plan:', newFlyingPlan);
-    // Envoie vers le backend
+    this.flightPlanService.createFlightPlan(newFlyingPlan).subscribe(id => {
+      if (id) {
+        this.snackBar.open('Plan de vol créé avec succès !', 'OK');
+      } else {
+        this.snackBar.open('Une erreur à eu lieu, veuillez vérifier le formulaire', 'OK');
+      }
+    });
   }
 
   updateMeteo(change: { [key: string]: any }){
