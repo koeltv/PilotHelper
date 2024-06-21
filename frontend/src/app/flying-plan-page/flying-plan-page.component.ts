@@ -6,6 +6,9 @@ import {AirCraft} from "../../shared/models/AirCraft";
 import {MatGridListModule} from '@angular/material/grid-list';
 import {DisplayMeteoComponent} from "./display-meteo/display-meteo.component";
 import {MatListModule} from '@angular/material/list';
+import {DataService} from "../api/data.service";
+import {FlightPlanService} from "../api/flight-plan.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -23,24 +26,7 @@ import {MatListModule} from '@angular/material/list';
 })
 export class FlyingPlanPageComponent {
 
-  myAirCraft: AirCraft[] = [
-    {
-      aircraftId: "avion1",
-      aircraftType: "A",
-      turbulenceType: "1",
-      equipment: "tout",
-      transponder: "jsp",
-      colorAndMarkings: "rouge"
-    },
-    {
-      aircraftId: "avion2",
-      aircraftType: "D",
-      turbulenceType: "3",
-      equipment: "tout",
-      transponder: "jsp encore",
-      colorAndMarkings: "bleu"
-    }
-  ];
+  aircrafts: AirCraft[] = [];
 
   selectedAircraft: AirCraft = {
     aircraftId: '',
@@ -54,13 +40,28 @@ export class FlyingPlanPageComponent {
   airportCodeStart:string = "";
   airportCodeEnd:string = "";
 
+  constructor(
+    private readonly dataService: DataService,
+    private readonly flightPlanService: FlightPlanService,
+    private readonly snackBar: MatSnackBar,
+  ) {
+    this.dataService.readAllAircraft().subscribe(aircrafts => {
+      this.aircrafts = aircrafts;
+    })
+  }
+
   onAircraftSelected(selectedAircraft: AirCraft[]) {
     this.selectedAircraft = selectedAircraft[0];
   }
 
   onFormSubmit(newFlyingPlan: FlightPlan) {
-    console.log('Flying Plan:', newFlyingPlan);
-    // Envoie vers le backend
+    this.flightPlanService.createFlightPlan(newFlyingPlan).subscribe(id => {
+      if (id) {
+        this.snackBar.open('Plan de vol créé avec succès !', 'OK');
+      } else {
+        this.snackBar.open('Une erreur à eu lieu, veuillez vérifier le formulaire', 'OK');
+      }
+    });
   }
 
   updateMeteo(change: { [key: string]: any }){
