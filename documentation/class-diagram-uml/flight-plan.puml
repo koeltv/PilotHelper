@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include aircraft.puml
+
+class FlightPlan {
+  +flightRules: Char
+  +flightType: Char
+  +aircraftCount: Int
+  +startingAirport: String
+  +startingTime: String
+  +cruisingSpeed: String
+  +cruisingAltitude: String
+  +path: String
+  +destinationAirport: String
+  +estimatedTime: String
+  +alternativeAirport: List<String>
+  +otherInformations: List<String>
+  +autonomy: String
+  +occupantCount: Int
+  +remarks: String
+  +pilot: String
+}
+
+class Equipment {
+  +uhfPost: Boolean
+  +vhfPost: Boolean
+  +rdbaBeacon: Boolean
+  +survivalEquipmentPolar: Boolean
+  +survivalEquipmentDesert: Boolean
+  +survivalEquipmentMaritime: Boolean
+  +survivalEquipmentJungle: Boolean
+  +safetyJacketWithLight: Boolean
+  +safetyJacketWithFluorescein: Boolean
+  +safetyJacketWithUHF: Boolean
+  +safetyJacketWithVHF: Boolean
+  +raftCount: Int
+  +raftCapacity: Int
+  +raftCoverageColor: String
+}
+
+class FlightPlanUser {
+  +userId: UUID
+}
+
+FlightPlan "1" *-- "*" FlightPlanUser
+FlightPlan "1" o-- "1" Aircraft
+FlightPlan "1" *-- "1" Equipment
+@enduml

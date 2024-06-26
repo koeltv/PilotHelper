@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Aircraft {
+  +aircraftId: String
+  +aircraftType: String
+  +turbulenceType: Char
+  +equipment: String
+  +transponder: String
+  +colorAndMarkings: String
+}
+
+@enduml

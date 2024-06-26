@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Weather {
+  +metar_id: Int
+  +icaoId: String
+  +receiptTime: String
+  +obsTime: Int
+  +reportTime: String
+  +temp: Int
+  +dewp: Int
+  +wdir: Int
+  +wspd: Int
+  +wgst: Int
+  +visib: String
+  +altim: Int
+  +slp: String
+  +qcField: Int
+  +wxString: String
+  +presTend: String
+  +maxT: String
+  +minT: String
+  +maxT24: String
+  +minT24: String
+  +precip: String
+  +pcp3hr: String
+  +pcp6hr: String
+  +pcp24hr: String
+  +snow: String
+  +vertVis: String
+  +metarType: String
+  +rawOb: String
+  +mostRecent: Int
+  +lat: Float
+  +lon: Float
+  +elev: Int
+  +prior: Int
+  +name: String
+  +clouds: List<Cloud>
+}
+
+class Cloud {
+  +cover: String
+  +base: Int
+}
+
+Weather "1" *-- "*" Cloud
+
+@enduml
