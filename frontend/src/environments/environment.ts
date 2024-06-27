@@ -1,8 +1,8 @@
 export const environment = {
   enableKeycloak: true,
-  backendUrl: "https://pilothelper.com",
+  backendUrl: "https://pilothelper.sytes.net",
   auth: {
-    url: 'https://keycloak.pilothelper.com',
+    url: 'https://authentification.sytes.net',
     realm: 'pilothelper-realm',
     clientId: 'pilothelper',
   },
