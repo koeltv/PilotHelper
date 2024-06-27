@@ -745,7 +745,11 @@
       ],
       "webOrigins": [
         "+",
-        "http://localhost:4200"
+        "http://localhost:4200",
+        "http://pilothelper.com",
+        "https://pilothelper.com",
+        "http://pilothelper.sytes.net",
+        "https://pilothelper.sytes.net"
       ],
       "notBefore": 0,
       "bearerOnly": false,
@@ -2330,7 +2334,7 @@
     "oauth2DeviceCodeLifespan": "600",
     "parRequestUriLifespan": "60",
     "clientSessionMaxLifespan": "0",
-    "frontendUrl": "http://keycloak:8080",
+    "frontendUrl": "",
     "organizationsEnabled": "false",
     "acr.loa.map": "{}"
   },
