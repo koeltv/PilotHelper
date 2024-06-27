@@ -1,18 +1,18 @@
 {
   "/planning-tools": {
-    "target": "http://localhost/",
+    "target": "https://pilothelper.com/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/flight-plan": {
-    "target": "http://localhost/",
+    "target": "https://pilothelper.com/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
   "/data": {
-    "target": "http://localhost/",
+    "target": "https://pilothelper.com/",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
