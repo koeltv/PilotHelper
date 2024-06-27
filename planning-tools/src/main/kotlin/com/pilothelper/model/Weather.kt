@@ -16,7 +16,8 @@ data class Weather(
     val dewp: Int,
     val wdir: Int,
     val wspd: Int,
-    val wgst: String?,
+    val wgst: Int?,
+    @Serializable(with = FloatOrStringAsStringSerializer::class)
     val visib: String,
     val altim: Int,
     val slp: String?,
@@ -47,6 +48,8 @@ data class Weather(
     @Serializable
     data class Cloud(
         val cover: String,
-        val base: Int
+        val base: Int?
     )
 }
+
+

@@ -1,6 +1,6 @@
 http:
   middlewares:
-    keycloak-middleware-name:
+    authentification:
       plugin:
         keycloakopenid:
           KeycloakURLEnv: "KEYCLOAK_FRONT_URL"
@@ -10,6 +10,20 @@ http:
           TokenCookieNameEnv: "TOKEN_COOKIE_NAME"
           Scope: openid
           UseAuthHeader: "false"
+
+    cors: # Needed to allow access through a browser
+      headers:
+        accessControlAllowOriginList:
+          - "http://localhost:4200"
+        accessControlAllowCredentials: true
+        accessControlAllowHeaders: "content-type,authorization"
+        accessControlAllowMethods:
+          - "GET"
+          - "OPTIONS"
+          - "POST"
+          - "PUT"
+        accessControlMaxAge: 100
+        addVaryHeader: true
 
 tls:
   certificates:

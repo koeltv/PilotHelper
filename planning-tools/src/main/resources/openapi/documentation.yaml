@@ -13,12 +13,7 @@ paths:
         "200":
           description: "OK"
           content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+            text/plain: { }
   /aircraft-type:
     get:
       description: ""
@@ -169,16 +164,49 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Airport"
-  /airport/nearby:
+  /airport/nearby/ip/{ip}:
+    get:
+      description: "Read all airports close to the user by its IP address"
+      parameters:
+        - name: "radius"
+          in: "query"
+          required: false
+          schema:
+            type: "number"
+        - name: "ip"
+          in: "path"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            'application/json':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+            'application/xml':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Airport"
+  /airport/nearby/location:
     get:
       description: "Read all airports close to a given point"
       parameters:
         - name: "latitude"
           in: "query"
-          required: false
+          required: true
           schema:
             type: "number"
         - name: "longitude"
+          in: "query"
+          required: true
+          schema:
+            type: "number"
+        - name: "radius"
           in: "query"
           required: false
           schema:
@@ -306,7 +334,7 @@ components:
           $ref: "#/components/schemas/Geometry"
         elevation:
           $ref: "#/components/schemas/Elevation"
-        private:
+        isPrivate:
           type: "boolean"
       required:
         - "_id"
@@ -391,7 +419,8 @@ components:
           type: "integer"
           format: "int32"
         wgst:
-          type: "string"
+          type: "integer"
+          format: "int32"
         visib:
           type: "string"
         altim:

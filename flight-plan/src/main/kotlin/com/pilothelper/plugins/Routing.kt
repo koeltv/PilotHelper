@@ -17,10 +17,22 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("This is the Flight Plan API")
         }
+        // Read all flight-plans from user
+        get("/user") {
+            val token = call.getToken() ?: return@get call.respond(HttpStatusCode.Unauthorized)
+            val userId = requestUserInfo(token).getId()
+
+            val flightPlansWithId = flightPlanService.readAllFromUser(userId)
+            println(flightPlansWithId)
+            call.respond(flightPlansWithId)
+        }
         // Create flight-plan
         post("") {
+            val token = call.getToken() ?: return@post call.respond(HttpStatusCode.Unauthorized)
+            val userId = requestUserInfo(token).getId()
+
             val flightPlan = call.receive<FlightPlan>()
-            val id = flightPlanService.create(flightPlan)
+            val id = flightPlanService.create(flightPlan, userId)
             call.respond(HttpStatusCode.Created, id)
         }
         // Read flight-plan

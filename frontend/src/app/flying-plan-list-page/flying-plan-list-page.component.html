@@ -1,0 +1,32 @@
+<mat-grid-list cols="3" rowHeight="1.2:1">
+  @for (plan of flightPlanPdfs; track plan) {
+    <mat-grid-tile>
+      <pdf-viewer [src]="plan.source"
+                  class="pdf-viewer"
+                  [render-text]="true"
+                  [zoom]="0.95"
+                  [zoom-scale]="'page-fit'"
+                  [fit-to-page]="true"
+      ></pdf-viewer>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"
+              class="menu-button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="copyLink(plan.source.url)">
+          <mat-icon>link</mat-icon>
+          <span>Obtenir le lien</span>
+        </button>
+        <button mat-menu-item (click)="openLink(plan.source.url)">
+          <mat-icon>open_in_new</mat-icon>
+          <span>Ouvrir</span>
+        </button>
+        <button mat-menu-item (click)="deleteFlightPlan(plan.id)">
+          <mat-icon>delete</mat-icon>
+          <span>Supprimer le plan de vol</span>
+        </button>
+      </mat-menu>
+
+    </mat-grid-tile>
+  }
+</mat-grid-list>

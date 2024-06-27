@@ -1,0 +1,10 @@
+.pdf-viewer {
+  height: 100%;
+  aspect-ratio: 11/16;
+}
+
+.menu-button {
+  position: absolute;
+  top: 0;
+  right: 16%;
+}

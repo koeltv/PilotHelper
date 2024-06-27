@@ -1,0 +1,9 @@
+@startuml test
+'https://plantuml.com/class-diagram
+
+!include planning_tools_weather.puml
+!include planning_tools_route.puml
+!include planning_tools_airport.puml
+!include planning_tools_aircraft_types.puml
+
+@enduml

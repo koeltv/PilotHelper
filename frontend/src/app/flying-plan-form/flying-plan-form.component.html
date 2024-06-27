@@ -1,0 +1,218 @@
+<div style="text-align: center">
+  <form [formGroup]="flyingPlanForm" (ngSubmit)="onSubmit()">
+    <div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Règles de vol:</mat-label>
+          <input matInput id="flightRules" formControlName="flightRules"/>
+        </mat-form-field>
+        <mat-form-field class="space-margin">
+            <mat-label>Type de vol:</mat-label>
+          <input matInput id="flightType" formControlName="flightType"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Nombre d'aéronefs:</mat-label>
+          <input matInput id="aircraftCount" formControlName="aircraftCount" type="number"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <app-airport-input [name]="'Starting Airport'"
+                           [control]="flyingPlanForm.controls['startingAirport']"
+        ></app-airport-input>
+        <app-airport-input [name]="'Destination Airport'"
+                           [control]="flyingPlanForm.controls['destinationAirport']"
+        ></app-airport-input>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Temps de départ:</mat-label>
+          <input matInput id="startingTime" formControlName="startingTime" type="time">
+        </mat-form-field>
+        <mat-form-field class="space-margin">
+            <mat-label>Durée prévue:</mat-label>
+          <input matInput id="estimatedTime" formControlName="estimatedTime" type="time">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Vitesse de croisière:</mat-label>
+          <input matInput id="cruisingSpeed" formControlName="cruisingSpeed"/>
+        </mat-form-field>
+        <mat-form-field class="space-margin">
+            <mat-label>Altitude de croisière:</mat-label>
+          <input matInput id="cruisingAltitude" formControlName="cruisingAltitude"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+          <mat-label>Route</mat-label>
+          <textarea matInput formControlName="path" placeholder="ABQ DIESL TTORO3 IAH"></textarea>
+        </mat-form-field>
+        <button mat-icon-button aria-label="Get routes" (click)="suggestRoutes()">
+          <mat-icon>help</mat-icon>
+        </button>
+      </div>
+      <div>
+        <mat-form-field class="space-margin" formArrayName="alternativeAirport">
+            <mat-label>Aéroports alternatifs:</mat-label>
+          <div *ngFor="let altAirport of alternativeAirports.controls; let i=index">
+            <input matInput [formControlName]="i" [id]="'alternativeAirports' + i"/>
+          </div>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin" formArrayName="otherInformations">
+            <mat-label>Autres informations:</mat-label>
+          <div *ngFor="let info of otherInformations.controls; let i=index">
+            <input matInput [formControlName]="i" [id]="'otherInformations' + i"/>
+          </div>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Autonomie:</mat-label>
+          <input matInput id="autonomy" formControlName="autonomy" type="time"/>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="space-margin">
+            <mat-label>Nombre d'occupants:</mat-label>
+          <input matInput id="occupantCount" formControlName="occupantCount" type="number"/>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <mat-grid-list cols="2" rowHeight="100px">
+        <mat-grid-tile colspan="2" rowspan="1">
+            <h4>Données de l'aéronef</h4>
+        </mat-grid-tile>
+
+      <mat-grid-tile colspan="2" rowspan="3">
+        <div formGroupName="aircraftData">
+          <show-aircraft-form [airCraftList]="aircrafts"
+                              (updatedAircraftList)="onAircraftSelected($event)"></show-aircraft-form>
+
+          <mat-form-field class="space-margin">
+            <mat-label>Aircraft ID:</mat-label>
+            <input matInput id="aircraftId" formControlName="aircraftId"/>
+          </mat-form-field>
+
+          <aircraft-type-input
+                  name="Type d'aéronef"
+            [control]="aircraftData.controls['aircraftType']"
+          ></aircraft-type-input>
+
+          <mat-form-field class="space-margin">
+              <mat-label>Type de turbulence:</mat-label>
+            <input matInput id="turbulenceType" formControlName="turbulenceType"/>
+          </mat-form-field>
+
+          <mat-form-field class="space-margin">
+              <mat-label>Équipement:</mat-label>
+            <input matInput id="equipment" formControlName="equipment"/>
+          </mat-form-field>
+
+          <mat-form-field class="space-margin">
+            <mat-label>Transponder:</mat-label>
+            <input matInput id="transponder" formControlName="transponder"/>
+          </mat-form-field>
+
+          <mat-form-field class="space-margin">
+              <mat-label>Marques et couleur:</mat-label>
+            <input matInput id="colorAndMarkings" formControlName="colorAndMarkings"/>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+
+        <mat-grid-tile colspan="2" rowspan="1"><h4>Section équipement</h4></mat-grid-tile>
+
+      <div formGroupName="equipment" style="text-align: left">
+        <mat-grid-tile colspan="1" rowspan="5">
+          <table>
+            <tr>
+              <mat-checkbox id="uhfPost" formControlName="uhfPost">UHF Post</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="vhfPost" formControlName="vhfPost">VHF Post</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="rdbaBeacon" formControlName="rdbaBeacon">RDBA Beacon</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="survivalEquipmentPolar" formControlName="survivalEquipmentPolar">Survival Equipment Polar</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="survivalEquipmentDesert" formControlName="survivalEquipmentDesert">Survival Equipment Desert</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="survivalEquipmentMaritime" formControlName="survivalEquipmentMaritime">Survival Equipment Maritime</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="survivalEquipmentJungle" formControlName="survivalEquipmentJungle">Survival Equipment Jungle</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="safetyJacketWithLight" formControlName="safetyJacketWithLight">Safety Jacket With Light</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="safetyJacketWithFluorescein" formControlName="safetyJacketWithFluorescein">Safety Jacket With Fluorescein</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="safetyJacketWithUHF" formControlName="safetyJacketWithUHF">Safety Jacket With UHF</mat-checkbox>
+            </tr>
+            <tr>
+              <mat-checkbox id="safetyJacketWithVHF" formControlName="safetyJacketWithVHF">Safety Jacket With VHF</mat-checkbox>
+            </tr>
+          </table>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1" rowspan="3">
+          <div>
+            <div>
+              <mat-form-field class="space-margin">
+                  <mat-label>Nombre de canots:</mat-label>
+                <input matInput id="raftCount" formControlName="raftCount" type="number"/>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="space-margin">
+                  <mat-label>Capacité de canots:</mat-label>
+                <input matInput id="raftCapacity" formControlName="raftCapacity" type="number"/>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="space-margin">
+                  <mat-label>Couleur des canots:</mat-label>
+                <input matInput id="raftCoverageColor" formControlName="raftCoverageColor"/>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-grid-tile>
+
+      </div>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+      <br>
+
+    <mat-form-field class="space-margin">
+        <mat-label>Remarques:</mat-label>
+      <input matInput id="remarks" formControlName="remarks"/>
+    </mat-form-field>
+    <mat-form-field class="space-margin">
+        <mat-label>Pilote:</mat-label>
+      <input matInput id="pilot" formControlName="pilot"/>
+    </mat-form-field>
+
+      <div>
+          <button mat-fab extended type="submit" [disabled]="flyingPlanForm.invalid">
+              <mat-icon>send</mat-icon>
+              Enregister
+          </button>
+      </div>
+  </form>
+</div>
+

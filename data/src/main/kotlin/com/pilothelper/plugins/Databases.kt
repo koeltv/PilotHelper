@@ -4,6 +4,7 @@ import com.pilothelper.model.Aircraft
 import com.pilothelper.service.AircraftService
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -65,9 +66,10 @@ fun Application.configureDatabases() {
             }
         }
 
-        //Get Aircraft from User
-        get("/aircraft/user/{id}") {
-            val id = call.parameters["id"]?.let { UUID.fromString(it) } ?: throw IllegalArgumentException("Invalid ID")
+        //Read all Aircraft from connected User
+        get("/aircraft/user") {
+            val token = call.getToken() ?: throw BadRequestException("Please login first")
+            val id = UUID.fromString(requestUserInfo(token).sub)
             val userAircrafts = aircraftService.readUserAircrafts(id)
             call.respond(HttpStatusCode.OK, userAircrafts)
         }

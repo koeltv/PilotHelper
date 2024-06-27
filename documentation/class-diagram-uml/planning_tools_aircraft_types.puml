@@ -1,0 +1,10 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class AircraftType {
+  +name: String
+  +designator: String
+  +engineManufacturer: String
+}
+
+@enduml

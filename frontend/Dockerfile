@@ -5,10 +5,11 @@ WORKDIR /usr/src/app
 ENV NG_CLI_ANALYTICS="false"
 # Copy Node files & install dependencies
 COPY package.json package-lock.json ./
-RUN ["npm", "install"]
+RUN ["npm", "ci"]
 # Copy Angular files
 COPY angular.json tsconfig.app.json tsconfig.json tsconfig.spec.json ngsw-config.json ./
 # Copy the source code & resources
+COPY m3-theme.scss m3-theme.scss
 COPY public public
 COPY src src
 # Build the application bundle

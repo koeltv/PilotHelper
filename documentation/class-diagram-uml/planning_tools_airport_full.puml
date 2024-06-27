@@ -1,0 +1,78 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Airport {
+  +_id: String
+  +name: String
+  +icaoCode: String
+  +iataCode: String
+  +altIdentifier: String
+  +type: Int
+  +country: String
+  +geometry: Geometry
+  +elevation: Elevation
+  +elevationGeoid: ElevationGeoid
+  +trafficType: List<Int>
+  +magneticDeclination: Float
+  +ppr: Boolean
+  +isPrivate: Boolean
+  +skydiveActivity: Boolean
+  +winchOnly: Boolean
+  +services: Services
+  +frequencies: List<Frequency>
+  +runways: List<Runway>
+  +hoursOfOperation: HoursOfOperation
+  +contact: String
+  +remarks: String
+  +images: List<Image>
+  +createdBy: String
+  +updatedBy: String
+  +createdAt: String
+  +updatedAt: String
+}
+
+class Geometry {
+  +type: String
+  +coordinates: List<Float>
+}
+
+class Elevation {
+  +value: Int
+  +unit: Int
+  +referenceDatum: Int
+}
+
+class ElevationGeoid {
+  Non utilisé
+}
+
+class Services {
+  Non utilisé
+}
+
+class Frequency {
+  Non utilisé
+}
+
+class Runway {
+  Non utilisé
+}
+
+class HoursOfOperation {
+  Non utilisé
+}
+
+class Image {
+  Non utilisé
+}
+
+Airport "1" *-- "1" Geometry
+Airport "1" *-- "1" Elevation
+Airport "1" *-- "1" ElevationGeoid
+Airport "1" *-- "*" Services
+Airport "1" *-- "*" Frequency
+Airport "1" *-- "*" Runway
+Airport "1" *-- "1" HoursOfOperation
+Airport "1" *-- "*" Image
+
+@enduml

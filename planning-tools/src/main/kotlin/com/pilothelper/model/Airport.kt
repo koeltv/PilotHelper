@@ -1,6 +1,8 @@
 package com.pilothelper.model
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 /**
  * Data returned by OpenAIP API: https://docs.openaip.net/#/Airports/get_airports
@@ -8,7 +10,7 @@ import kotlinx.serialization.Serializable
  * Could be exchanged for https://airlabs.co/docs/airports (limit of 1000 requests/month)
  */
 @Serializable
-data class Airport(
+data class Airport @OptIn(ExperimentalSerializationApi::class) constructor(
     val _id: String,
     val name: String,
     val icaoCode: String?,
@@ -22,7 +24,8 @@ data class Airport(
 //    val trafficType: List<Int>,
 //    val magneticDeclination: Float,
 //    val ppr: Boolean,
-    val private: Boolean,
+    @JsonNames("private")
+    val isPrivate: Boolean,
 //    val skydiveActivity: Boolean,
 //    val winchOnly: Boolean,
 //    val services: Services,

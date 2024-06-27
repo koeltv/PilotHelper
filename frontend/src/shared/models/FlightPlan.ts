@@ -1,11 +1,11 @@
-import {airCraft} from './airCraft';
+import {AirCraft} from './AirCraft';
 import {AircraftEquipment} from "./AircraftEquipment";
 
 export class FlightPlan {
   constructor(
     public flightRules: string,
     public flightType: string,
-    public aircraftData: airCraft,
+    public aircraftData: AirCraft,
     public aircraftCount: number,
     public startingAirport: string,
     public startingTime: string,

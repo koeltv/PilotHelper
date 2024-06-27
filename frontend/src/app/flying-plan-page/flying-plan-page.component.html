@@ -1,1 +1,25 @@
-<p>flying-plan-page works!</p>
+<mat-grid-list cols="4" rowHeight="1:5.4">
+  <mat-grid-tile
+    [colspan]="1">
+    <div>
+      <display-meteo [airportCode]="airportCodeStart"></display-meteo>
+      <br><br>
+      <display-meteo [airportCode]="airportCodeEnd"></display-meteo>
+    </div>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile
+    [colspan]="2">
+    <div>
+      <h1>Créer un plan de vol.</h1>
+      <app-flying-plan-form
+        (formChange)="updateMeteo($event)"
+        (formSubmit)="onFormSubmit($event)">
+      </app-flying-plan-form>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+

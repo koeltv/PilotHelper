@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Routes</h1>
+<div mat-dialog-content>
+  <p>Veuillez sélectionner une route</p>
+  <p>
+    <mat-action-list>
+      @for (route of routes; track route) {
+        <button mat-list-item [mat-dialog-close]="route">{{ route.route }}</button>
+      }
+    </mat-action-list>
+
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Annuler</button>
+</div>

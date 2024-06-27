@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+!include aircraft.puml
+
+class UserAircraft {
+    +userId: UUID
+}
+
+Aircraft "*" o-- "*" UserAircraft
+
+@enduml

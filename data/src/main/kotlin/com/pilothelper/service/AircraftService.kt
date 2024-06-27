@@ -64,7 +64,7 @@ class AircraftService(database: Database) {
         Aircrafts.deleteWhere { Aircrafts.id eq id }
     } > 0
 
-    suspend fun readUserAircrafts(id: UUID): List<Aircraft> = dbQuery {
+    suspend fun readUserAircrafts(id:UUID): List<Aircraft> = dbQuery {
         AircraftsUsers.innerJoin(Aircrafts)
             .select(AircraftsUsers.userId eq id)
             .map { it.toAircraft() }

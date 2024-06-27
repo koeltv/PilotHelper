@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class IPInfo {
+  +status: String
+  +continent: String
+  +country: String
+  +countryCode: String
+  +regionName: String
+  +city: String
+  +zip: String
+  +lat: Float
+  +lon: Float
+  +timezone: String
+  +currency: String
+  +isp: String
+  +org: String
+  +as: String
+  +reverse: String
+  +mobile: Boolean
+  +proxy: Boolean
+  +hosting: Boolean
+  +ip: String
+  +cached: Boolean
+  +cacheTimestamp: Int
+}
+
+@enduml

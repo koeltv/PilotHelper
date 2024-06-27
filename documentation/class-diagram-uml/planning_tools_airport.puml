@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Airport {
+  +_id: String
+  +name: String
+  +icaoCode: String
+  +iataCode: String
+  +altIdentifier: String
+  +type: Int
+  +country: String
+  +geometry: Geometry
+  +elevation: Elevation
+  +isPrivate: Boolean
+}
+
+class Geometry {
+  +type: String
+  +coordinates: List<Float>
+}
+
+class Elevation {
+  +value: Int
+  +unit: Int
+  +referenceDatum: Int
+}
+
+Airport "1" *-- "1" Geometry
+Airport "1" *-- "1" Elevation
+
+@enduml

@@ -120,15 +120,9 @@ paths:
             '*/*':
               schema:
                 type: "object"
-  /aircraft/user/{id}:
+  /aircraft/user:
     get:
       description: "Get Aircrafts from User"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "string"
       responses:
         "200":
           description: "OK"
@@ -143,6 +137,12 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Aircraft"
+        "400":
+          description: "User is not logged in"
+          content:
+            '*/*':
+              schema:
+                type: "object"
 components:
   schemas:
     Aircraft:

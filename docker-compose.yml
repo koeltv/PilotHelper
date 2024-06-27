@@ -13,7 +13,7 @@ services:
 
   # Keycloak : Authentification & Authorization
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:25.0.0
     command: start --import-realm
     env_file:
       - keycloak-database.env
@@ -118,7 +118,7 @@ services:
       traefik.http.routers.data.entrypoints: https,http
       traefik.http.routers.data.tls: true
       traefik.http.routers.data.rule: PathPrefix(`/data`)
-      traefik.http.routers.data.middlewares: keycloak-middleware-name@file,data
+      traefik.http.routers.data.middlewares: cors@file,authentification@file,data
       traefik.http.middlewares.data.stripprefix.prefixes: /data
     depends_on:
       - database
@@ -135,7 +135,7 @@ services:
       traefik.http.routers.flight-plan.entrypoints: https,http
       traefik.http.routers.flight-plan.tls: true
       traefik.http.routers.flight-plan.rule: PathPrefix(`/flight-plan`)
-      traefik.http.routers.flight-plan.middlewares: keycloak-middleware-name@file,flight-plan
+      traefik.http.routers.flight-plan.middlewares: cors@file,authentification@file,flight-plan
       traefik.http.middlewares.flight-plan.stripprefix.prefixes: /flight-plan
     depends_on:
       - database
@@ -152,7 +152,7 @@ services:
       traefik.http.routers.planning-tools.entrypoints: https,http
       traefik.http.routers.planning-tools.tls: true
       traefik.http.routers.planning-tools.rule: PathPrefix(`/planning-tools`)
-      traefik.http.routers.planning-tools.middlewares: keycloak-middleware-name@file,planning-tools
+      traefik.http.routers.planning-tools.middlewares: cors@file,authentification@file,planning-tools
       traefik.http.middlewares.planning-tools.stripprefix.prefixes: /planning-tools
     depends_on:
       - database
