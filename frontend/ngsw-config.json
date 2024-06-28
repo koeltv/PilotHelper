@@ -9,6 +9,7 @@
         "files": [
           "/favicon.ico",
           "/index.html",
+          "/assets/silent-check-sso.html",
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
