@@ -57,6 +57,7 @@ class AircraftService(database: Database) {
                 it[transponder] = aircraft.transponder
                 it[colorAndMarkings] = aircraft.colorAndMarkings
             }
+            return@dbQuery id
         }
     }
 
