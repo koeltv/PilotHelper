@@ -9,15 +9,15 @@ services:
     volumes:
       - keycloak_database:/bitnami/postgresql
     env_file:
-      - keycloak-database.env
+      - env/keycloak-database.env
 
   # Keycloak : Authentification & Authorization
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.0
     command: start-dev --import-realm
     env_file:
-      - keycloak-database.env
-      - keycloak.env
+      - env/keycloak-database.env
+      - env/keycloak.env
     volumes:
       - ./authentification:/opt/keycloak/data/import:ro
     ports:
@@ -41,7 +41,7 @@ services:
       - "${PROXY_PORT:-80}:80"
       - 8081:8080 # For admin interface
     env_file:
-      - keycloak-shared.env
+      - env/keycloak-shared.env
     volumes:
       - ./reverse-proxy/traefik.yml/:/etc/traefik/traefik.yml:ro
       - ./reverse-proxy/dynamic.yml/:/etc/traefik/dynamic.yml:ro
@@ -74,7 +74,7 @@ services:
     depends_on:
       - prometheus
     env_file:
-      - grafana.env
+      - env/grafana.env
     ports:
       - 3000:3000
     volumes:
@@ -97,7 +97,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - database.env
+      - env/database.env
 
   # Simple service example
   data:
@@ -112,8 +112,8 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
+      - env/keycloak-shared.env
+      - env/database.env
 
   flight-plan:
     build: flight-plan
@@ -127,8 +127,8 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
+      - env/keycloak-shared.env
+      - env/database.env
 
   planning-tools:
     build: planning-tools
@@ -142,9 +142,9 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
-      - api.env
+      - env/keycloak-shared.env
+      - env/database.env
+      - env/api.env
 
   frontend:
     build: frontend

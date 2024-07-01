@@ -9,7 +9,7 @@ do
   echo "Setting up $base_name env file..."
 
   # Copy and rename the file to the current directory
-  cp "$file" "./$base_name.env"
+  cp "$file" "./env/$base_name.env"
 done
 
 echo "Env files are all ready !"
