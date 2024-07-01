@@ -1,9 +1,2 @@
-export const environment = {
-  enableKeycloak: true,
-  backendUrl: "http://pilothelper.com",
-  auth: {
-    url: 'http://keycloak:8080',
-    realm: 'pilothelper-realm',
-    clientId: 'pilothelper',
-  },
-};
+// @ts-ignore
+export const environment = window['env'] || {};

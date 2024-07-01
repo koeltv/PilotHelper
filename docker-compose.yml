@@ -154,6 +154,8 @@ services:
       traefik.enable: true
       traefik.http.routers.frontend.rule: Host(`pilothelper.com`) && PathPrefix(`/`)
       traefik.http.routers.frontend.priority: 1 # Lower priority to avoid conflicts
+    env_file:
+      - env/frontend.env
 
 volumes:
   keycloak_database:
