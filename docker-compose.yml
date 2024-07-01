@@ -9,16 +9,16 @@ services:
     volumes:
       - keycloak_database:/bitnami/postgresql
     env_file:
-      - keycloak-database.env
+      - env/keycloak-database.env
 
   # Keycloak : Authentification & Authorization
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.0
     command: start --import-realm
     env_file:
-      - keycloak-database.env
-      - keycloak-url.env
-      - keycloak.env
+      - env/keycloak-database.env
+      - env/keycloak-url.env
+      - env/keycloak.env
     volumes:
       - ./authentification:/opt/keycloak/data/import:ro
     depends_on:
@@ -46,8 +46,8 @@ services:
       - "${HTTPS_PROXY_PORT:-443}:443"
       - 8081:8080 # For admin interface
     env_file:
-      - keycloak-shared.env
-      - keycloak-url.env
+      - env/keycloak-shared.env
+      - env/keycloak-url.env
     volumes:
       - ./reverse-proxy/traefik.yml/:/etc/traefik/traefik.yml:ro
       - ./reverse-proxy/dynamic.yml/:/etc/traefik/dynamic.yml:ro
@@ -83,7 +83,7 @@ services:
     depends_on:
       - prometheus
     env_file:
-      - grafana.env
+      - env/grafana.env
     volumes:
       - ./metrics/grafana/provisioning:/etc/grafana/provisioning:ro
       - ./metrics/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
@@ -106,7 +106,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - database.env
+      - env/database.env
 
   # Simple service example
   data:
@@ -123,8 +123,8 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
+      - env/keycloak-shared.env
+      - env/database.env
 
   flight-plan:
     build: flight-plan
@@ -140,8 +140,8 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
+      - env/keycloak-shared.env
+      - env/database.env
 
   planning-tools:
     build: planning-tools
@@ -157,9 +157,9 @@ services:
     depends_on:
       - database
     env_file:
-      - keycloak-shared.env
-      - database.env
-      - api.env
+      - env/keycloak-shared.env
+      - env/database.env
+      - env/api.env
 
   frontend:
     build: frontend
@@ -171,6 +171,8 @@ services:
       traefik.http.routers.frontend.tls: true
       traefik.http.routers.frontend.rule: Host(`pilothelper.com`) && PathPrefix(`/`)
       traefik.http.routers.frontend.priority: 1 # Lower priority to avoid conflicts
+    env_file:
+      - env/frontend.env
 
 volumes:
   keycloak_database:
