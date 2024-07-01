@@ -52,15 +52,6 @@ export class FlyingPlanFormComponent {
 
   aircrafts: AirCraft[] = [];
 
-  selectedAircraft: AirCraft = {
-    aircraftId: '',
-    aircraftType: '',
-    turbulenceType: '',
-    equipment: '',
-    transponder: '',
-    colorAndMarkings: ''
-  };
-
   constructor(
     private readonly fb: FormBuilder,
     private readonly snackbar: MatSnackBar,

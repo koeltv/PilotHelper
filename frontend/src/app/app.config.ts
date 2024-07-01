@@ -9,7 +9,7 @@ import {environment} from '../environments/environment';
 import {provideAnimations} from '@angular/platform-browser/animations';
 
 function initializeKeycloak(keycloak: KeycloakService) {
-  return () => {
+  return async () => {
     if (!environment.enableKeycloak) return false;
 
     return keycloak.init({
