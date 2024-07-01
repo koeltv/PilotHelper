@@ -27,7 +27,7 @@ http:
 
 tls:
   certificates:
-    - certFile: /certs/_wildcard.pilothelper.com.pem
-      keyFile: /certs/_wildcard.pilothelper.com-key.pem
+    - certFile: /certs/pilothelper.com.pem
+      keyFile: /certs/pilothelper.com-key.pem
       stores:
         - default

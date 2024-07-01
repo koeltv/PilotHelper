@@ -21,8 +21,8 @@ Voici un résumé de l'architecture du projet :
 
 - Lancer le script [env-setup.sh](./env-setup.sh) pour copier les fichiers env depuis [les exemples](./documentation/env) puis les paramétrer (les valeurs par défaut suffisent pour un essai).
 - Installer docker et docker compose (si ce n'est pas déjà fait)
-- Ajouter dans le fichier `hosts` (`C:\Windows\System32\drivers\etc\hosts` sur Windows) les
-  lignes ```127.0.0.1 pilothelper.com``` et ```127.0.0.1 keycloak.pilothelper.com```.
+- Ajouter dans le fichier `hosts` (`C:\Windows\System32\drivers\etc\hosts` sur Windows) la
+  ligne ```127.0.0.1 pilothelper.com```.
 - Dans ce répertoire lancer docker compose: `docker compose up -d`
 
 Les comptes par défaut sont :

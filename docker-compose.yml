@@ -25,7 +25,7 @@ services:
       - keycloak-database
     labels:
       traefik.enable: true
-      traefik.http.routers.keycloak.rule: Host(`keycloak.pilothelper.com`)
+      traefik.http.routers.keycloak.rule: PathPrefix(`/auth`)
       traefik.http.routers.keycloak.entrypoints: https,http
       traefik.http.routers.keycloak.tls: true
 
@@ -51,8 +51,8 @@ services:
     volumes:
       - ./reverse-proxy/traefik.yml/:/etc/traefik/traefik.yml:ro
       - ./reverse-proxy/dynamic.yml/:/etc/traefik/dynamic.yml:ro
-      - ./reverse-proxy/certs/_wildcard.pilothelper.com.pem:/etc/ssl/certs/_wildcard.pilothelper.com.pem:ro
-      - ./reverse-proxy/certs/_wildcard.pilothelper.com-key.pem:/etc/ssl/certs/_wildcard.pilothelper.com-key.pem:ro
+      - ./reverse-proxy/certs/pilothelper.com.pem:/etc/ssl/certs/pilothelper.com.pem:ro
+      - ./reverse-proxy/certs/pilothelper.com-key.pem:/etc/ssl/certs/pilothelper.com-key.pem:ro
       - ./reverse-proxy/certs:/certs:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
 

@@ -36,6 +36,8 @@
     "!/flight-plan/**",
     "!/planning-tools",
     "!/planning-tools/**",
+    "!/auth",
+    "!/auth/**",
     "/**"
   ]
 }
