@@ -7,14 +7,15 @@ import {MatSidenavContainer} from "@angular/material/sidenav";
 import {MatDialog} from "@angular/material/dialog";
 import {KeycloakEventType, KeycloakService} from "keycloak-angular";
 import {NgOptimizedImage} from "@angular/common";
+import {FlyingPlaneComponent} from "./flying-plane/flying-plane.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, NgOptimizedImage],
+  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, NgOptimizedImage, FlyingPlaneComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   title = 'frontend';
