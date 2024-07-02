@@ -1,0 +1,16 @@
+<form>
+  <div>
+    <mat-form-field>
+      <mat-label>Filtre</mat-label>
+      <mat-select [(ngModel)]="selected"
+                  (ngModelChange)="filterChange($event)"
+                  [ngModelOptions]="{standalone: true}"
+      >
+        <mat-option [value]="undefined">Tous</mat-option>
+        @for (aircraft of aircraftList; track aircraft) {
+          <mat-option [value]="aircraft">{{ aircraft.aircraftId }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

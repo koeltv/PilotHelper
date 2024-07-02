@@ -1,0 +1,42 @@
+<div style="text-align: center">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <mat-form-field class="form-button">
+        <mat-label>N° d'avion</mat-label>
+        <input matInput placeholder="ZZZZ" formControlName="aircraftId">
+      </mat-form-field>
+
+      <app-aircraft-type-input name="Désignation de l'avion" class="form-button"
+                           [control]="form.controls['aircraftType']"
+      ></app-aircraft-type-input>
+
+      <mat-form-field class="form-button">
+        <mat-label>Type de turbulence</mat-label>
+        <mat-select formControlName="turbulenceType">
+          @for (type of turbulenceType; track type) {
+            <mat-option [value]="type.value">{{ type.value }} - {{ type.description }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="form-button">
+        <mat-label>Équipement</mat-label>
+        <input matInput placeholder="S" formControlName="equipment">
+      </mat-form-field>
+
+      <mat-form-field class="form-button">
+        <mat-label>Transponder</mat-label>
+        <input matInput placeholder="S" formControlName="transponder">
+      </mat-form-field>
+
+      <mat-form-field class="form-button">
+        <mat-label>Marques et couleur</mat-label>
+        <input matInput placeholder="Bleu" formControlName="colorAndMarkings">
+      </mat-form-field>
+    </div>
+
+    <ng-content></ng-content>
+  </form>
+</div>

@@ -1,14 +1,29 @@
-<personal-aircraft-form (aircraftCreated)="addAircraft($event)"></personal-aircraft-form>
+<h1 style="text-align: center">Ajouter un avion personnel</h1><br>
+
+<app-aircraft-form (aircraftCreated)="addAircraft($event)" #aircraftFormComponent>
+  <button mat-fab extended type="reset" class="form-button">
+    <mat-icon>restart_alt</mat-icon>
+    Effacer
+  </button>
+
+  <button mat-fab extended type="submit" class="form-button" [disabled]="!aircraftFormComponent.form.valid">
+    <mat-icon>send</mat-icon>
+    Enregistrer
+  </button>
+</app-aircraft-form>
 
 <h2>Liste des avions</h2>
 
-<show-aircraft-form [airCraftList]="airCraftList"
-                    (updatedAircraftList)="updateVisibleAircraft($event)"></show-aircraft-form>
+<app-select-aircraft [aircraftList]="airCraftList"
+                     (updatedAircraftList)="updateVisibleAircraft($event)"></app-select-aircraft>
 
 <ul>
-  <li *ngFor="let aircraft of visibleAircraft">
-    ID: {{ aircraft.aircraftId }}, Type: {{ aircraft.aircraftType }}, Turbulence: {{ aircraft.turbulenceType }},
-    Équipement: {{ aircraft.equipment }}, Transpondeur: {{ aircraft.transponder }}, Couleur et Marquages: {{ aircraft.colorAndMarkings }}
-  </li>
+  @for (aircraft of visibleAircraft; track aircraft) {
+    <li>
+      ID: {{ aircraft.aircraftId }}, Type: {{ aircraft.aircraftType }}, Turbulence: {{ aircraft.turbulenceType }},
+      Équipement: {{ aircraft.equipment }}, Transpondeur: {{ aircraft.transponder }}, Couleur et
+      Marquages: {{ aircraft.colorAndMarkings }}
+    </li>
+  }
 </ul>
 
