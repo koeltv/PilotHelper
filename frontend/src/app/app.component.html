@@ -22,7 +22,7 @@
                  fixedTopGap="56">
       <mat-nav-list>
         @for (nav of navElements; track nav) {
-          <a mat-list-item routerLink="{{nav.path}}">{{ nav.name }}</a>
+          <a mat-list-item routerLink="{{nav.path}}" (click)="sideNav.toggle()">{{ nav.name }}</a>
         }
       </mat-nav-list>
     </mat-sidenav>
