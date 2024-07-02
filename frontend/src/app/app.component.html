@@ -1,12 +1,13 @@
-<mat-sidenav-container>
-  <mat-toolbar>
-    <button mat-icon-button (click)="navigate('/')" aria-label="Menu icon">
+<div class="container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar class="toolbar">
+    <button mat-icon-button (click)="sideNav.toggle()" aria-label="Menu icon" [disabled]="!mobileQuery.matches">
       <mat-icon>menu</mat-icon>
     </button>
-    <a mat-button (click)="navigate('/')">PilotHelper</a>
-    <a mat-button (click)="navigate('/aircraft')">Mes aéronefs</a>
-    <a mat-button (click)="navigate('/my-flyingplans')">Mes plans de vol</a>
-    <a mat-button (click)="navigate('/flyingplan')">Planifier un vol</a>
+    @if (!mobileQuery.matches) {
+      @for (nav of navElements; track nav) {
+        <a mat-button (click)="navigate(nav.path)">{{ nav.name }}</a>
+      }
+    }
 
     <app-flying-plane class="spacer"></app-flying-plane>
 
@@ -16,5 +17,19 @@
     </button>
   </mat-toolbar>
 
-  <router-outlet></router-outlet>
-</mat-sidenav-container>
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #sideNav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+                 fixedTopGap="56">
+      <mat-nav-list>
+        @for (nav of navElements; track nav) {
+          <a mat-list-item routerLink="{{nav.path}}">{{ nav.name }}</a>
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+</div>
