@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {FlightPlan} from "../../shared/models/FlightPlan";
 import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {FlyingPlanFormComponent} from "../flying-plan-form/flying-plan-form.component";
@@ -7,6 +7,7 @@ import {DisplayMeteoComponent} from "./display-meteo/display-meteo.component";
 import {MatListModule} from '@angular/material/list';
 import {FlightPlanService} from "../api/flight-plan.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 
 @Component({
@@ -27,10 +28,16 @@ export class FlyingPlanPageComponent {
   airportCodeStart:string = "";
   airportCodeEnd:string = "";
 
+  mobileQuery: MediaQueryList;
+
   constructor(
     private readonly flightPlanService: FlightPlanService,
     private readonly snackBar: MatSnackBar,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
   ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges());
   }
 
   onFormSubmit(newFlyingPlan: FlightPlan) {

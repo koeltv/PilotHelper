@@ -1,25 +1,18 @@
-<mat-grid-list cols="4" rowHeight="1:5.4">
-  <mat-grid-tile
-    [colspan]="1">
-    <div>
+<h1 style="text-align: center">Créer un plan de vol</h1>
+<div class="flex-container">
+  @if (!mobileQuery.matches) {
+    <div [style.flex]="1">
       <display-meteo [airportCode]="airportCodeStart"></display-meteo>
-      <br><br>
       <display-meteo [airportCode]="airportCodeEnd"></display-meteo>
     </div>
-  </mat-grid-tile>
+  }
 
-
-  <mat-grid-tile
-    [colspan]="2">
+  <div [style.flex]="3">
     <div>
-      <h1>Créer un plan de vol.</h1>
       <app-flying-plan-form
         (formChange)="updateMeteo($event)"
         (formSubmit)="onFormSubmit($event)">
       </app-flying-plan-form>
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
-
-
-
+  </div>
+</div>

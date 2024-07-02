@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AirCraft} from "../../shared/models/AirCraft";
 import {FlightPlan} from "../../shared/models/FlightPlan";
@@ -19,6 +19,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatDivider} from "@angular/material/divider";
 import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
 import {DataService} from "../api/data.service";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-flying-plan-form',
@@ -52,13 +53,20 @@ export class FlyingPlanFormComponent {
 
   aircrafts: AirCraft[] = [];
 
+  mobileQuery: MediaQueryList;
+
   constructor(
     private readonly fb: FormBuilder,
     private readonly snackbar: MatSnackBar,
     private readonly dialog: MatDialog,
     private readonly planningToolsService: PlanningToolsService,
     private readonly dataService: DataService,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
   ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges());
+
     this.aircraftData = this.fb.group({
       aircraftId: [''],
       aircraftType: [undefined],
