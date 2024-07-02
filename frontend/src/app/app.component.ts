@@ -7,7 +7,7 @@ import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/mater
 import {MatDialog} from "@angular/material/dialog";
 import {KeycloakEventType, KeycloakService} from "keycloak-angular";
 import {NgOptimizedImage} from "@angular/common";
-import {FlyingPlaneComponent} from "./flying-plane/flying-plane.component";
+import {PlaneAnimatedComponent} from "./plane-animated/plane-animated.component";
 import {MediaMatcher} from "@angular/cdk/layout";
 import {MatListItem, MatNavList} from "@angular/material/list";
 
@@ -22,7 +22,7 @@ class NavElement {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, MatSidenavContent, NgOptimizedImage, FlyingPlaneComponent, MatSidenav, MatNavList, MatListItem, RouterLink],
+  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, MatSidenavContent, NgOptimizedImage, PlaneAnimatedComponent, MatSidenav, MatNavList, MatListItem, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

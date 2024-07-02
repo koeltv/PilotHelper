@@ -1,28 +1,33 @@
 import {Component} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule, NgForOf} from "@angular/common";
-import {PersonalAircraftFormComponent} from "../create-aircraft-form/create-aicraft-form.component";
-import {ShowAircraftForm} from "../show-aircaft-form/show-aircraft-form.component";
-import {AirCraft} from "../../shared/models/AirCraft";
+import {AircraftFormComponent} from "./aircraft-form/aircraft-form.component";
+import {Aircraft} from "../../shared/models/Aircraft";
 import {DataService} from "../api/data.service";
+import {MatFabButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
+import {SelectAircraftComponent} from "./select-aircraft/select-aircraft.component";
 
 @Component({
-  selector: 'aircraft-page',
+  selector: 'app-aircraft-page',
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     NgForOf,
-    PersonalAircraftFormComponent,
-    ShowAircraftForm,
-    ReactiveFormsModule
+    AircraftFormComponent,
+    SelectAircraftComponent,
+    ReactiveFormsModule,
+    MatFabButton,
+    MatIcon,
+    SelectAircraftComponent
   ],
   templateUrl: './aircraft-page.component.html',
   styleUrl: './aircraft-page.component.css'
 })
 export class AircraftPageComponent {
-  airCraftList: AirCraft[] = [];
-  visibleAircraft: AirCraft[] = [];
+  airCraftList: Aircraft[] = [];
+  visibleAircraft: Aircraft[] = [];
 
   constructor(private dataService: DataService) {
     this.fetchAircrafts();
@@ -34,11 +39,11 @@ export class AircraftPageComponent {
     });
   }
 
-  addAircraft(aircraft: AirCraft) {
+  addAircraft(aircraft: Aircraft) {
     this.dataService.createAircraft(aircraft).subscribe(() => this.fetchAircrafts());
   }
 
-  updateVisibleAircraft(updatedList: AirCraft[]) {
+  updateVisibleAircraft(updatedList: Aircraft[]) {
     this.visibleAircraft = updatedList;
   }
 }

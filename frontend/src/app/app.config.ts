@@ -9,22 +9,18 @@ import {environment} from '../environments/environment';
 import {provideAnimations} from '@angular/platform-browser/animations';
 
 function initializeKeycloak(keycloak: KeycloakService) {
-  return async () => {
-    if (!environment.enableKeycloak) return false;
-
-    return keycloak.init({
-      config: {
-        realm: `${environment.auth.realm}`,
-        url: `${environment.auth.url}`,
-        clientId: `${environment.auth.clientId}`
-      },
-      initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-        messageReceiveTimeout: 1000,
-      },
-    }).catch(() => false);
-  };
+  return async () => keycloak.init({
+    config: {
+      realm: `${environment.auth.realm}`,
+      url: `${environment.auth.url}`,
+      clientId: `${environment.auth.clientId}`
+    },
+    initOptions: {
+      onLoad: 'check-sso',
+      silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+      messageReceiveTimeout: 1000,
+    },
+  }).catch(() => false);
 }
 
 export const appConfig: ApplicationConfig = {

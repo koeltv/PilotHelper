@@ -3,7 +3,7 @@ import {from, Observable, switchMap} from "rxjs";
 import {Weather} from "../../shared/models/Weather";
 import {HttpClient} from "@angular/common/http";
 import {Route} from "../../shared/models/Route";
-import {AirCraftType} from "../../shared/models/AirCraftType";
+import {AircraftType} from "../../shared/models/AircraftType";
 import {Airport} from "../../shared/models/Airport";
 
 @Injectable({
@@ -24,16 +24,16 @@ export class PlanningToolsService {
     return this.client.get<Route[]>(`${this.baseUrl}/route?from=${startingAirport}&to=${destinationAirport}`);
   }
 
-  getAllAircraftTypes(): Observable<AirCraftType[]> {
-    return this.client.get<AirCraftType[]>(`${this.baseUrl}/aircraft-type`);
+  getAllAircraftTypes(): Observable<AircraftType[]> {
+    return this.client.get<AircraftType[]>(`${this.baseUrl}/aircraft-type`);
   }
 
-  getAircraftTypesByName(name: string): Observable<AirCraftType[]> {
-    return this.client.get<AirCraftType[]>(`${this.baseUrl}/aircraft-type/name/${name}`);
+  getAircraftTypesByName(name: string): Observable<AircraftType[]> {
+    return this.client.get<AircraftType[]>(`${this.baseUrl}/aircraft-type/name/${name}`);
   }
 
-  getAircraftTypesByType(type: string): Observable<AirCraftType[]> {
-    return this.client.get<AirCraftType[]>(`${this.baseUrl}/aircraft-type/type/${type}`);
+  getAircraftTypesByType(type: string): Observable<AircraftType[]> {
+    return this.client.get<AircraftType[]>(`${this.baseUrl}/aircraft-type/type/${type}`);
   }
 
   getAllAirports(): Observable<Airport[]> {
