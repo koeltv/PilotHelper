@@ -23,4 +23,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy the web application inside the container
 COPY --from=builder /usr/src/app/dist/frontend/browser /usr/share/nginx/html
 # Replace environment variables and run the Nginx server
-ENTRYPOINT envsubst < /usr/share/nginx/html/assets/env.js > /usr/share/nginx/html/assets/temp.js && mv /usr/share/nginx/html/assets/temp.js /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'
+ENTRYPOINT envsubst < /usr/share/nginx/html/env.js > /usr/share/nginx/html/temp.js && mv /usr/share/nginx/html/temp.js /usr/share/nginx/html/env.js && exec nginx -g 'daemon off;'
