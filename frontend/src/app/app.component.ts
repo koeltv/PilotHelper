@@ -1,31 +1,51 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button";
-import {MatSidenavContainer} from "@angular/material/sidenav";
+import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
 import {MatDialog} from "@angular/material/dialog";
 import {KeycloakEventType, KeycloakService} from "keycloak-angular";
 import {NgOptimizedImage} from "@angular/common";
+import {FlyingPlaneComponent} from "./flying-plane/flying-plane.component";
+import {MediaMatcher} from "@angular/cdk/layout";
+import {MatListItem, MatNavList} from "@angular/material/list";
 
+class NavElement {
+  constructor(
+    public name: string,
+    public path: string
+  ) {
+  }
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, NgOptimizedImage],
+  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, MatSidenavContent, NgOptimizedImage, FlyingPlaneComponent, MatSidenav, MatNavList, MatListItem, RouterLink],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
-
   username: string | undefined;
+  mobileQuery: MediaQueryList;
+
+  navElements: NavElement[] = [
+    {path: '/', name: 'PilotHelper'},
+    {path: '/aircraft', name: 'Mes aéronefs'},
+    {path: '/my-flyingplans', name: 'Mes plans de vol'},
+    {path: '/flyingplan', name: 'Planifier un vol'},
+  ];
 
   constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
     private router: Router,
     private authService: KeycloakService,
     public dialog: MatDialog
   ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges())
   }
 
   public addAuthCookie(authService: KeycloakService) {

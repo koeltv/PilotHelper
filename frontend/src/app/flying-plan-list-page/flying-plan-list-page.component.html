@@ -1,4 +1,4 @@
-<mat-grid-list cols="3" rowHeight="1.2:1">
+<mat-grid-list [cols]="tabletQuery.matches ? (mobileQuery.matches ? 1 : 2) : 3" rowHeight="1:1">
   @for (plan of flightPlanPdfs; track plan) {
     <mat-grid-tile>
       <pdf-viewer [src]="plan.source"
