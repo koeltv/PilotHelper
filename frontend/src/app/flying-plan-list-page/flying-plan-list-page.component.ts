@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {FlightPlanService} from "../api/flight-plan.service";
 import {PdfViewerModule} from "ng2-pdf-viewer";
@@ -10,6 +10,7 @@ import {Clipboard} from "@angular/cdk/clipboard";
 import {environment} from "../../environments/environment";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "./confirmation-dialog/confirmation-dialog.component";
+import {MediaMatcher} from "@angular/cdk/layout";
 
 class Source {
   constructor(
@@ -48,13 +49,21 @@ export class FlightPlanPdf {
 })
 export class FlyingPlanListPageComponent {
   flightPlanPdfs: FlightPlanPdf[] = [];
+  mobileQuery: MediaQueryList;
+  tabletQuery: MediaQueryList;
 
   constructor(
     private flightPlanService: FlightPlanService,
     private clipboard: Clipboard,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
   ) {
     this.refreshFlightPlans();
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.tabletQuery = media.matchMedia('(max-width: 800px)');
+    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges());
+    this.tabletQuery.addEventListener('change', () => changeDetectorRef.detectChanges());
   }
 
   private refreshFlightPlans() {

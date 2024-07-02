@@ -6,7 +6,7 @@ form {
   flex: 1 1 auto;
 }
 
-.container {
+.main-container {
   display: flex;
   flex-direction: column;
   position: absolute;
