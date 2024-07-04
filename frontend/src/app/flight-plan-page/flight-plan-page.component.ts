@@ -8,6 +8,7 @@ import {MatListModule} from '@angular/material/list';
 import {FlightPlanService} from "../api/flight-plan.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MediaMatcher} from "@angular/cdk/layout";
+import {Airport} from "../../shared/models/Airport";
 
 
 @Component({
@@ -25,8 +26,8 @@ import {MediaMatcher} from "@angular/cdk/layout";
 })
 export class FlightPlanPageComponent {
 
-  airportCodeStart:string = "";
-  airportCodeEnd:string = "";
+  airportCodeStart: string = '';
+  airportCodeEnd: string = '';
 
   mobileQuery: MediaQueryList;
 
@@ -52,9 +53,11 @@ export class FlightPlanPageComponent {
 
   updateMeteo(change: { [key: string]: any }){
     if (change['startingAirport']) {
-      this.airportCodeStart = change['startingAirport'];
+      const startingAirport: string | Airport = change['startingAirport'];
+      this.airportCodeStart = typeof startingAirport == 'string' ? startingAirport : (startingAirport.icaoCode ?? 'ZZZZ');
     } else if (change['destinationAirport']) {
-      this.airportCodeEnd = change['destinationAirport'];
+      const destinationAirport: string | Airport = change['destinationAirport'];
+      this.airportCodeEnd = typeof destinationAirport == 'string' ? destinationAirport : (destinationAirport.icaoCode ?? 'ZZZZ');
     }
   }
 }
