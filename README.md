@@ -19,7 +19,10 @@ Voici un résumé de l'architecture du projet :
 
 ## Setup
 
+### Standard (master et autres branches)
 - Lancer le script [env-setup.sh](./env-setup.sh) pour copier les fichiers env depuis [les exemples](./documentation/env) puis les paramétrer (les valeurs par défaut suffisent pour un essai).
+- Pour obtenir des données sur les aéroports, une clé d'API [OpenAIP](https://www.openaip.net/) est nécessaire (
+  fichier [api.env](env/api.env))
 - Installer docker et docker compose (si ce n'est pas déjà fait)
 - Ajouter dans le fichier `hosts` (`C:\Windows\System32\drivers\etc\hosts` sur Windows) la
   ligne ```127.0.0.1 pilothelper.com```.
@@ -36,6 +39,17 @@ Les comptes par défaut sont :
   - pas de compte par défaut, il faut en créer un (register ou via interface admin)
 
 Toutes les valeurs par défaut sont visibles dans les fichiers `.env` après execution du script et `documentation/env/*.env.example` avant.
+
+### HTTPS (branche `https`)
+
+**Attention !** Les fichiers d'environnement sur la branche `https` sont légèrement différents et l'adresse utilisée
+est `pilothelper.com` par défaut.
+Pour lancer l'application sur cette branche:
+
+- Ajouter dans le fichier `hosts` (`C:\Windows\System32\drivers\etc\hosts` sur Windows) la
+  ligne ```127.0.0.1 pilothelper.com```.
+- Lancer à nouveau le script [env-setup.sh](./env-setup.sh). Le contenu des fichiers d'environnement n'est pas écrasé
+  lorsque vous changez d'environnement, seulement stocké dans un sous-dossier.
 
 ## Fonctionnement global du back
 
