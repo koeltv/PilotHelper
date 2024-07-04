@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, viewChild} from '@angular/core';
 import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
@@ -45,7 +45,7 @@ export class AirportInputComponent {
   @Input({transform: (value: AbstractControl): FormControl<any> => <FormControl<any>>value}) control!: FormControl;
   @Input() name!: string;
 
-  @ViewChild('airportInput') airportInput!: ElementRef<HTMLInputElement>;
+  airportInput = viewChild.required<ElementRef<HTMLInputElement>>('airportInput')
 
   public options: Airport[] = [];
   public filteredOptions: Airport[] = [];
@@ -55,7 +55,7 @@ export class AirportInputComponent {
     if (filter != this.filterBy) {
       this.options = [];
       this.filteredOptions = [];
-      this.airportInput.nativeElement.value = '';
+      this.airportInput().nativeElement.value = '';
     }
     this.filterBy = filter;
   }
@@ -71,7 +71,7 @@ export class AirportInputComponent {
   }
 
   handleAirportAutocomplete(): void {
-    const typedInput = this.airportInput.nativeElement.value.toUpperCase();
+    const typedInput = this.airportInput().nativeElement.value.toUpperCase();
 
     if (typedInput.length <= 1) {
       this.options = [];

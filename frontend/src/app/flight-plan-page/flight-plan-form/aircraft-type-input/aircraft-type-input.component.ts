@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, viewChild} from '@angular/core';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
@@ -39,7 +39,7 @@ export class AircraftTypeInputComponent {
   @Input({transform: (value: AbstractControl): FormControl<any> => <FormControl<any>>value}) control!: FormControl;
   @Input() name!: string;
 
-  @ViewChild('aircraftTypeInput') aircraftTypeInput!: ElementRef<HTMLInputElement>;
+  aircraftTypeInput = viewChild.required<ElementRef<HTMLInputElement>>('aircraftTypeInput');
 
   public options: AircraftType[] = [];
   public filteredOptions: AircraftType[] = [];
@@ -49,7 +49,7 @@ export class AircraftTypeInputComponent {
     if (filter != this.filterBy) {
       this.options = [];
       this.filteredOptions = [];
-      this.aircraftTypeInput.nativeElement.value = '';
+      this.aircraftTypeInput().nativeElement.value = '';
     }
     this.filterBy = filter;
   }
@@ -64,7 +64,7 @@ export class AircraftTypeInputComponent {
   }
 
   handleAircraftTypeAutocomplete(): void {
-    const typedInput = this.aircraftTypeInput.nativeElement.value.toUpperCase();
+    const typedInput = this.aircraftTypeInput().nativeElement.value.toUpperCase();
 
     if (typedInput.length <= 1) {
       this.options = [];
