@@ -48,7 +48,6 @@ import {AircraftFormComponent} from "../../aircraft-page/aircraft-form/aircraft-
 })
 export class FlightPlanFormComponent {
   @Output() formSubmit = new EventEmitter<FlightPlan>();
-  @Output() formChange = new EventEmitter<{ [key: string]: any }>();
   flightPlanForm: FormGroup;
   aircraftData: FormGroup;
 
@@ -115,12 +114,6 @@ export class FlightPlanFormComponent {
 
     this.dataService.readAllAircraft().subscribe(aircrafts => {
       this.aircrafts = aircrafts;
-    })
-
-    Object.keys(this.flightPlanForm.controls).forEach(fieldName => {
-      this.flightPlanForm.get(fieldName)?.valueChanges.subscribe(newValue => {
-        this.formChange.emit({[fieldName]: newValue});
-      });
     });
   }
 

@@ -8,7 +8,6 @@ import {MatListModule} from '@angular/material/list';
 import {FlightPlanService} from "../api/flight-plan.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MediaMatcher} from "@angular/cdk/layout";
-import {Airport} from "../../shared/models/Airport";
 
 
 @Component({
@@ -25,10 +24,6 @@ import {Airport} from "../../shared/models/Airport";
   styleUrl: './flight-plan-page.component.css'
 })
 export class FlightPlanPageComponent {
-
-  airportCodeStart: string = '';
-  airportCodeEnd: string = '';
-
   mobileQuery: MediaQueryList;
 
   constructor(
@@ -49,15 +44,5 @@ export class FlightPlanPageComponent {
         this.snackBar.open('Une erreur à eu lieu, veuillez vérifier le formulaire', 'OK');
       }
     });
-  }
-
-  updateMeteo(change: { [key: string]: any }){
-    if (change['startingAirport']) {
-      const startingAirport: string | Airport = change['startingAirport'];
-      this.airportCodeStart = typeof startingAirport == 'string' ? startingAirport : (startingAirport.icaoCode ?? 'ZZZZ');
-    } else if (change['destinationAirport']) {
-      const destinationAirport: string | Airport = change['destinationAirport'];
-      this.airportCodeEnd = typeof destinationAirport == 'string' ? destinationAirport : (destinationAirport.icaoCode ?? 'ZZZZ');
-    }
   }
 }

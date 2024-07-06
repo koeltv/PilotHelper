@@ -4,6 +4,7 @@ import {Cloud} from "../../../shared/models/Weather";
 import {NgIf} from "@angular/common";
 import {MatListModule} from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
+import {Airport} from "../../../shared/models/Airport";
 
 @Component({
   selector: 'app-display-meteo',
@@ -18,9 +19,9 @@ import {MatCardModule} from '@angular/material/card';
 })
 
 export class DisplayMeteoComponent implements OnChanges {
-  @Input() airportCode!: string;
+  @Input() airport!: string | Airport | null;
 
-  nameDisplay: string = "";
+  nameDisplay: string = "Entrez un aéroport pour y voir la météo !";
   conditionDisplay: string = "";
   temperatureDisplay: string = "";
   dewpointDisplay: string = "";
@@ -33,10 +34,14 @@ export class DisplayMeteoComponent implements OnChanges {
   }
 
   ngOnChanges(_changes: SimpleChanges) {
-    if (this.airportCode.length == 4) {
-      this.displayWeatherFunction(this.airportCode);
-    } else {
-      this.nameDisplay = "Entrez un aéroport pour y voir la météo !";
+    if (this.airport) {
+      const airportCode = typeof this.airport == 'string' ? this.airport : (this.airport.icaoCode ?? 'ZZZZ');
+
+      if (airportCode.length == 4) {
+        this.displayWeatherFunction(airportCode);
+      } else {
+        this.nameDisplay = 'Entrez un aéroport pour y voir la météo !'
+      }
     }
   }
 
