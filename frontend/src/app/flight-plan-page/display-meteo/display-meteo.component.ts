@@ -42,6 +42,11 @@ export class DisplayMeteoComponent implements OnChanges {
 
   displayWeatherFunction(airportCode: string) {
     this.planningToolService.getWeatherInfoFor(airportCode).subscribe(info => {
+      if (!info) {
+        this.nameDisplay = `Aucune information pour ${airportCode}`;
+        return;
+      }
+
       this.nameDisplay = `<b>METAR pour :</b> ${info.name} `;
       this.conditionDisplay = `<b>Conditions &agrave;:</b> ${this.unixToTimespan(info.obsTime)} `;
       this.temperatureDisplay = `<b>Temperature:</b>	${info.temp}°C (${this.celsiusToFahrenheit(info.temp)}°F) `;
