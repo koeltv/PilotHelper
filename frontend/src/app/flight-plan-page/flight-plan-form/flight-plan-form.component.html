@@ -18,12 +18,8 @@
         </mat-form-field>
       </div>
       <div>
-        <app-airport-input name="Aéroport de départ"
-                           [control]="flightPlanForm.controls['startingAirport']"
-        ></app-airport-input>
-        <app-airport-input name="Aéroport de destination"
-                           [control]="flightPlanForm.controls['destinationAirport']"
-        ></app-airport-input>
+        <app-airport-input name="Aéroport de départ" [control]="flightPlanForm.controls['startingAirport']"/>
+        <app-airport-input name="Aéroport de destination" [control]="flightPlanForm.controls['destinationAirport']"/>
       </div>
       <div>
         <mat-form-field class="space-margin">
@@ -88,21 +84,19 @@
       </div>
     </div>
 
-    <mat-divider></mat-divider>
+    <mat-divider/>
     <br>
 
     <div>
       <h4>Données de l'aéronef</h4>
 
       <div formGroupName="aircraftData">
-        <app-select-aircraft [aircraftList]="aircrafts"
-                             (updatedAircraftList)="onAircraftSelected($event)"></app-select-aircraft>
-
-        <app-aircraft-form [form]="aircraftData"></app-aircraft-form>
+        <app-select-aircraft [aircraftList]="aircrafts" (updatedAircraftList)="onAircraftSelected($event)"/>
+        <app-aircraft-form [form]="aircraftData"/>
       </div>
     </div>
 
-    <mat-divider></mat-divider>
+    <mat-divider/>
     <br>
 
     <div>
@@ -175,7 +169,7 @@
       </mat-grid-list>
     </div>
 
-    <mat-divider></mat-divider>
+    <mat-divider/>
     <br>
 
     <mat-form-field class="space-margin">

@@ -2,16 +2,14 @@
 <div class="flex-container">
   @if (!mobileQuery.matches) {
     <div [style.flex]="1">
-      <app-display-meteo [airport]="flightPlanForm.flightPlanForm.value['startingAirport']"></app-display-meteo>
-      <app-display-meteo [airport]="flightPlanForm.flightPlanForm.value['destinationAirport']"></app-display-meteo>
+      <app-display-meteo [airport]="flightPlanForm.flightPlanForm.value['startingAirport']"/>
+      <app-display-meteo [airport]="flightPlanForm.flightPlanForm.value['destinationAirport']"/>
     </div>
   }
 
   <div [style.flex]="3">
     <div>
-      <app-flight-plan-form #flightPlanForm
-        (formSubmit)="onFormSubmit($event)">
-      </app-flight-plan-form>
+      <app-flight-plan-form #flightPlanForm (formSubmit)="onFormSubmit($event)"/>
     </div>
   </div>
 </div>
