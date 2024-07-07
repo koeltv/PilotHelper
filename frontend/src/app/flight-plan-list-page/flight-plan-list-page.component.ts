@@ -1,16 +1,16 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {FlightPlanService} from "../api/flight-plan.service";
-import {PdfViewerModule} from "ng2-pdf-viewer";
-import {FlightPlan} from "../../shared/models/FlightPlan";
-import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
-import {Clipboard} from "@angular/cdk/clipboard";
-import {environment} from "../../environments/environment";
-import {MatDialog} from "@angular/material/dialog";
-import {ConfirmationDialogComponent} from "./confirmation-dialog/confirmation-dialog.component";
-import {MediaMatcher} from "@angular/cdk/layout";
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {FlightPlanService} from '../api/flight-plan.service';
+import {PdfViewerModule} from 'ng2-pdf-viewer';
+import {FlightPlan} from '../../shared/models/FlightPlan';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {environment} from '../../environments/environment';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from './confirmation-dialog/confirmation-dialog.component';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 class Source {
   constructor(
@@ -27,7 +27,7 @@ export class FlightPlanPdf {
     public id: number,
     public flightPlan: FlightPlan,
   ) {
-    this.source = new Source(`${environment.backendUrl}/flight-plan/${id}/pdf`)
+    this.source = new Source(`${environment.backendUrl}/flight-plan/${id}/pdf`);
   }
 }
 
@@ -69,7 +69,7 @@ export class FlightPlanListPageComponent {
   private refreshFlightPlans() {
     this.flightPlanService.readAllFlightPlans().subscribe(flightPlansWithId => {
       this.flightPlanPdfs = [];
-      for (let flightPlanWithId of flightPlansWithId) {
+      for (const flightPlanWithId of flightPlansWithId) {
         this.flightPlanPdfs.push(new FlightPlanPdf(flightPlanWithId.id, flightPlanWithId.flightPlan));
       }
     });

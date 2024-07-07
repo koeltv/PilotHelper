@@ -1,15 +1,15 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
-import {MatToolbar} from "@angular/material/toolbar";
-import {MatIcon} from "@angular/material/icon";
-import {MatAnchor, MatIconAnchor, MatIconButton} from "@angular/material/button";
-import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
-import {MatDialog} from "@angular/material/dialog";
-import {KeycloakEventType, KeycloakService} from "keycloak-angular";
-import {NgOptimizedImage} from "@angular/common";
-import {PlaneAnimatedComponent} from "./plane-animated/plane-animated.component";
-import {MediaMatcher} from "@angular/cdk/layout";
-import {MatListItem, MatNavList} from "@angular/material/list";
+import {MatToolbar} from '@angular/material/toolbar';
+import {MatIcon} from '@angular/material/icon';
+import {MatAnchor, MatButton, MatIconAnchor, MatIconButton} from '@angular/material/button';
+import {MatSidenav, MatSidenavContainer, MatSidenavContent} from '@angular/material/sidenav';
+import {MatDialog} from '@angular/material/dialog';
+import {KeycloakEventType, KeycloakService} from 'keycloak-angular';
+import {NgOptimizedImage} from '@angular/common';
+import {PlaneAnimatedComponent} from './plane-animated/plane-animated.component';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {MatListItem, MatNavList} from '@angular/material/list';
 
 class NavElement {
   constructor(
@@ -22,7 +22,7 @@ class NavElement {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, MatSidenavContent, NgOptimizedImage, PlaneAnimatedComponent, MatSidenav, MatNavList, MatListItem, RouterLink],
+  imports: [MatToolbar, MatIcon, MatIconButton, MatAnchor, MatIconAnchor, RouterOutlet, MatSidenavContainer, MatSidenavContent, NgOptimizedImage, PlaneAnimatedComponent, MatSidenav, MatNavList, MatListItem, RouterLink, MatButton],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -45,15 +45,15 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges())
+    this.mobileQuery.addEventListener('change', () => changeDetectorRef.detectChanges());
   }
 
   public addAuthCookie(authService: KeycloakService) {
     authService.getToken().then(token => document.cookie = `Authorization=Bearer ${token}`);
   }
 
-  public async ngOnInit() {
-    await this.setupAuthentification();
+  public ngOnInit() {
+    this.setupAuthentification();
   }
 
   private async setupAuthentification() {

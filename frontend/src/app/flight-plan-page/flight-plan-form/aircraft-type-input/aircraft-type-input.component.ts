@@ -1,14 +1,14 @@
 import {Component, Input} from '@angular/core';
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
-import {MatInput} from "@angular/material/input";
-import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
-import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PlanningToolsService} from "../../../api/planning-tools.service";
-import {AircraftType} from "../../../../shared/models/AircraftType";
-import {Observable} from "rxjs";
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatInput} from '@angular/material/input';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PlanningToolsService} from '../../../api/planning-tools.service';
+import {AircraftType} from '../../../../shared/models/AircraftType';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-aircraft-type-input',
@@ -36,7 +36,7 @@ export class AircraftTypeInputComponent {
   constructor(private planningToolsService: PlanningToolsService) {
   }
 
-  @Input({transform: (value: AbstractControl): FormControl => <FormControl>value}) control!: FormControl<string | AircraftType | null>;
+  @Input({transform: (value: AbstractControl): FormControl => value as FormControl}) control!: FormControl<string | AircraftType | null>;
   @Input() name!: string;
 
   public options: AircraftType[] = [];
@@ -83,7 +83,7 @@ export class AircraftTypeInputComponent {
         this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput);
       });
     } else {
-      this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput)
+      this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput);
     }
   }
 

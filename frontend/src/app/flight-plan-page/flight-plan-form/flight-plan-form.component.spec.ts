@@ -10,7 +10,7 @@ describe('FlightPlanFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FlightPlanFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FlightPlanFormComponent);
     component = fixture.componentInstance;

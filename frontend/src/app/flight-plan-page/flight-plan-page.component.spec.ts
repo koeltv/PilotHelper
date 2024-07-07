@@ -10,7 +10,7 @@ describe('FlightPlanPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FlightPlanPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FlightPlanPageComponent);
     component = fixture.componentInstance;

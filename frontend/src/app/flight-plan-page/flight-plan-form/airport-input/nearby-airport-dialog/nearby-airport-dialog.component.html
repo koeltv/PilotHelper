@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Aéroports proches</h1>
 <div mat-dialog-content>
   <p>Veuillez sélectionner un aéroport</p>
-  <mat-icon aria-hidden="false" aria-label="Zoom in icon" fontIcon="zoom_in"></mat-icon>
+  <mat-icon aria-hidden="false" aria-label="Zoom in icon" fontIcon="zoom_in"/>
   <mat-slider min="0.1" max="2" step="0.1" (change)="updateList(slider.value)" style="width: 72%;">
     <input #slider matSliderThumb value="0.2">
   </mat-slider>
-  <mat-icon aria-hidden="false" aria-label="Zoom out icon" fontIcon="zoom_out"></mat-icon>
+  <mat-icon aria-hidden="false" aria-label="Zoom out icon" fontIcon="zoom_out"/>
   <p>
     <mat-action-list>
       @for (airport of airports; track airport) {

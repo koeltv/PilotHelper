@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import {catchError, from, Observable, of, switchMap} from "rxjs";
-import {Weather} from "../../shared/models/Weather";
-import {HttpClient} from "@angular/common/http";
-import {Route} from "../../shared/models/Route";
-import {AircraftType} from "../../shared/models/AircraftType";
-import {Airport} from "../../shared/models/Airport";
+import {catchError, from, Observable, of, switchMap} from 'rxjs';
+import {Weather} from '../../shared/models/Weather';
+import {HttpClient} from '@angular/common/http';
+import {Route} from '../../shared/models/Route';
+import {AircraftType} from '../../shared/models/AircraftType';
+import {Airport} from '../../shared/models/Airport';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanningToolsService {
-  private readonly baseUrl = `/planning-tools`
-  private readonly publicIpProvider = "https://icanhazip.com/";
+  private readonly baseUrl = '/planning-tools';
+  private readonly publicIpProvider = 'https://icanhazip.com/';
 
   constructor(private client: HttpClient) {
   }
@@ -62,6 +62,6 @@ export class PlanningToolsService {
       switchMap(publicIp => {
         return this.client.get<Airport[]>(`${this.baseUrl}/airport/nearby/ip/${publicIp.trim()}?radius=${radius}`);
       })
-    )
+    );
   }
 }

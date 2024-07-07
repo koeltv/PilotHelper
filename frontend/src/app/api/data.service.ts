@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Aircraft} from "../../shared/models/Aircraft";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Aircraft} from '../../shared/models/Aircraft';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private baseUrl = `/data/aircraft`
+  private baseUrl = '/data/aircraft';
 
   constructor(private client: HttpClient) {
   }

@@ -1,26 +1,26 @@
 import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Aircraft} from "../../../shared/models/Aircraft";
-import {FlightPlan} from "../../../shared/models/FlightPlan";
-import {NgForOf} from "@angular/common";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {MatFabButton, MatIconButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
-import {PlanningToolsService} from "../../api/planning-tools.service";
-import {Airport} from "../../../shared/models/Airport";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
-import {SelectRouteDialogComponent} from "./select-route-dialog/select-route-dialog.component";
-import {AirportInputComponent} from "./airport-input/airport-input.component";
-import {AircraftTypeInputComponent} from "./aircraft-type-input/aircraft-type-input.component";
-import {MatCheckbox} from "@angular/material/checkbox";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {MatDivider} from "@angular/material/divider";
-import {SelectAircraftComponent} from "../../aircraft-page/select-aircraft/select-aircraft.component";
-import {DataService} from "../../api/data.service";
-import {MediaMatcher} from "@angular/cdk/layout";
-import {AircraftFormComponent} from "../../aircraft-page/aircraft-form/aircraft-form.component";
+import {Aircraft} from '../../../shared/models/Aircraft';
+import {FlightPlan} from '../../../shared/models/FlightPlan';
+import {NgForOf} from '@angular/common';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {PlanningToolsService} from '../../api/planning-tools.service';
+import {Airport} from '../../../shared/models/Airport';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {SelectRouteDialogComponent} from './select-route-dialog/select-route-dialog.component';
+import {AirportInputComponent} from './airport-input/airport-input.component';
+import {AircraftTypeInputComponent} from './aircraft-type-input/aircraft-type-input.component';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatDivider} from '@angular/material/divider';
+import {SelectAircraftComponent} from '../../aircraft-page/select-aircraft/select-aircraft.component';
+import {DataService} from '../../api/data.service';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {AircraftFormComponent} from '../../aircraft-page/aircraft-form/aircraft-form.component';
 
 @Component({
   selector: 'app-flight-plan-form',
@@ -47,7 +47,7 @@ import {AircraftFormComponent} from "../../aircraft-page/aircraft-form/aircraft-
   styleUrl: './flight-plan-form.component.css'
 })
 export class FlightPlanFormComponent {
-  @Output() formSubmit = new EventEmitter<FlightPlan>();
+  @Output() readonly formSubmit = new EventEmitter<FlightPlan>();
   flightPlanForm: FormGroup;
   aircraftData: FormGroup;
 

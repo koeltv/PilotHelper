@@ -5,7 +5,7 @@
     </button>
     @if (!mobileQuery.matches) {
       @for (nav of navElements; track nav) {
-        <a mat-button (click)="navigate(nav.path)">{{ nav.name }}</a>
+        <button mat-button (click)="navigate(nav.path)">{{ nav.name }}</button>
       }
     }
 
@@ -28,7 +28,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <router-outlet></router-outlet>
+      <router-outlet/>
     </mat-sidenav-content>
 
   </mat-sidenav-container>

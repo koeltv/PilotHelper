@@ -12,9 +12,9 @@
   <button matSuffix mat-icon-button aria-label="Filter by" [matMenuTriggerFor]="airportFilterMenu">
     <mat-icon>filter_list</mat-icon>
     <mat-menu #airportFilterMenu="matMenu">
-      <button mat-menu-item (click)="setFilterTo('name')" [disabled]="filterBy == 'name'">par nom</button>
-      <button mat-menu-item (click)="setFilterTo('icao')" [disabled]="filterBy == 'icao'">par ICAO</button>
-      <button mat-menu-item (click)="setFilterTo('iata')" [disabled]="filterBy == 'iata'">par IATA</button>
+      <button mat-menu-item (click)="setFilterTo('name')" [disabled]="filterBy === 'name'">par nom</button>
+      <button mat-menu-item (click)="setFilterTo('icao')" [disabled]="filterBy === 'icao'">par ICAO</button>
+      <button mat-menu-item (click)="setFilterTo('iata')" [disabled]="filterBy === 'iata'">par IATA</button>
     </mat-menu>
   </button>
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAirport">

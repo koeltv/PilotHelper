@@ -1,13 +1,13 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {FlightPlan} from "../../shared/models/FlightPlan";
-import {SelectAircraftComponent} from "../aircraft-page/select-aircraft/select-aircraft.component";
-import {FlightPlanFormComponent} from "./flight-plan-form/flight-plan-form.component";
+import {FlightPlan} from '../../shared/models/FlightPlan';
+import {SelectAircraftComponent} from '../aircraft-page/select-aircraft/select-aircraft.component';
+import {FlightPlanFormComponent} from './flight-plan-form/flight-plan-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import {DisplayMeteoComponent} from "./display-meteo/display-meteo.component";
+import {DisplayMeteoComponent} from './display-meteo/display-meteo.component';
 import {MatListModule} from '@angular/material/list';
-import {FlightPlanService} from "../api/flight-plan.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MediaMatcher} from "@angular/cdk/layout";
+import {FlightPlanService} from '../api/flight-plan.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 
 @Component({
