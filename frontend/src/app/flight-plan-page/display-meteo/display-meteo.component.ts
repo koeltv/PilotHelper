@@ -40,9 +40,21 @@ export class DisplayMeteoComponent implements OnChanges {
       if (airportCode.length == 4) {
         this.displayWeatherFunction(airportCode);
       } else {
+        this.reset();
         this.nameDisplay = 'Entrez un aéroport pour y voir la météo !'
       }
     }
+  }
+
+  reset() {
+    this.nameDisplay = '';
+    this.conditionDisplay = '';
+    this.temperatureDisplay = '';
+    this.dewpointDisplay = '';
+    this.pressureDisplay = '';
+    this.windsDisplay = '';
+    this.visibilityDisplay = '';
+    this.cloudsDisplay = '';
   }
 
   displayWeatherFunction(airportCode: string) {
@@ -53,7 +65,7 @@ export class DisplayMeteoComponent implements OnChanges {
       }
 
       this.nameDisplay = `<b>METAR pour :</b> ${info.name} `;
-      this.conditionDisplay = `<b>Conditions &agrave;:</b> ${this.unixToTimespan(info.obsTime)} `;
+      this.conditionDisplay = `<b>Conditions &agrave;:</b> ${this.unixToTimespan(info.obsTime).toLocaleString()} `;
       this.temperatureDisplay = `<b>Temperature:</b>	${info.temp}°C (${this.celsiusToFahrenheit(info.temp)}°F) `;
       this.dewpointDisplay = `<b>Point de ros&eacute;e:</b>	${info.dewp}°C (${this.celsiusToFahrenheit(info.dewp)} °F) `;
       this.pressureDisplay = `<b>Pressure (altimeter):</b>	${this.mbToInchHg(info.altim)}  inches Hg (${info.altim} mb)`;
