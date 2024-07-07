@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, viewChild} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
@@ -36,10 +36,8 @@ export class AircraftTypeInputComponent {
   constructor(private planningToolsService: PlanningToolsService) {
   }
 
-  @Input({transform: (value: AbstractControl): FormControl<any> => <FormControl<any>>value}) control!: FormControl;
+  @Input({transform: (value: AbstractControl): FormControl => <FormControl>value}) control!: FormControl<string | AircraftType | null>;
   @Input() name!: string;
-
-  aircraftTypeInput = viewChild.required<ElementRef<HTMLInputElement>>('aircraftTypeInput');
 
   public options: AircraftType[] = [];
   public filteredOptions: AircraftType[] = [];
@@ -49,7 +47,7 @@ export class AircraftTypeInputComponent {
     if (filter != this.filterBy) {
       this.options = [];
       this.filteredOptions = [];
-      this.aircraftTypeInput().nativeElement.value = '';
+      this.control.patchValue('');
     }
     this.filterBy = filter;
   }
@@ -64,7 +62,10 @@ export class AircraftTypeInputComponent {
   }
 
   handleAircraftTypeAutocomplete(): void {
-    const typedInput = this.aircraftTypeInput().nativeElement.value.toUpperCase();
+    const aircraftType = this.control.value;
+    if (!aircraftType || typeof aircraftType != 'string') return;
+
+    const typedInput = aircraftType.toUpperCase();
 
     if (typedInput.length <= 1) {
       this.options = [];
@@ -86,8 +87,8 @@ export class AircraftTypeInputComponent {
     }
   }
 
-  displayAircraftType(aircraftType: AircraftType | string | undefined): string {
-    if (aircraftType == undefined) return '';
+  displayAircraftType(aircraftType: AircraftType | string | null): string {
+    if (aircraftType == null) return '';
     if (typeof aircraftType == 'string') return aircraftType;
     return aircraftType.designator ? aircraftType.designator : 'ZZZZ';
   }

@@ -69,7 +69,7 @@ export class FlightPlanFormComponent {
 
     this.aircraftData = this.fb.group({
       aircraftId: [''],
-      aircraftType: [undefined],
+      aircraftType: [null],
       turbulenceType: [''],
       equipment: [''],
       transponder: [''],
@@ -81,12 +81,12 @@ export class FlightPlanFormComponent {
       flightType: ['', Validators.required],
       aircraftData: this.aircraftData,
       aircraftCount: [1, Validators.required],
-      startingAirport: [undefined, Validators.required],
+      startingAirport: [null, Validators.required],
       startingTime: ['', Validators.required],
       cruisingSpeed: ['', Validators.required],
       cruisingAltitude: ['', Validators.required],
       path: ['', Validators.required],
-      destinationAirport: [undefined, Validators.required],
+      destinationAirport: [null, Validators.required],
       estimatedTime: ['', Validators.required],
       alternativeAirport: this.fb.array(['']),
       otherInformations: this.fb.array(['']),
@@ -159,8 +159,8 @@ export class FlightPlanFormComponent {
   }
 
   suggestRoutes() {
-    let startingAirport: string | Airport | undefined = this.flightPlanForm.get('startingAirport')?.value;
-    let destinationAirport: string | Airport | undefined = this.flightPlanForm.get('destinationAirport')?.value;
+    let startingAirport: string | Airport | null = this.flightPlanForm.get('startingAirport')?.value;
+    let destinationAirport: string | Airport | null = this.flightPlanForm.get('destinationAirport')?.value;
 
     if (startingAirport != null && destinationAirport != null) {
       if (startingAirport instanceof Airport) {
