@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Ajouter un avion personnel</h1><br>
+<h1 style="text-align: center">Ajouter un aéronef</h1><br>
 
 <app-aircraft-form (aircraftCreated)="addAircraft($event)" #aircraftFormComponent>
   <button mat-fab extended type="reset" class="form-button">
@@ -12,10 +12,9 @@
   </button>
 </app-aircraft-form>
 
-<h2>Liste des avions</h2>
+<h2>Liste des aéronefs</h2>
 
-<app-select-aircraft [aircraftList]="airCraftList"
-                     (updatedAircraftList)="updateVisibleAircraft($event)"></app-select-aircraft>
+<app-select-aircraft [aircraftList]="airCraftList" (updatedAircraftList)="updateVisibleAircraft($event)"/>
 
 <ul>
   @for (aircraft of visibleAircraft; track aircraft) {

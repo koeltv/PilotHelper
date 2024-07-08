@@ -1,5 +1,5 @@
 import {Aircraft} from './Aircraft';
-import {AircraftEquipment} from "./AircraftEquipment";
+import {AircraftEquipment} from './AircraftEquipment';
 
 export class FlightPlan {
   constructor(

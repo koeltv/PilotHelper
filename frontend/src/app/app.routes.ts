@@ -1,8 +1,8 @@
 import {Routes} from '@angular/router';
 import {HomePageComponent} from './home-page/home-page.component';
-import {AircraftPageComponent} from "./aircraft-page/aircraft-page.component";
-import {FlightPlanPageComponent} from "./flight-plan-page/flight-plan-page.component";
-import {FlightPlanListPageComponent} from "./flight-plan-list-page/flight-plan-list-page.component";
+import {AircraftPageComponent} from './aircraft-page/aircraft-page.component';
+import {FlightPlanPageComponent} from './flight-plan-page/flight-plan-page.component';
+import {FlightPlanListPageComponent} from './flight-plan-list-page/flight-plan-list-page.component';
 
 const routeConfig : Routes = [
   {

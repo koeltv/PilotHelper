@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {Aircraft} from "../../../shared/models/Aircraft";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
+import {Aircraft} from '../../../shared/models/Aircraft';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 import {
   AircraftTypeInputComponent
-} from "../../flight-plan-page/flight-plan-form/aircraft-type-input/aircraft-type-input.component";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {MatFabButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
+} from '../../flight-plan-page/flight-plan-form/aircraft-type-input/aircraft-type-input.component';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 interface TurbulenceType {
   value: string,
@@ -21,12 +21,12 @@ interface TurbulenceType {
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatFormField, MatInput, MatLabel, AircraftTypeInputComponent, MatSelect, MatOption, MatFabButton, MatIcon],
   templateUrl: './aircraft-form.component.html',
-  styleUrls: ['./aircraft-form.component.css']
+  styleUrl: './aircraft-form.component.css'
 })
 export class AircraftFormComponent implements OnInit {
-  @Input() form!: FormGroup
+  @Input() form!: FormGroup;
 
-  @Output() aircraftCreated = new EventEmitter<Aircraft>();
+  @Output() readonly aircraftCreated = new EventEmitter<Aircraft>();
   readonly turbulenceType: TurbulenceType[] = [
     {value: 'L', description: 'Léger (MTOW <= 7t)'},
     {value: 'M', description: 'Moyen (7t < MTOW <= 136t)'},

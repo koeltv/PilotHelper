@@ -1,23 +1,28 @@
 import {Injectable} from '@angular/core';
-import {from, Observable, switchMap} from "rxjs";
-import {Weather} from "../../shared/models/Weather";
-import {HttpClient} from "@angular/common/http";
-import {Route} from "../../shared/models/Route";
-import {AircraftType} from "../../shared/models/AircraftType";
-import {Airport} from "../../shared/models/Airport";
+import {catchError, from, Observable, of, switchMap} from 'rxjs';
+import {Weather} from '../../shared/models/Weather';
+import {HttpClient} from '@angular/common/http';
+import {Route} from '../../shared/models/Route';
+import {AircraftType} from '../../shared/models/AircraftType';
+import {Airport} from '../../shared/models/Airport';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanningToolsService {
-  private readonly baseUrl = `/planning-tools`
-  private readonly publicIpProvider = "https://icanhazip.com/";
+  private readonly baseUrl = '/planning-tools';
+  private readonly publicIpProvider = 'https://icanhazip.com/';
 
   constructor(private client: HttpClient) {
   }
 
-  getWeatherInfoFor(airportId: string): Observable<Weather> {
-    return this.client.get<Weather>(`${this.baseUrl}/weather/${airportId}`);
+  getWeatherInfoFor(airportId: string): Observable<Weather | null> {
+    return this.client.get<Weather | null>(`${this.baseUrl}/weather/${airportId}`).pipe(
+      catchError(error => {
+        if (error.status == '404') return of(null);
+        else throw error;
+      })
+    );
   }
 
   getRoutesBetween(startingAirport: string, destinationAirport: string): Observable<Route[]> {
@@ -57,6 +62,6 @@ export class PlanningToolsService {
       switchMap(publicIp => {
         return this.client.get<Airport[]>(`${this.baseUrl}/airport/nearby/ip/${publicIp.trim()}?radius=${radius}`);
       })
-    )
+    );
   }
 }

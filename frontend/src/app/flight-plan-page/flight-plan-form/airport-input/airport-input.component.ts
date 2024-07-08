@@ -1,16 +1,17 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
-import {MatInput} from "@angular/material/input";
-import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
-import {Airport} from "../../../../shared/models/Airport";
-import {Observable} from "rxjs";
-import {PlanningToolsService} from "../../../api/planning-tools.service";
-import {MatDialog} from "@angular/material/dialog";
-import {NearbyAirportDialogComponent} from "./nearby-airport-dialog/nearby-airport-dialog.component";
+import {Component, Input} from '@angular/core';
+import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatInput} from '@angular/material/input';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {Airport} from '../../../../shared/models/Airport';
+import {Observable} from 'rxjs';
+import {PlanningToolsService} from '../../../api/planning-tools.service';
+import {MatDialog} from '@angular/material/dialog';
+import {NearbyAirportDialogComponent} from './nearby-airport-dialog/nearby-airport-dialog.component';
+import {AircraftType} from '../../../../shared/models/AircraftType';
 
 @Component({
   selector: 'app-airport-input',
@@ -42,10 +43,8 @@ export class AirportInputComponent {
   ) {
   }
 
-  @Input({transform: (value: AbstractControl): FormControl<any> => <FormControl<any>>value}) control!: FormControl;
+  @Input({transform: (value: AbstractControl): FormControl => value as FormControl}) control!: FormControl<string | AircraftType | null>;
   @Input() name!: string;
-
-  @ViewChild('airportInput') airportInput!: ElementRef<HTMLInputElement>;
 
   public options: Airport[] = [];
   public filteredOptions: Airport[] = [];
@@ -55,7 +54,7 @@ export class AirportInputComponent {
     if (filter != this.filterBy) {
       this.options = [];
       this.filteredOptions = [];
-      this.airportInput.nativeElement.value = '';
+      this.control.patchValue('');
     }
     this.filterBy = filter;
   }
@@ -71,7 +70,10 @@ export class AirportInputComponent {
   }
 
   handleAirportAutocomplete(): void {
-    const typedInput = this.airportInput.nativeElement.value.toUpperCase();
+    const airport = this.control.value;
+    if (!airport || typeof airport != 'string') return;
+
+    const typedInput = airport.toUpperCase();
 
     if (typedInput.length <= 1) {
       this.options = [];
@@ -90,13 +92,13 @@ export class AirportInputComponent {
         this.filteredOptions = this.filterAirportsBy(this.options, this.filterBy, typedInput);
       });
     } else {
-      this.filteredOptions = this.filterAirportsBy(this.options, this.filterBy, typedInput)
+      this.filteredOptions = this.filterAirportsBy(this.options, this.filterBy, typedInput);
     }
   }
 
-  displayAirport(airport: Airport | string | undefined): string {
-    if (airport == undefined) return '';
-    if (typeof airport == 'string') return 'ZZZZ';
+  displayAirport(airport: Airport | string | null): string {
+    if (airport == null) return '';
+    if (typeof airport == 'string') return airport;
     return airport.icaoCode ? airport.icaoCode : 'ZZZZ';
   }
 

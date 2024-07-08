@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AircraftPageComponent } from './aircraft-page.component';
+import {AircraftPageComponent} from './aircraft-page.component';
 
 describe('AircraftPageComponent', () => {
   let component: AircraftPageComponent;
@@ -10,8 +10,8 @@ describe('AircraftPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AircraftPageComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AircraftPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

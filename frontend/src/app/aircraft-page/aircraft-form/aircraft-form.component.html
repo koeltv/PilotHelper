@@ -2,13 +2,12 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div>
       <mat-form-field class="form-button">
-        <mat-label>N° d'avion</mat-label>
+        <mat-label>N° d'aéronef</mat-label>
         <input matInput placeholder="ZZZZ" formControlName="aircraftId">
       </mat-form-field>
 
-      <app-aircraft-type-input name="Désignation de l'avion" class="form-button"
-                           [control]="form.controls['aircraftType']"
-      ></app-aircraft-type-input>
+      <app-aircraft-type-input name="Désignation de l'aéronef" class="form-button"
+                               [control]="form.controls['aircraftType']"/>
 
       <mat-form-field class="form-button">
         <mat-label>Type de turbulence</mat-label>
@@ -37,6 +36,6 @@
       </mat-form-field>
     </div>
 
-    <ng-content></ng-content>
+    <ng-content/>
   </form>
 </div>

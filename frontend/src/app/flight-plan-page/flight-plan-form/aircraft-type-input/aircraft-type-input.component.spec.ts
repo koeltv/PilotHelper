@@ -10,7 +10,7 @@ describe('AircraftTypeInputComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AircraftTypeInputComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AircraftTypeInputComponent);
     component = fixture.componentInstance;

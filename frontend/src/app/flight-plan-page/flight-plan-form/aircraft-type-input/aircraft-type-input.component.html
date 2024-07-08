@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-label>{{ name }}</mat-label>
-  <input #aircraftTypeInput
+  <input
          type="text"
          placeholder="A124"
          matInput
@@ -12,8 +12,8 @@
   <button matSuffix mat-icon-button aria-label="Filter by" [matMenuTriggerFor]="aircraftTypeFilterMenu">
     <mat-icon>filter_list</mat-icon>
     <mat-menu #aircraftTypeFilterMenu="matMenu">
-      <button mat-menu-item (click)="setFilterTo('name')" [disabled]="filterBy == 'name'">By Name</button>
-      <button mat-menu-item (click)="setFilterTo('icao')" [disabled]="filterBy == 'icao'">By ICAO</button>
+      <button mat-menu-item (click)="setFilterTo('name')" [disabled]="filterBy === 'name'">By Name</button>
+      <button mat-menu-item (click)="setFilterTo('icao')" [disabled]="filterBy === 'icao'">By ICAO</button>
     </mat-menu>
   </button>
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayAircraftType">

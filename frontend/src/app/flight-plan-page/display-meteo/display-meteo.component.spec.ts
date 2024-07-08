@@ -10,7 +10,7 @@ describe('DisplayMeteoComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DisplayMeteoComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DisplayMeteoComponent);
     component = fixture.componentInstance;

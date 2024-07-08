@@ -6,6 +6,7 @@ import com.pilothelper.fetcher.WeatherFetcher
 import com.pilothelper.model.Coordinates
 import com.pilothelper.service.AircraftTypeService
 import com.pilothelper.service.AirportService
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.forwardedheaders.*
@@ -32,7 +33,9 @@ fun Application.configureRouting() {
         get("/weather/{airportId}") {
             val airportId = call.parameters["airportId"] ?: throw MissingRequestParameterException("Missing airport ID")
             val weather = weatherFetcher.fetchInfo(airportId)
-            call.respond(weather)
+
+            if (weather != null) call.respond(weather)
+            else call.respond(HttpStatusCode.NotFound)
         }
 
         get("/route") {

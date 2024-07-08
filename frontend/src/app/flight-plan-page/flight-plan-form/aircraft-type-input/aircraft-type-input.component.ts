@@ -1,14 +1,14 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
-import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
-import {MatInput} from "@angular/material/input";
-import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
-import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {PlanningToolsService} from "../../../api/planning-tools.service";
-import {AircraftType} from "../../../../shared/models/AircraftType";
-import {Observable} from "rxjs";
+import {Component, Input} from '@angular/core';
+import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatIcon} from '@angular/material/icon';
+import {MatIconButton} from '@angular/material/button';
+import {MatInput} from '@angular/material/input';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {AbstractControl, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {PlanningToolsService} from '../../../api/planning-tools.service';
+import {AircraftType} from '../../../../shared/models/AircraftType';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-aircraft-type-input',
@@ -36,10 +36,8 @@ export class AircraftTypeInputComponent {
   constructor(private planningToolsService: PlanningToolsService) {
   }
 
-  @Input({transform: (value: AbstractControl): FormControl<any> => <FormControl<any>>value}) control!: FormControl;
+  @Input({transform: (value: AbstractControl): FormControl => value as FormControl}) control!: FormControl<string | AircraftType | null>;
   @Input() name!: string;
-
-  @ViewChild('aircraftTypeInput') aircraftTypeInput!: ElementRef<HTMLInputElement>;
 
   public options: AircraftType[] = [];
   public filteredOptions: AircraftType[] = [];
@@ -49,7 +47,7 @@ export class AircraftTypeInputComponent {
     if (filter != this.filterBy) {
       this.options = [];
       this.filteredOptions = [];
-      this.aircraftTypeInput.nativeElement.value = '';
+      this.control.patchValue('');
     }
     this.filterBy = filter;
   }
@@ -64,7 +62,10 @@ export class AircraftTypeInputComponent {
   }
 
   handleAircraftTypeAutocomplete(): void {
-    const typedInput = this.aircraftTypeInput.nativeElement.value.toUpperCase();
+    const aircraftType = this.control.value;
+    if (!aircraftType || typeof aircraftType != 'string') return;
+
+    const typedInput = aircraftType.toUpperCase();
 
     if (typedInput.length <= 1) {
       this.options = [];
@@ -82,12 +83,12 @@ export class AircraftTypeInputComponent {
         this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput);
       });
     } else {
-      this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput)
+      this.filteredOptions = this.filterAircraftTypesBy(this.options, this.filterBy, typedInput);
     }
   }
 
-  displayAircraftType(aircraftType: AircraftType | string | undefined): string {
-    if (aircraftType == undefined) return '';
+  displayAircraftType(aircraftType: AircraftType | string | null): string {
+    if (aircraftType == null) return '';
     if (typeof aircraftType == 'string') return aircraftType;
     return aircraftType.designator ? aircraftType.designator : 'ZZZZ';
   }

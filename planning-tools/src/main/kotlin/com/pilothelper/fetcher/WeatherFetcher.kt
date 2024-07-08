@@ -10,7 +10,7 @@ class WeatherFetcher(private val client: HttpClient) {
         const val API_URL = "https://aviationweather.gov/api/data/metar"
     }
 
-    suspend fun fetchInfo(airportId: String): Weather {
+    suspend fun fetchInfo(airportId: String): Weather? {
         val response = client.get(API_URL) {
             url {
                 parameters.append("format", "json")
@@ -18,6 +18,6 @@ class WeatherFetcher(private val client: HttpClient) {
             }
         }
         val weather: List<Weather> = response.body()
-        return weather[0]
+        return if (weather.isEmpty()) null else weather[0]
     }
 }

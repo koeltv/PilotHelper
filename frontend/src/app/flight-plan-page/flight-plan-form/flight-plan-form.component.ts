@@ -1,26 +1,26 @@
 import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Aircraft} from "../../../shared/models/Aircraft";
-import {FlightPlan} from "../../../shared/models/FlightPlan";
-import {NgForOf} from "@angular/common";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatInput} from "@angular/material/input";
-import {MatFabButton, MatIconButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
-import {PlanningToolsService} from "../../api/planning-tools.service";
-import {Airport} from "../../../shared/models/Airport";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {MatDialog} from "@angular/material/dialog";
-import {SelectRouteDialogComponent} from "./select-route-dialog/select-route-dialog.component";
-import {AirportInputComponent} from "./airport-input/airport-input.component";
-import {AircraftTypeInputComponent} from "./aircraft-type-input/aircraft-type-input.component";
-import {MatCheckbox} from "@angular/material/checkbox";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {MatDivider} from "@angular/material/divider";
-import {SelectAircraftComponent} from "../../aircraft-page/select-aircraft/select-aircraft.component";
-import {DataService} from "../../api/data.service";
-import {MediaMatcher} from "@angular/cdk/layout";
-import {AircraftFormComponent} from "../../aircraft-page/aircraft-form/aircraft-form.component";
+import {Aircraft} from '../../../shared/models/Aircraft';
+import {FlightPlan} from '../../../shared/models/FlightPlan';
+import {NgForOf} from '@angular/common';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {PlanningToolsService} from '../../api/planning-tools.service';
+import {Airport} from '../../../shared/models/Airport';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
+import {SelectRouteDialogComponent} from './select-route-dialog/select-route-dialog.component';
+import {AirportInputComponent} from './airport-input/airport-input.component';
+import {AircraftTypeInputComponent} from './aircraft-type-input/aircraft-type-input.component';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatDivider} from '@angular/material/divider';
+import {SelectAircraftComponent} from '../../aircraft-page/select-aircraft/select-aircraft.component';
+import {DataService} from '../../api/data.service';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {AircraftFormComponent} from '../../aircraft-page/aircraft-form/aircraft-form.component';
 
 @Component({
   selector: 'app-flight-plan-form',
@@ -47,8 +47,7 @@ import {AircraftFormComponent} from "../../aircraft-page/aircraft-form/aircraft-
   styleUrl: './flight-plan-form.component.css'
 })
 export class FlightPlanFormComponent {
-  @Output() formSubmit = new EventEmitter<FlightPlan>();
-  @Output() formChange = new EventEmitter<{ [key: string]: any }>();
+  @Output() readonly formSubmit = new EventEmitter<FlightPlan>();
   flightPlanForm: FormGroup;
   aircraftData: FormGroup;
 
@@ -70,7 +69,7 @@ export class FlightPlanFormComponent {
 
     this.aircraftData = this.fb.group({
       aircraftId: [''],
-      aircraftType: [undefined],
+      aircraftType: [null],
       turbulenceType: [''],
       equipment: [''],
       transponder: [''],
@@ -82,12 +81,12 @@ export class FlightPlanFormComponent {
       flightType: ['', Validators.required],
       aircraftData: this.aircraftData,
       aircraftCount: [1, Validators.required],
-      startingAirport: [undefined, Validators.required],
+      startingAirport: [null, Validators.required],
       startingTime: ['', Validators.required],
       cruisingSpeed: ['', Validators.required],
       cruisingAltitude: ['', Validators.required],
       path: ['', Validators.required],
-      destinationAirport: [undefined, Validators.required],
+      destinationAirport: [null, Validators.required],
       estimatedTime: ['', Validators.required],
       alternativeAirport: this.fb.array(['']),
       otherInformations: this.fb.array(['']),
@@ -115,12 +114,6 @@ export class FlightPlanFormComponent {
 
     this.dataService.readAllAircraft().subscribe(aircrafts => {
       this.aircrafts = aircrafts;
-    })
-
-    Object.keys(this.flightPlanForm.controls).forEach(fieldName => {
-      this.flightPlanForm.get(fieldName)?.valueChanges.subscribe(newValue => {
-        this.formChange.emit({[fieldName]: newValue});
-      });
     });
   }
 
@@ -166,8 +159,8 @@ export class FlightPlanFormComponent {
   }
 
   suggestRoutes() {
-    let startingAirport: string | Airport | undefined = this.flightPlanForm.get('startingAirport')?.value;
-    let destinationAirport: string | Airport | undefined = this.flightPlanForm.get('destinationAirport')?.value;
+    let startingAirport: string | Airport | null = this.flightPlanForm.get('startingAirport')?.value;
+    let destinationAirport: string | Airport | null = this.flightPlanForm.get('destinationAirport')?.value;
 
     if (startingAirport != null && destinationAirport != null) {
       if (startingAirport instanceof Airport) {

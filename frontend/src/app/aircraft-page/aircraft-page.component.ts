@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CommonModule, NgForOf} from "@angular/common";
-import {AircraftFormComponent} from "./aircraft-form/aircraft-form.component";
-import {Aircraft} from "../../shared/models/Aircraft";
-import {DataService} from "../api/data.service";
-import {MatFabButton} from "@angular/material/button";
-import {MatIcon} from "@angular/material/icon";
-import {SelectAircraftComponent} from "./select-aircraft/select-aircraft.component";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule, NgForOf} from '@angular/common';
+import {AircraftFormComponent} from './aircraft-form/aircraft-form.component';
+import {Aircraft} from '../../shared/models/Aircraft';
+import {DataService} from '../api/data.service';
+import {MatFabButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {SelectAircraftComponent} from './select-aircraft/select-aircraft.component';
 
 @Component({
   selector: 'app-aircraft-page',
@@ -20,7 +20,6 @@ import {SelectAircraftComponent} from "./select-aircraft/select-aircraft.compone
     ReactiveFormsModule,
     MatFabButton,
     MatIcon,
-    SelectAircraftComponent
   ],
   templateUrl: './aircraft-page.component.html',
   styleUrl: './aircraft-page.component.css'

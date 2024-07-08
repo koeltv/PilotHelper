@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {MatActionList, MatListItem} from "@angular/material/list";
-import {MatButton} from "@angular/material/button";
-import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
-import {PlanningToolsService} from "../../../../api/planning-tools.service";
-import {MatSlider, MatSliderThumb} from "@angular/material/slider";
-import {MatIcon} from "@angular/material/icon";
-import {Airport} from "../../../../../shared/models/Airport";
-import {FormsModule} from "@angular/forms";
+import {MatActionList, MatListItem} from '@angular/material/list';
+import {MatButton} from '@angular/material/button';
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
+import {PlanningToolsService} from '../../../../api/planning-tools.service';
+import {MatSlider, MatSliderThumb} from '@angular/material/slider';
+import {MatIcon} from '@angular/material/icon';
+import {Airport} from '../../../../../shared/models/Airport';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-nearby-airport-dialog',
@@ -40,6 +40,6 @@ export class NearbyAirportDialogComponent {
     if (typeof radius == 'string') radius = parseFloat(radius);
     this.planningToolsService.getNearbyAirports(radius).subscribe(airports => {
       this.airports = airports;
-    })
+    });
   }
 }

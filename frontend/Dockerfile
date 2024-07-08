@@ -7,7 +7,7 @@ ENV NG_CLI_ANALYTICS="false"
 COPY package.json package-lock.json ./
 RUN ["npm", "ci"]
 # Copy Angular files
-COPY angular.json tsconfig.app.json tsconfig.json tsconfig.spec.json ngsw-config.json ./
+COPY angular.json tsconfig.app.json tsconfig.json tsconfig.spec.json ngsw-config.json eslint.config.js ./
 # Copy the source code & resources
 COPY m3-theme.scss m3-theme.scss
 COPY public public
